@@ -34,7 +34,8 @@ public class TamGiacClass {
     }
 
     public boolean KiemTraTamGiac() {
-        return (this.canhA + this.canhB >= this.canhC) && (this.canhB + this.canhC >= this.canhA) && (this.canhC + this.canhA >= this.canhB);
+        return (this.canhA + this.canhB >= this.canhC) && (this.canhB + this.canhC >= this.canhA) &&
+                (this.canhC + this.canhA >= this.canhB);
     }
 
     public double TinhChuViTamGiac() {
@@ -57,12 +58,27 @@ public class TamGiacClass {
             return 0;
         else if (this.canhA == this.canhB && this.canhB == this.canhC)
             return 1;
-        else if (((this.canhA == this.canhB) || (this.canhB == this.canhC) || (this.canhA == this.canhC)) && KiemTraTamGiacVuong(this.canhA, this.canhB, this.canhC) == true)
+        else if (((this.canhA == this.canhB) ||
+                (this.canhB == this.canhC) ||
+                (this.canhA == this.canhC)) &&
+                KiemTraTamGiacVuong(this.canhA, this.canhB, this.canhC) == true)
             return 2;
-        else if ((this.canhA == this.canhB) || (this.canhB == this.canhC) || (this.canhA == this.canhC))
+        else if ((this.canhA == this.canhB) ||
+                (this.canhB == this.canhC) ||
+                (this.canhA == this.canhC))
             return 3;
         else if (KiemTraTamGiacVuong(this.canhA, this.canhB, this.canhC) == true)
             return 4;
         else return 5;
+    }
+
+    public String KetQuaPhanLoai(){
+        int kq=PhanLoaiTamGiac();
+        if(kq==0) return "Đây không phải là tam giác";
+        else if(kq==1) return "Đây là tam giác đều";
+        else if(kq==2) return "Đây là tam giác cân vuông";
+        else if(kq==3) return "Đây là tam giác cân";
+        else if(kq==4) return "Đây là tam giác vuông";
+        else return "Đây là tam giác thường";
     }
 }

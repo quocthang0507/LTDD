@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TamGiac</string>
+    <string name="hintCanhA">Cạnh A</string>
+    <string name="hintCanhB" >Cạnh B</string>
+    <string name="hintCanhC">Cạnh C</string>
+    <string name="btnKiemTra">Kiểm tra</string>
 </resources>

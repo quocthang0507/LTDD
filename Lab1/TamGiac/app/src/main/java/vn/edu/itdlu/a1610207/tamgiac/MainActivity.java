@@ -3,6 +3,10 @@ package vn.edu.itdlu.a1610207.tamgiac;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,10 +14,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TamGiacClass tamGiac = new TamGiacClass();
-        tamGiac.SetCanh(3, 4, 5);
-        int phanLoai = tamGiac.PhanLoaiTamGiac();
-        PrintObject(Integer.toString(phanLoai));
+        Button btnKT=(Button)findViewById(R.id.btnKiemTra);
+        btnKT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int a = GetValueFromTextView(findViewById(R.id.canhA));
+                int b = GetValueFromTextView(findViewById(R.id.canhB));
+                int c = GetValueFromTextView(findViewById(R.id.canhC));
+                TamGiacClass tg=new TamGiacClass();
+                tg.SetCanh(a, b, c);
+                ChangeValueTextView(tg.KetQuaPhanLoai());
+            }
+        });
+    }
+
+    int GetValueFromTextView(View tv){
+        return Integer.parseInt(((EditText) tv).getText().toString());
+    }
+
+    void ChangeValueTextView(String s){
+        TextView t = (TextView) findViewById(R.id.tvKQ);
+        t.setText(s);
     }
 
     private void PrintObject(Object obj) {
