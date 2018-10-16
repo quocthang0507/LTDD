@@ -1,5 +1,7 @@
 package vn.edu.itdlu.a1610207.calculator;
 
+import android.widget.TextView;
+
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Months;
@@ -28,7 +30,7 @@ public class CoreFunctions {
         return Math.sqrt(x);
     }
 
-    //Negative a number
+    //Negating number
     static double neg(double x) {
         return -x;
     }
@@ -51,20 +53,20 @@ public class CoreFunctions {
     }
 
     //Common trigonometry
-    //i =1 : sin, i = 2 : cos, i = 3 : tan
+    //sin, cos, tan
     //isRadians: true if x is radians, false if x is degrees
-    static double trigonometry(int i, double x, boolean isRadians) {
+    static double trigonometry(String t, double x, boolean isRadians) {
         double value = 0;
         if (!isRadians)
             x = deg2Rad(x);
-        switch (i) {
-            case 1:
+        switch (t) {
+            case "sin":
                 value = Math.sin(x);
                 break;
-            case 2:
+            case "cos":
                 value = Math.cos(x);
                 break;
-            case 3:
+            case "tan":
                 value = Math.tan(x);
                 break;
         }
@@ -72,20 +74,20 @@ public class CoreFunctions {
     }
 
     //Common hyperbolic
-    //i =1 : sinh, i = 2 : cosh, i = 3 : tanh
+    //sinh, cosh, tanh
     //isRadians: true if x is radians, false if x is degrees
-    static double hyperbolic(int i, double x, boolean isRadians) {
+    static double hyperbolic(String t, double x, boolean isRadians) {
         double value = 0;
         if (!isRadians)
             x = deg2Rad(x);
-        switch (i) {
-            case 1:
+        switch (t) {
+            case "sinh":
                 value = Math.sinh(x);
                 break;
-            case 2:
+            case "cosh":
                 value = Math.cosh(x);
                 break;
-            case 3:
+            case "tanh":
                 value = Math.tanh(x);
                 break;
         }
@@ -125,16 +127,16 @@ public class CoreFunctions {
         return ~n;
     }
 
-    static int bitwise(int a, int b, char c) {
-        int value = 0;
-        switch (c) {
-            case '&':
+    static long bitwise(long a, long b, String t) {
+        long value = 0;
+        switch (t) {
+            case "and":
                 value = a & b;
                 break;
-            case '|':
+            case "or":
                 value = a | b;
                 break;
-            case '^':
+            case "xor":
                 value = a ^ b;
                 break;
         }
