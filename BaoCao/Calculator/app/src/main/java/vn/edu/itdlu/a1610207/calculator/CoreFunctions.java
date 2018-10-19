@@ -1,7 +1,5 @@
 package vn.edu.itdlu.a1610207.calculator;
 
-import android.widget.TextView;
-
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Months;
@@ -30,16 +28,9 @@ public class CoreFunctions {
         return Math.sqrt(x);
     }
 
-    //Negating number
+    //Negative number
     static double neg(double x) {
         return -x;
-    }
-
-    //i = 0: The C button will clear all input to the calculator.
-    //i = 1: The CE button clears the most recent entry
-    //i = 2: Backspace
-    static void del(int i) {
-        //Do something here
     }
 
     //Convert degrees to radians
