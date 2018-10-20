@@ -3,9 +3,10 @@ package vn.edu.itdlu.a1610207.calculator;
 import android.widget.TextView;
 
 public class ActionProcess {
-    public void actionPerformed(TextView textView, String command){
-        switch (command){
-                //Standard mode
+    public void actionPerformed(TextView equation, TextView current, String command) {
+        String currentNumber = current.getText().toString();
+        switch (command) {
+            //Standard mode
             case "%":   //Percentage
                 break;
             case "√":   //Square root
@@ -43,7 +44,7 @@ public class ActionProcess {
                 break;
             case "=":   //Equal
                 break;
-                //Scientific mode
+            //Scientific mode
             case "^":   //x to the power of y
                 break;
             case "10^": //Power of 10
@@ -67,7 +68,7 @@ public class ActionProcess {
                 break;
             case ")":   //CLose parenthesis
                 break;
-                //Programmer mode
+            //Programmer mode
             case "xor": //The Bitwise Operators: And (&), Or (|), Not (~), Xor (^)
             case "or":
             case "and":
@@ -81,7 +82,7 @@ public class ActionProcess {
             case "E":
             case "F":
                 break;
-            default :   //Calculate
+            default:   //Calculate
                 break;
         }
     }

@@ -1,51 +1,117 @@
 package vn.edu.itdlu.a1610207.calculator;
 
+//Date calculation
+
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.Weeks;
 import org.joda.time.Years;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+//Others
+
 
 public class CoreFunctions {
-    //Percentage (%)
+    String[] Currency =
+            {"AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT",
+                    "BGN", "BHD", "BIF", "BND", "BOB", "BRL", "BSD", "BTC", "BTN", "BWP", "BYN",
+                    "BYR", "BZD", "CAD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CUP", "CVE",
+                    "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "EUR", "FJD", "FKP",
+                    "GBP", "GEL", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK",
+                    "HTG", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY",
+                    "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP",
+                    "LKR", "LRD", "LSL", "LVL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT",
+                    "MOP", "MRO", "MUR", "MVR", "MWK", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO",
+                    "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG",
+                    "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD",
+                    "SHP", "SLL", "SOS", "SRD", "STD", "SYP", "SZL", "THB", "TJS", "TMT", "TND",
+                    "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "ele ", "UYU", "UZS", "VEF",
+                    "VND", "VUV", "WST", "XAF", "XCD", "XDR", "XOF", "XPF", "YER", "ZAR", "ZMW"};
+
+    String[] Volume = {"Millimeters", "Cubic centimeters", "Liters", "Cubic meters", "Cubic inches", "Cubic feet", "Cubic yards"};
+
+    String[] Length = {"Nanometers", "Microns", "Millimeters", "Centimeters", "Meters", "Kilometers", "Inches", "Feet", "Yards", "Miles"};
+
+    String[] Weight_Mass = {"Carats", "Milligrams", "Centigrams", "Decigrams", "Grams", "Dekagrams", "Hectograms", "Kilograms", "Ounces", "Pounds"};
+
+    String[] Temperature = {"Celsius", "Fahrenheit", "Kelvin"};
+
+    String[] Energy = {"Electron volts", "Joules", "Kilojoules", "Thermal calories", "Food calories", "Foot-pounds"};
+
+    String[] Data = {"Bits", "Bytes",
+            "Kilobits", "Kibibits", "Kilobytes", "Kibibytes",
+            "Megabits", "Mebibits", "Megabytes", "Mebibytes",
+            "Gigabits", "Gibibits", "Gigabytes", "Gibibytes",
+            "Terabits", "Tebibits", "Terabytes", "Tebibytes",
+            "Petabits", "Pebibits", "Petabytes", "Pebibytes",
+            "Exabits", "Exbibits", "Exabytes", "Exbibytes",
+            "Zetabits", "Zebibits", "Zetabytes", "Zebibytes",
+            "Yottabits", "Yotbibits", "Yottabytes", "Yottbibytes"};
+
+    String[] Area = {"Square millimeters", "Square centimeters", "Square meters", "Hectares", "Square kilometers", "Square inches", "Square feet", "Square yards", "Acres", "Square miles"};
+
+    String[] Speed = {"Centimeters per second", "Meters per second", "Kilometers per hour", "Feet per second", "Miles per hour", "Knots", "Mach"};
+
+    String[] Time = {"Microseconds", "Milliseconds", "Seconds", "Minutes", "Hours", "Days", "Weeks", "Years"};
+
+    String[] Power = {"Watts", "Kilowatts", "Horsepower (US)", "Foot-pounds/minute", "BTUs/minute"};
+
+    String[] Pressure = {"Atmospheres", "Bars", "Kilopascals", "Millimeters of mercury", "Pascals", "Pounds per square inch"};
+
+    String[] Angle = {"Degrees", "Radians", "Gradians"};
+
+    /**************************************Calculator**************************************/
+
+    /* Percentage (%) */
     static double percentage(double n) {
         return n / 100;
     }
 
-    //x^y
-    //reciprocal 1/x (x^-1)
-    //sqr x^2
-    //10^x
+    /*
+    x^y
+    reciprocal 1/x (x^-1)
+    sqr x^2
+    10^x
+    */
     static double pow(double x, double y) {
         return Math.pow(x, y);
     }
 
-    //Square root of x
+    /* Square root of x */
     static double sqrt(double x) {
         return Math.sqrt(x);
     }
 
-    //Negative number
+    /* Negative number */
     static double neg(double x) {
         return -x;
     }
 
-    //Convert degrees to radians
+    /* Convert degrees to radians */
     static double deg2Rad(double x) {
         return Math.toRadians(x);
     }
 
-    //Convert radians to degrees
+    /* Convert radians to degrees */
     static double rad2Deg(double x) {
         return Math.toDegrees(x);
     }
 
-    //Common trigonometry
-    //sin, cos, tan
-    //isRadians: true if x is radians, false if x is degrees
+    /*
+    Common trigonometry
+    Such as: sin, cos, tan
+    isRadians: true if x is radians, false if x is degrees
+    */
     static double trigonometry(String t, double x, boolean isRadians) {
         double value = 0;
         if (!isRadians)
@@ -64,9 +130,11 @@ public class CoreFunctions {
         return value;
     }
 
-    //Common hyperbolic
-    //sinh, cosh, tanh
-    //isRadians: true if x is radians, false if x is degrees
+    /*
+    Common hyperbolic
+    Such as: sinh, cosh, tanh
+    isRadians: true if x is radians, false if x is degrees
+    */
     static double hyperbolic(String t, double x, boolean isRadians) {
         double value = 0;
         if (!isRadians)
@@ -85,35 +153,37 @@ public class CoreFunctions {
         return value;
     }
 
-    //The natural logarithm of x
+    /* The natural logarithm of x */
     static double log(double x) {
         return Math.log(x);
     }
 
-    //Exponential function
-    //The method returns the base of the natural logarithms, e, to the power of the argument.
+    /*
+    Exponential function
+    The method returns the base of the natural logarithms, e, to the power of the argument
+    */
     static double exp(double x) {
         return Math.exp(x);
     }
 
-    //The mathematical constant π
+    /* The mathematical constant π */
     static double pi() {
         return Math.PI;
     }
 
-    //Factorial of x
+    /* Factorial of x */
     static long factorial(int x) {
         if (x > 0)
             return x * factorial(x - 1);
         else return 1;
     }
 
-    //Convert from base to another base
+    /* Convert from base to another base */
     static String convertFromBaseToBase(String str, int fromBase, int toBase) {
         return Integer.toString(Integer.parseInt(str, fromBase), toBase);
     }
 
-    //The Bitwise Operators: And (&), Or (|), Not (~), Xor (^)
+    /* The Bitwise Operators: And (&), Or (|), Not (~), Xor (^) */
     static int not(int n) {
         return ~n;
     }
@@ -134,7 +204,7 @@ public class CoreFunctions {
         return value;
     }
 
-    //Difference between 2 dates
+    /* Difference between 2 dates */
     static String difference(String start, String stop) {
         String value = "";
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
@@ -160,7 +230,7 @@ public class CoreFunctions {
         return value;
     }
 
-    //date1 add or subtract date2
+    /* date1 add or subtract date2 */
     static String ChangeDay(String date1, String date2, char c) {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         Date d1 = null, d2 = null;
@@ -187,5 +257,36 @@ public class CoreFunctions {
             return null;
         }
         return value;
+    }
+
+    /**************************************Converter**************************************/
+
+    /* Get HTML source from link */
+    static String GetHTMLSource(String link) {
+        URL url;
+        try {
+            url = new URL(link);
+            return org.apache.commons.io.IOUtils.toString(url, "utf8");
+        } catch (MalformedURLException e) {
+            return null;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    /*Get the excange rates from website*/
+    double GetExchangeRate(String unit1, String unit2) {
+        String url = "https://free.currencyconverterapi.com/api/v6/convert?q=" + unit1 + "_" + unit2 + "&compact=y";
+        String content = GetHTMLSource(url);
+        Pattern pattern = Pattern.compile("([\\d.]+)");
+        Matcher matcher = pattern.matcher(content);
+        if (matcher.find())
+            return Double.parseDouble(matcher.group());
+        else return 0;
+    }
+
+    /*Convert array to list*/
+    List<String> ConvertArray2List(String[] array) {
+        return Arrays.asList(array);
     }
 }
