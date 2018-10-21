@@ -3,8 +3,13 @@ package vn.edu.itdlu.a1610207.calculator;
 import android.widget.TextView;
 
 public class ActionProcess {
-    public void actionPerformed(TextView equation, TextView current, String command) {
-        String currentNumber = current.getText().toString();
+    /**
+     * Perform an action when user pressed
+     */
+    public void actionPerformed(io.github.kexanie.library.MathView formula, TextView in, String command) {
+        String input = in.getText().toString();
+        int len = input.length();
+        String last = len > 0 ? input.substring(len - 1) : "";
         switch (command) {
             //Standard mode
             case "%":   //Percentage

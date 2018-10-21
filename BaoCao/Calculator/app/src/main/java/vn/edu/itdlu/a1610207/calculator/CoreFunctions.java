@@ -89,7 +89,6 @@ public class CoreFunctions {
      * Data converter
      * The most commonly used units of data storage capacity are the bit
      */
-
     String[] Data = {"Bits", "Bytes",
             "Kilobits", "Kibibits", "Kilobytes", "Kibibytes",
             "Megabits", "Mebibits", "Megabytes", "Mebibytes",
@@ -307,7 +306,7 @@ public class CoreFunctions {
     /**
      * Difference between 2 dates
      */
-    static String difference(String start, String stop) {
+    static String different(String start, String stop) {
         String value = "";
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         Date d1 = null, d2 = null;
@@ -335,7 +334,7 @@ public class CoreFunctions {
     /**
      * Date1 add or subtract date2
      */
-    static String ChangeDay(String date1, String date2, char c) {
+    static String changeDay(String date1, String date2, char c) {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         Date d1 = null, d2 = null;
         String value;
@@ -366,7 +365,7 @@ public class CoreFunctions {
     /**
      * Get HTML source from link
      */
-    static String GetHTMLSource(String link) {
+    static String getHTMLSource(String link) {
         URL url;
         try {
             url = new URL(link);
@@ -390,9 +389,9 @@ public class CoreFunctions {
     /**
      * Get the exchange rates from website
      */
-    double GetExchangeRate(String unit1, String unit2) {
+    double getExchangeRate(String unit1, String unit2) {
         String url = "https://free.currencyconverterapi.com/api/v6/convert?q=" + unit1 + "_" + unit2 + "&compact=y";
-        String content = GetHTMLSource(url);
+        String content = getHTMLSource(url);
         Pattern pattern = Pattern.compile("([\\d.]+)");
         Matcher matcher = pattern.matcher(content);
         if (matcher.find())
