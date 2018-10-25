@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     Button btRun, btXoa;
     Button btCong, btTru, btNhan, btChia;
     EditText etTuSoA, etMauSoA, etTuSoB, etMauSoB;
+    int tuSoA, tuSoB, mauSoA, mauSoB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,20 @@ public class MainActivity extends AppCompatActivity {
         etMauSoB = (EditText) findViewById(R.id.etMauSoB);
     }
 
+    boolean layDuLieu() {
+        try {
+            tuSoA = Integer.parseInt(this.etTuSoA.getText().toString());
+            mauSoA = Integer.parseInt(this.etMauSoA.getText().toString());
+            tuSoB = Integer.parseInt(this.etTuSoB.getText().toString());
+            mauSoB = Integer.parseInt(this.etMauSoB.getText().toString());
+            if (mauSoA == 0 || mauSoB == 0) throw new Exception();
+        } catch (Exception e) {
+            tvHienThi.setText("Nhập sai!!!");
+            return false;
+        }
+        return true;
+    }
+
     public void btXoa_onClick(View v) {
         etMauSoA.setText("");
         etTuSoA.setText("");
@@ -44,49 +59,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btRun_onClick(View v) {
-        int tuSoA = Integer.parseInt(this.etTuSoA.getText().toString());
-        int mauSoA = Integer.parseInt(this.etMauSoA.getText().toString());
-        int tuSoB = Integer.parseInt(this.etTuSoB.getText().toString());
-        int mauSoB = Integer.parseInt(this.etMauSoB.getText().toString());
-        PhanSo phanSoA = new PhanSo(tuSoA, mauSoA);
-        PhanSo phanSoB = new PhanSo(tuSoB, mauSoB);
-        phanSoA.rutGonPhanSo();
-        phanSoB.rutGonPhanSo();
-        this.tvHienThi.setText("Phân số tối giản của phân số A : " + phanSoA.xuatPhanSo());
-        this.tvHienThi.setText("Phân số tối giản của phân số B : " + phanSoB.xuatPhanSo());
+        if (layDuLieu()) {
+            PhanSo phanSoA = new PhanSo(tuSoA, mauSoA);
+            PhanSo phanSoB = new PhanSo(tuSoB, mauSoB);
+            phanSoA.rutGonPhanSo();
+            phanSoB.rutGonPhanSo();
+            etTuSoA.setText("" + phanSoA.tuSo);
+            etMauSoA.setText("" + phanSoA.mauSo);
+            etTuSoB.setText("" + phanSoB.tuSo);
+            etMauSoB.setText("" + phanSoB.mauSo);
+            tvHienThi.setText("Đã rút gọn 2 phân số");
+        }
     }
 
     public void btCong_onClick(View v) {
-        int tuSo = Integer.parseInt(this.etTuSoA.getText().toString());
-        int mauSo = Integer.parseInt(this.etMauSoA.getText().toString());
-        PhanSo kq = new PhanSo(tuSo, mauSo);
-        kq = kq.congPhanSo(new PhanSo(Integer.parseInt(this.etTuSoB.getText().toString()), Integer.parseInt(this.etMauSoB.getText().toString())));
-        tvHienThi.setText("Kết quả phép cộng 2 phân số trên là : " + kq.xuatPhanSo());
+        if (layDuLieu()) {
+            PhanSo kq = new PhanSo(tuSoA, mauSoA);
+            kq = kq.congPhanSo(new PhanSo(tuSoB, mauSoB));
+            tvHienThi.setText("Kết quả phép cộng 2 phân số trên là : " + kq.xuatPhanSo());
+        }
     }
 
     public void btTru_onClick(View v) {
-        int tuSo = Integer.parseInt(this.etTuSoA.getText().toString());
-        int mauSo = Integer.parseInt(this.etMauSoA.getText().toString());
-        PhanSo kq = new PhanSo(tuSo, mauSo);
-        kq = kq.truPhanSo(new PhanSo(Integer.parseInt(this.etTuSoB.getText().toString()), Integer.parseInt(this.etMauSoB.getText().toString())));
-        tvHienThi.setText("Kết quả phép trừ 2 phân số trên là : " + kq.xuatPhanSo());
+        if (layDuLieu()) {
+            PhanSo kq = new PhanSo(tuSoA, mauSoA);
+            kq = kq.truPhanSo(new PhanSo(tuSoB, mauSoB));
+            tvHienThi.setText("Kết quả phép trừ 2 phân số trên là : " + kq.xuatPhanSo());
+        }
     }
 
     public void btNhan_onClick(View v) {
-        int tuSo = Integer.parseInt(this.etTuSoA.getText().toString());
-        int mauSo = Integer.parseInt(this.etMauSoA.getText().toString());
-        PhanSo kq = new PhanSo(tuSo, mauSo);
-        kq = kq.nhanPhanSo(new PhanSo(Integer.parseInt(this.etTuSoB.getText().toString()), Integer.parseInt(this.etMauSoB.getText().toString())));
-        tvHienThi.setText("Kết quả phép nhân 2 phân số trên là : " + kq.xuatPhanSo());
+        if (layDuLieu()) {
+            PhanSo kq = new PhanSo(tuSoA, mauSoA);
+            kq = kq.nhanPhanSo(new PhanSo(tuSoB, mauSoB));
+            tvHienThi.setText("Kết quả phép nhân 2 phân số trên là : " + kq.xuatPhanSo());
+        }
     }
 
     public void btChia_onClick(View v) {
-        int tuSo = Integer.parseInt(this.etTuSoA.getText().toString());
-        int mauSo = Integer.parseInt(this.etMauSoA.getText().toString());
-        PhanSo kq = new PhanSo(tuSo, mauSo);
-        kq = kq.chiaPhanSo(new PhanSo(Integer.parseInt(this.etTuSoB.getText().toString()), Integer.parseInt(this.etMauSoB.getText().toString())));
-        if (kq != null)
+        if (layDuLieu()) {
+            PhanSo kq = new PhanSo(tuSoA, mauSoA);
+            kq = kq.chiaPhanSo(new PhanSo(tuSoB, mauSoB));
             tvHienThi.setText("Kết quả phép chia 2 phân số trên là : " + kq.xuatPhanSo());
-        else tvHienThi.setText("Không thể thực hiện phép chia cho 0");
+        }
     }
 }
