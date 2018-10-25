@@ -3,28 +3,61 @@ package vn.edu.itdlu.a1610207.calculator;
 import android.widget.TextView;
 
 public class ActionProcess {
+
     /**
-     * Perform an action when user pressed
+     * Check if the equation is completed
+     * true, you can change the last operator
+     * false, input string and operator will be joined
      */
-    public void actionPerformed(io.github.kexanie.library.MathView formula, TextView in, String command) {
-        String input = in.getText().toString();
-        int len = input.length();
-        String last = len > 0 ? input.substring(len - 1) : "";
+    boolean completed;
+
+    /**
+     * Perform an action when user press
+     */
+    public void actionPerformed(TextView expression, TextView input, String command) {
+        CoreFunctions fn = new CoreFunctions();
+        String in = input.getText().toString();
+        String exp = expression.getText().toString();
         switch (command) {
+
             //Standard mode
+
             case "%":   //Percentage
+                exp += in + "/100";
+                completed = true;
+                in = "" + (Double.parseDouble(in) / 100);
                 break;
             case "√":   //Square root
+                exp += "sqrt(" + in + ")";
+                completed = true;
+                in = "" + fn.sqrt(Double.parseDouble(in));
                 break;
             case "x²":  //x squared
+                exp += "sqr(" + in + ")";
+                completed = true;
+                in = "" + fn.pow(Double.parseDouble(in), 2);
                 break;
             case "⅟":   //Multiplicative inverse
+                if (in == "0" || Double.parseDouble(in) == 0)
+                    in = "Cannot divide by zero";
+                else {
+                    exp += "1/(" + in + ")";
+                    in = "" + fn.pow(Double.parseDouble(in), -1);
+                }
+                completed = true;
                 break;
             case "_C":  //Delete all
+                exp = "";
+                in = "0";
+                //Process other variables here ...
                 break;
             case "CE":  //Delete current number
+                in = "0";
                 break;
             case "←":   //Backspace
+                if (in == "0" || Double.parseDouble(in) == 0)
+                    if (!completed)
+                        in = in.substring(0, in.length() - 1);
                 break;
             case "0":   //Number
             case "1":
@@ -36,20 +69,42 @@ public class ActionProcess {
             case "7":
             case "8":
             case "9":
+                if (completed) {
+                    actionPerformed(expression, input, "_C");
+                }
+                completed = false;
+                in += command;
                 break;
             case "÷":   //Division
             case "×":   //Multiplication
-                break;
             case "-":   //Minus
             case "+":   //Plus
+                if (exp.matches("['+']|['\\-']|['*']|['/']")) {
+                    actionPerformed(expression, input, "=");
+                    if (exp.substring(exp.length() - 1).matches("['+']|['\\-']|['*']|['/']")) {
+                        exp = exp.substring(0, in.length() - 1) + " " + command + " ";
+                    } else exp += in + " " + command + " ";
+                }
                 break;
             case "±":   //Negative
+                if (completed) {
+                    exp = "negate(" + in + ")";
+                }
+                in = "" + fn.neg(Double.parseDouble(in));
                 break;
             case ".":   //Decimal
+                if (exp.substring(exp.length() - 1).matches("['+']|['\\-']|['*']|['/']")) {
+                    if (!in.contains(command))
+                        in = "0" + command;
+                } else in += command;
                 break;
             case "=":   //Equal
+                //Perform the calculation
+                completed = true;
                 break;
+
             //Scientific mode
+
             case "^":   //x to the power of y
                 break;
             case "10^": //Power of 10
@@ -73,7 +128,9 @@ public class ActionProcess {
                 break;
             case ")":   //CLose parenthesis
                 break;
+
             //Programmer mode
+
             case "xor": //The Bitwise Operators: And (&), Or (|), Not (~), Xor (^)
             case "or":
             case "and":
