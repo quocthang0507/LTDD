@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PhanSo</string>
+    <string name="hintTuSoA">Nhập tử số A</string>
+    <string name="hintMauSoA">Nhập mẫu số A</string>
+    <string name="hintTuSoB">Nhập tử số B</string>
+    <string name="hintMauSoB">Nhập mẫu số B</string>
+</resources>
