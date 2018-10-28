@@ -4,6 +4,8 @@ package vn.edu.itdlu.a1610207.calculator;
  * Date calculation
  */
 
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.Drawable;
 import android.widget.Spinner;
 
 import org.joda.time.DateTime;
@@ -22,21 +24,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CoreFunctions {
+
     String[] Currency =
-            {"AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT",
-                    "BGN", "BHD", "BIF", "BND", "BOB", "BRL", "BSD", "BTC", "BTN", "BWP", "BYN",
-                    "BYR", "BZD", "CAD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CUP", "CVE",
-                    "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "EUR", "FJD", "FKP",
-                    "GBP", "GEL", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK",
-                    "HTG", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY",
-                    "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP",
-                    "LKR", "LRD", "LSL", "LVL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT",
-                    "MOP", "MRO", "MUR", "MVR", "MWK", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO",
-                    "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG",
-                    "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD",
-                    "SHP", "SLL", "SOS", "SRD", "STD", "SYP", "SZL", "THB", "TJS", "TMT", "TND",
-                    "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USD", "UYU", "UZS", "VEF",
-                    "VND", "VUV", "WST", "XAF", "XCD", "XDR", "XOF", "XPF", "YER", "ZAR", "ZMW"};
+            {"AFN ؋", "ALL Lek", "AMD", "ANG ƒ", "AOA", "ARS $", "AUD $", "AWG ƒ", "AZN \u20BC", "BAM KM", "BBD $", "BDT",
+                    "BGN лв", "BHD", "BIF", "BND $", "BOB $b", "BRL R$", "BSD $", "BTC", "BTN", "BWP P", "BYN Br",
+                    "BYR", "BZD BZ$", "CAD $", "CDF", "CHF CHF", "CLP $", "CNY ¥", "COP $", "CRC ₡", "CUP ₱", "CVE",
+                    "CZK Kč", "DJF", "DKK kr", "DOP RD$", "DZD", "EGP £", "ERN", "ETB", "EUR €", "FJD $", "FKP £",
+                    "GBP £", "GEL", "GHS ¢", "GIP £", "GMD", "GNF", "GTQ Q", "GYD $", "HKD $", "HNL L", "HRK kn",
+                    "HTG", "HUF Ft", "IDR Rp", "ILS ₪", "INR ₹", "IQD", "IRR ﷼", "ISK kr", "JMD J$", "JOD", "JPY ¥",
+                    "KES", "KGS лв", "KHR ៛", "KMF", "KPW ₩", "KRW ₩", "KWD", "KYD $", "KZT лв", "LAK ₭", "LBP £",
+                    "LKR ₨", "LRD $", "LSL", "LVL", "LYD", "MAD", "MDL", "MGA", "MKD ден", "MMK", "MNT ₮",
+                    "MOP", "MRO", "MUR ₨", "MVR", "MWK", "MXN $", "MYR RM", "MZN MT", "NAD $", "NGN ₦", "NIO C$",
+                    "NOK kr", "NPR ₨", "NZD $", "OMR ﷼", "PAB B/.", "PEN S/.", "PGK", "PHP ₱", "PKR ₨", "PLN zł", "PYG Gs",
+                    "QAR ﷼", "RON lei", "RSD Дин.", "RUB \u20BD", "RWF", "SAR ﷼", "SBD $", "SCR ₨", "SDG", "SEK kr", "SGD $",
+                    "SHP £", "SLL", "SOS S", "SRD $", "STD", "SYP £", "SZL", "THB ฿", "TJS", "TMT", "TND",
+                    "TOP", "TRY ₺", "TTD TT$", "TWD NT$", "TZS", "UAH ₴", "UGX", "USD $", "UYU $U", "UZS лв", "VEF Bs",
+                    "VND ₫", "VUV", "WST", "XAF", "XCD $", "XDR", "XOF", "XPF", "YER ﷼", "ZAR R", "ZMW"};
 
     /**
      * Apply decimal format for double value
@@ -149,14 +152,14 @@ public class CoreFunctions {
      */
     String[] Angle = {"Degrees", "pi/180", "Radians", "1", "Gradians", "pi/200"};
 
-    /**************************************Calculator**************************************/
-
     /**
      * Percentage (%)
      */
     static double percentage(double n) {
         return n / 100;
     }
+
+    /**************************************Calculator**************************************/
 
     /**
      * x^y

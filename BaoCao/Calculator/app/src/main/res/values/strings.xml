@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Calculator</string>
+    <string name="group_1">Calculator</string>
+    <string name="cal_stand">Standard</string>
+    <string name="cal_scien">Scientific</string>
+    <string name="cal_prog">Programmer</string>
+    <string name="calc_date">Date Calculation</string>
+    <string name="group_2">Converter</string>
+    <string name="con_curr">Currency</string>
+    <string name="con_vol">Volume</string>
+    <string name="con_len">Length</string>
+    <string name="con_wei">Weight and Mass</string>
+    <string name="con_temp">Temperature</string>
+    <string name="con_ene">Energy</string>
+    <string name="con_area">Area</string>
+    <string name="con_spe">Speed</string>
+    <string name="con_time">Time</string>
+    <string name="con_pow">Power</string>
+    <string name="con_data">Data</string>
+    <string name="con_pre">Pressure</string>
+    <string name="con_ang">Angle</string>
+    <string name="about">About</string>
+    <string name="infinity">∞</string>
+    <string name="inverse">⅟x</string>
+    <string name="title">About...</string>
+    <string name="message">Author: La Quốc Thắng \r\nStudent ID: 1610207\r\nStudy at: Dalat University\r\n\nEmail 1: quocthang0507@gmail.com\r\nEmail 2: quocthang_0507@yahoo.com.vn\r\n"</string>
+    <string name="button">OK, Thank author a lot :)))</string>
 </resources>

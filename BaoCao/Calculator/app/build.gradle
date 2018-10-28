@@ -28,4 +28,5 @@ dependencies {
     implementation 'joda-time:joda-time:2.10'
     implementation 'org.apache.directory.studio:org.apache.commons.io:2.4'
     implementation project(':MathView')
+    implementation 'com.android.support:design:27.1.1'
 }
