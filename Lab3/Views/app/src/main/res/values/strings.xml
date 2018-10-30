@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Views</string>
+    <string name="clickHere">Click here</string>
+    <string name="writeHere">Write Here</string>
+    <string name="yourPassword">Your password</string>
+    <string name="enterPassword">Enter Password</string>
+    <string name="iphone">iPhone</string>
+    <string name="android">Android</string>
+    <string name="winMobile">Windows Mobile</string>
+    <string name="display">Display</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="toggle_on">Turn on</string>
+    <string name="toggle_off">Turn off</string>
+    <string name="rateMe">Rate Me</string>
+    <string name="submit">Submit</string>
+    <string name="result">Result : </string>
+    <string name="changeDate">Change Date</string>
+    <string name="currentDay">Current Date (M-D-YYYY) : </string>
+    <string name="changeTime">Change Time</string>
+    <string name="currentTime">Current Time (H:M) : </string>
+</resources>

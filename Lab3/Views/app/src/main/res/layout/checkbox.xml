@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <CheckBox
+        android:id="@+id/chk_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/iphone"
+        android:textSize="18sp" />
+
+    <CheckBox
+        android:id="@+id/chk_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/android"
+        android:textSize="18sp" />
+
+    <CheckBox
+        android:id="@+id/chk_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/winMobile"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btn_Display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/display"
+        android:textSize="18sp" />
+
+</LinearLayout>
