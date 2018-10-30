@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AnalogClock;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.DigitalClock;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -38,6 +40,8 @@ public class MainActivity extends Activity {
     int year, month, day;
     TimePicker timePicker;
     int hour, minute;
+    AnalogClock analogClock;
+    DigitalClock digitalClock;
 
     private DatePickerDialog.OnDateSetListener datePickerListener = new
             DatePickerDialog.OnDateSetListener() {
@@ -50,11 +54,27 @@ public class MainActivity extends Activity {
                     datePicker.init(year, month, day, null);
                 }
             };
+    private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int _minute) {
+            hour = hourOfDay;
+            minute = _minute;
+            textView.setText(new StringBuilder().append(pad(hour)).append(":").append(pad(minute)));
+            timePicker.setCurrentHour(hour);
+            timePicker.setCurrentMinute(minute);
+        }
+    };
+
+    private static String pad(int c) {
+        if (c >= 10)
+            return String.valueOf(c);
+        else return "0" + String.valueOf(c);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        switch (8) {
+        switch (10) {
             case 1:
                 setContentView(R.layout.button);
                 addListenerOnButton_Button();
@@ -92,9 +112,13 @@ public class MainActivity extends Activity {
                 break;
             case 9:
                 setContentView(R.layout.timepicker);
+                setCurrentTimeOnView();
+                addListenerOnButton_TimePicker();
                 break;
             case 10:
                 setContentView(R.layout.clock);
+                analogClock = findViewById(R.id.analog);
+                digitalClock = findViewById(R.id.digital);
                 break;
         }
     }
@@ -232,6 +256,7 @@ public class MainActivity extends Activity {
         });
     }
 
+    /*
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
@@ -240,6 +265,7 @@ public class MainActivity extends Activity {
         }
         return null;
     }
+    */
 
     public void setCurrentTimeOnView() {
         textView = findViewById(R.id.tv_Time);
@@ -253,7 +279,7 @@ public class MainActivity extends Activity {
     }
 
     public void addListenerOnButton_TimePicker() {
-        button=findViewById(R.id.btn_changeTime);
+        button = findViewById(R.id.btn_changeTime);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -263,10 +289,10 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    protected Dialog onCreateDialog(int id){
-        switch (id){
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
             case TIME_DIALOG_ID:
-                return new TimePickerDialog(this,timePickerListener,hour,minute,false);
+                return new TimePickerDialog(this, timePickerListener, hour, minute, false);
         }
         return null;
     }

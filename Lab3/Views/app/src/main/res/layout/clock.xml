@@ -4,4 +4,27 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/tv_analog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/analog"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <AnalogClock
+        android:id="@+id/analog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_digital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/digital"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <DigitalClock
+        android:id="@+id/digital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

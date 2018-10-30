@@ -19,4 +19,6 @@
     <string name="currentDay">Current Date (M-D-YYYY) : </string>
     <string name="changeTime">Change Time</string>
     <string name="currentTime">Current Time (H:M) : </string>
+    <string name="analog">Analog Clock</string>
+    <string name="digital">Digital Clock</string>
 </resources>

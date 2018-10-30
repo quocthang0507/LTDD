@@ -4,6 +4,13 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+    <Button
+        android:id="@+id/btn_changeTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/changeTime"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
     <TextView
         android:id="@+id/tv_currentTime"
         android:layout_width="wrap_content"
@@ -17,13 +24,6 @@
         android:layout_height="wrap_content"
         android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
-    <Button
-        android:id="@+id/btn_changeTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/changeTime"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TimePicker
         android:id="@+id/time_result"
