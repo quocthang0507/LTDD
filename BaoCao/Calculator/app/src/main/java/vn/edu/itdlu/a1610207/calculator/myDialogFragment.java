@@ -14,7 +14,7 @@ public class myDialogFragment extends android.app.DialogFragment {
         title = "About...";
         message = "Author: La Quốc Thắng \r\n" +
                 "Student ID: 1610207\r\n" +
-                "Study at: Dalat University\r\n"\n +
+                "Study at: Dalat University\r\n\n" +
                 "Email 1: quocthang0507@gmail.com\r\n" +
                 "Email 2: quocthang_0507@yahoo.com.vn\r\n";
         button = "OK, Thank author a lot :)))";

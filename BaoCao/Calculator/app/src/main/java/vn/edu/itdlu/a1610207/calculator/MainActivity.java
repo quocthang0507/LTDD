@@ -8,7 +8,9 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -16,18 +18,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     android.support.v7.widget.Toolbar toolbar;
+    ActionBar actionBar;
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
         map();
         addEventListener();
         setToolbar();
+        LayoutInflater.from(getApplicationContext()).inflate(R.layout.standard, frameLayout, true);
     }
 
     void map() {
-        drawerLayout = findViewById(R.id.drawer_layout);
+        frameLayout = findViewById(R.id.main_frame);
+        drawerLayout = findViewById(R.id.main);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
     }
@@ -35,6 +41,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     void addEventListener() {
         navigationView.setNavigationItemSelectedListener(this);
         //...
+    }
+
+    /**
+     * Set the toolbar as the action bar and add nav drawer button
+     */
+    void setToolbar() {
+        setSupportActionBar(toolbar);
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 
     /**
@@ -50,63 +66,83 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             //Calculator mode
             case R.id.cal_standard:
-                setToast("Standard nè, ahihi!!!", Toast.LENGTH_SHORT);
+                setToast("Standard Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.standard, frameLayout, true);
                 break;
             case R.id.cal_scientific:
-                setToast("Scientific nè, ahihi!!!", Toast.LENGTH_SHORT);
+                setToast("Scientific Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.scientific, frameLayout, true);
                 break;
             case R.id.cal_programmer:
-                setToast("Programmer nè, ahihi!!!", Toast.LENGTH_SHORT);
+                setToast("Programmer Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.programmer, frameLayout, true);
                 break;
             case R.id.cal_date:
-                setToast("Date Calculation nè, ahihi!!!", Toast.LENGTH_SHORT);
+                setToast("Date Calculation Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.datecalculation, frameLayout, true);
                 break;
 
             //Converter mode
             case R.id.con_currency:
+                setToast("Currency Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.currency, frameLayout, true);
                 break;
             case R.id.con_volume:
+                setToast("Volume Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.volume, frameLayout, true);
                 break;
             case R.id.con_length:
+                setToast("Length Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.length, frameLayout, true);
                 break;
             case R.id.con_weight:
+                setToast("Weight and Mass Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.weightandmass, frameLayout, true);
                 break;
             case R.id.con_temperature:
+                setToast("Temperature Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.temperature, frameLayout, true);
                 break;
             case R.id.con_energy:
+                setToast("Energy Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.energy, frameLayout, true);
                 break;
             case R.id.con_area:
+                setToast("Area Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.area, frameLayout, true);
                 break;
             case R.id.con_speed:
+                setToast("Speed Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.speed, frameLayout, true);
                 break;
             case R.id.con_time:
+                setToast("Time Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.time, frameLayout, true);
                 break;
             case R.id.con_power:
+                setToast("Power Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.power, frameLayout, true);
                 break;
             case R.id.con_data:
+                setToast("Data Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.data, frameLayout, true);
                 break;
             case R.id.con_pressure:
+                setToast("Pressure Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.pressure, frameLayout, true);
                 break;
             case R.id.con_angle:
+                setToast("Angle Converter Mode", Toast.LENGTH_SHORT);
+                LayoutInflater.from(getApplicationContext()).inflate(R.layout.angle, frameLayout, true);
                 break;
             case R.id.about:
                 DialogFragment dialogFragment = new myDialogFragment();
                 dialogFragment.show(getFragmentManager(), "about");
                 break;
             default:
-                break;
+                return false;
         }
         return true;
-    }
-
-    /**
-     * Set the toolbar as the action bar and add nav drawer button
-     */
-    void setToolbar() {
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 
     /**

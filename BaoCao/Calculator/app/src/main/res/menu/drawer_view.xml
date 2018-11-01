@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-->Name of Group1-->
-    <item
-        android:id="@+id/nav_standard"
-        android:title="@string/group_1"
-        android:tooltipText="@string/group_1" />
-
     <!-->Group of Calculator-->
     <group
         android:id="@+id/group1"
@@ -33,12 +27,6 @@
             android:title="@string/calc_date"
             android:tooltipText="@string/calc_date" />
     </group>
-
-    <!-->Name of Group2-->
-    <item
-        android:id="@+id/nav_converter"
-        android:title="@string/group_2"
-        android:tooltipText="@string/group_2" />
 
     <!-->Group of Converter-->
     <group
