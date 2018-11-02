@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_alertDialog"
+            android:title="Alert Dialog" />
+        <item
+            android:id="@+id/nav_gridView"
+            android:title="Grid View" />
+        <item
+            android:id="@+id/nav_imageButton"
+            android:title="Image Button" />
+        <item
+            android:id="@+id/nav_imageView"
+            android:title="Image View" />
+        <item
+            android:id="@+id/nav_linearLayout"
+            android:title="Linear Layout"/>
+        <item
+            android:id="@+id/nav_listView"
+            android:title="List View"/>
+        <item
+            android:id="@+id/nav_progressBar"
+            android:title="Progress Bar"/>
+        <item
+            android:id="@+id/nav_promptDialog"
+            android:title="Prompt Dialog"/>
+        <item
+            android:id="@+id/nav_relativeLayout"
+            android:title="Relative Layout"/>
+        <item
+            android:id="@+id/nav_tableLayout"
+            android:title="Table Layout"/>
+        <item
+            android:id="@+id/nav_toast"
+            android:title="Toast"/>
+    </group>
+</menu>
