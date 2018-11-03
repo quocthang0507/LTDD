@@ -19,8 +19,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_calculator" />
-                            <entry key="sourceFile" value="C:\Users\quoct\Downloads\icon\calculator.svg" />
+                            <entry key="height" value="19" />
+                            <entry key="outputName" value="ic_factorial" />
+                            <entry key="overrideSize" value="true" />
+                            <entry key="sourceFile" value="C:\Users\quoct\Downloads\icon\factorial.svg" />
+                            <entry key="width" value="23" />
                           </map>
                         </option>
                       </PersistentState>

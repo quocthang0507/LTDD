@@ -4,8 +4,6 @@ package vn.edu.itdlu.a1610207.calculator;
  * Date calculation
  */
 
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.drawable.Drawable;
 import android.widget.Spinner;
 
 import org.joda.time.DateTime;
@@ -200,24 +198,37 @@ public class CoreFunctions {
     }
 
     /**
-     * Common trigonometry
+     * Common trigonometric functions
      * Such as: sin, cos, tan
      * isRadians: true if x is radians, false if x is degrees
      */
-    static double trigonometry(String t, double x, boolean isRadians) {
-        double value = 0;
+    static double trigonometric(String t, double value, boolean isRadians) {
         if (!isRadians)
-            x = deg2Rad(x);
+            value = deg2Rad(value);
         switch (t) {
             case "sin":
-                value = Math.sin(x);
-                break;
+                return Math.sin(value);
             case "cos":
-                value = Math.cos(x);
-                break;
+                return Math.cos(value);
             case "tan":
-                value = Math.tan(x);
-                break;
+                return Math.tan(value);
+        }
+        return value;
+    }
+
+    /**
+     * Common inverse trigonometric functions
+     */
+    static double inverse_trigonometric(String t, double value, boolean isRadians) {
+        if (!isRadians)
+            value = deg2Rad(value);
+        switch (t) {
+            case "asin":
+                return Math.asin(value);
+            case "acos":
+                return Math.acos(value);
+            case "atan":
+                return Math.atan(value);
         }
         return value;
     }
