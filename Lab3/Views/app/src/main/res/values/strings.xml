@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Views</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_button">activity_button</string>
     <string name="clickHere">Click here</string>
     <string name="writeHere">Write Here</string>
     <string name="yourPassword">Your password</string>
@@ -21,4 +28,13 @@
     <string name="currentTime">Current Time (H:M) : </string>
     <string name="analog">Analog Clock</string>
     <string name="digital">Digital Clock</string>
+    <string name="title_activity_textbox">activity_textbox</string>
+    <string name="title_activity_password">activity_password</string>
+    <string name="title_activity_checkbox">activity_checkbox</string>
+    <string name="title_activity_radiobutton">activity_radiobutton</string>
+    <string name="title_activity_toggle">activity_toggle</string>
+    <string name="title_activity_ratingbar">activity_ratingbar</string>
+    <string name="title_activity_datepicker">activity_datepicker</string>
+    <string name="title_activity_timepicker">activity_timepicker</string>
+    <string name="title_activity_clock">activity_clock</string>
 </resources>

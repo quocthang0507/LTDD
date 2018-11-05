@@ -9,13 +9,56 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity_button"
+            android:label="@string/title_activity_button"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_textbox"
+            android:label="@string/title_activity_textbox"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_password"
+            android:label="@string/title_activity_password"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_checkbox"
+            android:label="@string/title_activity_checkbox"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_radiobutton"
+            android:label="@string/title_activity_radiobutton"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_toggle"
+            android:label="@string/title_activity_toggle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_ratingbar"
+            android:label="@string/title_activity_ratingbar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_datepicker"
+            android:label="@string/title_activity_datepicker"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_timepicker"
+            android:label="@string/title_activity_timepicker"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_clock"
+            android:label="@string/title_activity_clock"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

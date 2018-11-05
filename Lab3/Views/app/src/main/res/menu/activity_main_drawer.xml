@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_button"
+            android:title="Button" />
+        <item
+            android:id="@+id/nav_textbox"
+            android:title="Textbox" />
+        <item
+            android:id="@+id/nav_password"
+            android:title="Password" />
+        <item
+            android:id="@+id/nav_checkbox"
+            android:title="CheckBox" />
+        <item
+            android:id="@+id/nav_radiobutton"
+            android:title="RadioButton" />
+        <item
+            android:id="@+id/nav_togglebutton"
+            android:title="ToggleButton" />
+        <item
+            android:id="@+id/nav_ratingbar"
+            android:title="Rangting Bar" />
+        <item
+            android:id="@+id/nav_datepicker"
+            android:title="Date Picker" />
+        <item
+            android:id="@+id/nav_timepicker"
+            android:title="Time Picker" />
+        <item
+            android:id="@+id/nav_clock"
+            android:title="Clock" />
+    </group>
+
+</menu>

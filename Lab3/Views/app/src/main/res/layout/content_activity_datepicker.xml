@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity_datepicker"
+    tools:showIn="@layout/activity_datepicker">
 
     <Button
-        android:id="@+id/btn_changeTime"
+        android:id="@+id/btn_changeDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/changeTime"
+        android:text="@string/changeDate"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TextView
-        android:id="@+id/tv_currentTime"
+        android:id="@+id/tv_currentDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/currentTime"
+        android:text="@string/currentDay"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TextView
-        android:id="@+id/tv_Time"
+        android:id="@+id/tv_Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
-    <TimePicker
-        android:id="@+id/time_result"
+    <DatePicker
+        android:id="@+id/date_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
