@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/Intent_no_explicit"
+            android:title="@string/no_explicit" />
+        <item
+            android:id="@+id/Intent_explicit"
+            android:title="@string/explicit" />
+    </group>
+
+</menu>

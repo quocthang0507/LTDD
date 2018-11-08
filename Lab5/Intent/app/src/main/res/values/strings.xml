@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Intent</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="no_explicit">Intent không tường minh</string>
+    <string name="explicit">Intent tường minh</string>
+    <string name="title_activity_intent_noexplicit">activity_intent_noexplicit</string>
+    <string name="title_activity_intent_explicit">activity_intent_explicit</string>
+    <string name="intent_eg">Intent Example</string>
+    <string name="browser">Start Browser</string>
+    <string name="phone">Start Phone</string>
+    <string name="title_activity_explicit_1">activity_explicit_1</string>
+    <string name="title_activity_edittitle">activity_edittitle</string>
+</resources>
