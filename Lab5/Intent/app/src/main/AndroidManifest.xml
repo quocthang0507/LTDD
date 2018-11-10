@@ -30,7 +30,7 @@
         <activity
             android:name=".activity_edittitle"
             android:label="@string/title_activity_edittitle"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

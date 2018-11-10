@@ -15,4 +15,7 @@
     <string name="phone">Start Phone</string>
     <string name="title_activity_explicit_1">activity_explicit_1</string>
     <string name="title_activity_edittitle">activity_edittitle</string>
+    <string name="title_activity_camera">activity_camera</string>
+    <string name="camera">Intent Camera</string>
+    <string name="gallery">Gallery</string>
 </resources>

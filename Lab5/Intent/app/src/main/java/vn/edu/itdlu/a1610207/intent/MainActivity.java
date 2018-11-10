@@ -2,9 +2,7 @@ package vn.edu.itdlu.a1610207.intent;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,10 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +72,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.Intent_no_explicit) {
-            Intent intent = new Intent(MainActivity.this, activity_intent_noexplicit.class);
+            intent = new Intent(MainActivity.this, activity_intent_noexplicit.class);
             startActivity(intent);
         } else if (id == R.id.Intent_explicit) {
-            Intent intent = new Intent(MainActivity.this, activity_intent_explicit.class);
+            intent = new Intent(MainActivity.this, activity_intent_explicit.class);
+            startActivity(intent);
+        } else if (id == R.id.Intent_Camera) {
+            intent = new Intent("android.media.action.IMAGE_CAPTURE");
             startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

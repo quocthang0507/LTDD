@@ -6,10 +6,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/Intent_no_explicit"
+            android:icon="@drawable/ic_menu_gallery"
             android:title="@string/no_explicit" />
         <item
             android:id="@+id/Intent_explicit"
+            android:icon="@drawable/ic_menu_gallery"
             android:title="@string/explicit" />
+        <item
+            android:id="@+id/Intent_Camera"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/camera"/>
     </group>
 
 </menu>
