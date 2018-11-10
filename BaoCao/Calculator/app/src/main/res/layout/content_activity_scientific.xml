@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_scientific"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,7 +14,7 @@
     <io.github.kexanie.library.MathView
         android:id="@+id/formula_1"
         style="@style/MyMathView"
-        engine="KaTeX" />
+        engine="MathJax" />
 
     <TextView
         android:id="@+id/formula_2"
@@ -28,9 +29,7 @@
         android:text="0"
         android:textSize="@dimen/display_text_size" />
 
-    <LinearLayout
-        style="@style/MyLinearLayout"
-        android:visibility="visible">
+    <LinearLayout android:id="@+id/row1_shift1" style="@style/MyLinearLayout" android:visibility="visible">
 
         <ImageButton
             android:id="@+id/btn_square"
@@ -59,9 +58,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/MyLinearLayout"
-        android:visibility="visible">
+    <LinearLayout android:id="@+id/row2_shift1" style="@style/MyLinearLayout" android:visibility="visible">
 
         <ImageButton
             android:id="@+id/btn_sqrt"
@@ -89,9 +86,7 @@
             android:text="Mod" />
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/MyLinearLayout"
-        android:visibility="gone">
+    <LinearLayout android:id="@+id/row1_shift2" style="@style/MyLinearLayout" android:visibility="gone">
 
         <ImageButton
             android:id="@+id/btn_cubic"
@@ -120,7 +115,7 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/MyLinearLayout" android:visibility="gone">
+    <LinearLayout android:id="@+id/row2_shift2" style="@style/MyLinearLayout" android:visibility="gone">
 
         <ImageButton
             android:id="@+id/btn_inverse"
@@ -132,20 +127,20 @@
             style="@style/MyButton"
             android:src="@drawable/ic_ex" />
 
-        <ImageButton
+        <Button
             android:id="@+id/btn_ln"
             style="@style/MyButton"
-            android:src="@drawable/ic_ln" />
+            android:text="ln" />
 
-        <ImageButton
+        <Button
             android:id="@+id/btn_dms"
             style="@style/MyButton"
-            android:src="@drawable/ic_dms" />
+            android:text="dms" />
 
-        <ImageButton
+        <Button
             android:id="@+id/btn_deg"
             style="@style/MyButton"
-            android:src="@drawable/ic_deg" />
+            android:text="deg" />
     </LinearLayout>
 
     <LinearLayout style="@style/MyLinearLayout">

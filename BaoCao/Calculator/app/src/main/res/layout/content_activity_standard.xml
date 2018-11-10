@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_standard"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:ignore="HardcodedText"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity_standard"
+    tools:ignore="HardcodedText"
     tools:showIn="@layout/activity_standard">
 
     <io.github.kexanie.library.MathView
         android:id="@+id/formula_1"
         style="@style/MyMathView"
-        engine="KaTeX" />
+        engine="MathJax" />
 
     <TextView
         android:id="@+id/formula_2"

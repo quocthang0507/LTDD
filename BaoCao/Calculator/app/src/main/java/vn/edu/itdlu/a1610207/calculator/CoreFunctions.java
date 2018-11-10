@@ -16,8 +16,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,7 +44,8 @@ public class CoreFunctions {
     /**
      * Apply decimal format for double value
      */
-    DecimalFormat decimalFormat = new DecimalFormat(".######");
+    String pattern = ".#########";
+    Locale locale = Locale.US;
 
     /**
      * Length converter
@@ -150,12 +153,6 @@ public class CoreFunctions {
      */
     String[] Angle = {"Degrees", "pi/180", "Radians", "1", "Gradians", "pi/200"};
 
-    /**
-     * Percentage (%)
-     */
-    static double percentage(double n) {
-        return n / 100;
-    }
 
     /**************************************Calculator**************************************/
 
@@ -164,37 +161,52 @@ public class CoreFunctions {
      * reciprocal 1/x (x^-1)
      * sqr x^2
      * 10^x
+     * e^x
      */
-    static double pow(double x, double y) {
-        return Math.pow(x, y);
+    Object pow(double x, double y) {
+        return fixType(Math.pow(x, y));
+    }
+
+    /**
+     * Percentage (%)
+     */
+    Object percentage(double n) {
+        return fixType(n / 100);
     }
 
     /**
      * Square root of x
      */
-    static double sqrt(double x) {
-        return Math.sqrt(x);
+    Object sqrt(double x) {
+        return fixType(Math.sqrt(x));
+    }
+
+    /**
+     * nth root of x
+     */
+    Object nroot(double x, double n) {
+        return pow(x, 1 / n);
     }
 
     /**
      * Negative number
      */
-    static double neg(double x) {
-        return -x;
+    Object neg(double x) {
+        return fixType(-x);
     }
 
     /**
      * Convert degrees to radians
      */
-    static double deg2Rad(double x) {
-        return Math.toRadians(x);
+    Object deg2Rad(double x) {
+        return fixType(Math.toRadians(x));
     }
 
     /**
      * Convert radians to degrees
      */
-    static double rad2Deg(double x) {
-        return Math.toDegrees(x);
+    Object rad2Deg(double x) {
+        return fixType(Math.toDegrees(x));
     }
 
     /**
@@ -202,9 +214,9 @@ public class CoreFunctions {
      * Such as: sin, cos, tan
      * isRadians: true if x is radians, false if x is degrees
      */
-    static double trigonometric(String t, double value, boolean isRadians) {
+    Object trigonometric(String t, double value, boolean isRadians) {
         if (!isRadians)
-            value = deg2Rad(value);
+            value = (double) deg2Rad(value);
         switch (t) {
             case "sin":
                 return Math.sin(value);
@@ -213,15 +225,15 @@ public class CoreFunctions {
             case "tan":
                 return Math.tan(value);
         }
-        return value;
+        return fixType(value);
     }
 
     /**
      * Common inverse trigonometric functions
      */
-    static double inverse_trigonometric(String t, double value, boolean isRadians) {
+    Object inverse_trigonometric(String t, double value, boolean isRadians) {
         if (!isRadians)
-            value = deg2Rad(value);
+            value = (double) deg2Rad(value);
         switch (t) {
             case "asin":
                 return Math.asin(value);
@@ -230,7 +242,7 @@ public class CoreFunctions {
             case "atan":
                 return Math.atan(value);
         }
-        return value;
+        return fixType(value);
     }
 
     /**
@@ -238,10 +250,10 @@ public class CoreFunctions {
      * Such as: sinh, cosh, tanh
      * isRadians: true if x is radians, false if x is degrees
      */
-    static double hyperbolic(String t, double x, boolean isRadians) {
+    Object hyperbolic(String t, double x, boolean isRadians) {
         double value = 0;
         if (!isRadians)
-            x = deg2Rad(x);
+            x = (double) deg2Rad(x);
         switch (t) {
             case "sinh":
                 value = Math.sinh(x);
@@ -253,35 +265,71 @@ public class CoreFunctions {
                 value = Math.tanh(x);
                 break;
         }
-        return value;
+        return fixType(value);
     }
 
     /**
-     * The natural logarithm of x
+     * The natural logarithm (base e) of a double value
      */
-    static double log(double x) {
-        return Math.log(x);
+    Object ln(double x) {
+        return fixType(Math.log(x));
+    }
+
+    /**
+     * The base 10 logarithm of a double value
+     */
+    Object log10(double x) {
+        return fixType(Math.log10(x));
     }
 
     /**
      * Exponential function
      * The method returns the base of the natural logarithms, e, to the power of the argument
      */
-    static double exp(double x) {
-        return Math.exp(x);
+    Object exp(double x) {
+        return fixType(Math.exp(x));
+    }
+
+    /**
+     * Convert decimal degrees to Degrees Minutes Seconds
+     */
+    String dms(double dd) {
+        int d = (int) dd;
+        int m = (int) ((dd - d) * 60);
+        int s = (int) ((dd - d - m / 60) * 3600);
+        return String.format("{0}°{1}'{2}\"", d, m, s);
+    }
+
+    /**
+     * Convert Degrees Minutes Seconds to decimal degrees
+     */
+    double dd(String dms) {
+        int d, m, s;
+        d = Integer.parseInt(dms.substring(0, dms.indexOf("°") - 1));
+        m = Integer.parseInt(dms.substring(dms.indexOf("°") + 1, dms.indexOf("'") - 1));
+        s = Integer.parseInt(dms.substring(dms.indexOf("'") + 1, dms.indexOf("\"") - 1));
+        double decimal = ((m * 60) + s) / 3600;
+        return d + decimal;
     }
 
     /**
      * The mathematical constant π
      */
-    static double pi() {
-        return Math.PI;
+    double pi() {
+        return format(Math.PI);
+    }
+
+    /**
+     * The mathematical constant e
+     */
+    double e() {
+        return Math.E; //return exp(1.0);
     }
 
     /**
      * Factorial of x
      */
-    static long factorial(int x) {
+    long factorial(int x) {
         if (x > 0)
             return x * factorial(x - 1);
         else return 1;
@@ -290,18 +338,18 @@ public class CoreFunctions {
     /**
      * Convert from base to another base
      */
-    static String convertFromBaseToBase(String str, int fromBase, int toBase) {
+    String convertFromBaseToBase(String str, int fromBase, int toBase) {
         return Integer.toString(Integer.parseInt(str, fromBase), toBase);
     }
 
     /**
      * The Bitwise Operators: And (&), Or (|), Not (~), Xor (^)
      */
-    static int not(int n) {
+    int not(int n) {
         return ~n;
     }
 
-    static long bitwise(long a, long b, String t) {
+    long bitwise(long a, long b, String t) {
         long value = 0;
         switch (t) {
             case "and":
@@ -320,7 +368,7 @@ public class CoreFunctions {
     /**
      * Difference between 2 dates
      */
-    static String different(String start, String stop) {
+    String different(String start, String stop) {
         String value = "";
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         Date d1 = null, d2 = null;
@@ -348,7 +396,7 @@ public class CoreFunctions {
     /**
      * Date1 add or subtract date2
      */
-    static String changeDay(String date1, String date2, char c) {
+    String changeDay(String date1, String date2, char c) {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         Date d1 = null, d2 = null;
         String value;
@@ -379,7 +427,7 @@ public class CoreFunctions {
     /**
      * Get HTML source from link
      */
-    static String getHTMLSource(String link) {
+    String getHTMLSource(String link) {
         URL url;
         try {
             url = new URL(link);
@@ -394,10 +442,23 @@ public class CoreFunctions {
     /**************************************Converter**************************************/
 
     /**
+     * Try to fix proper type of value
+     */
+    Object fixType(double value) {
+        double decimal = value - (int) value;
+        if (decimal == 0f)
+            return (int) value;
+        else return format(value);
+    }
+
+    /**
      * Return a string whose value was formatted by decimalFormat
      */
-    String format(double value) {
-        return decimalFormat.format(value);
+    double format(double value) {
+        DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
+        decimalFormat.applyPattern(pattern);
+        String temp = decimalFormat.format(value);
+        return Double.parseDouble(temp);
     }
 
     /**
@@ -416,7 +477,7 @@ public class CoreFunctions {
     /**
      * Convert string to double, especially if it have power symbol
      */
-    double string2Double(String string) {
+    Object string2Double(String string) {
         if (string.contains("^")) {
             String[] temp = string.split("^");
             double p1 = Double.parseDouble(temp[0]);
@@ -471,16 +532,16 @@ public class CoreFunctions {
     /**
      * Other unit converter function
      */
-    double otherConverter(String[] array, int id1, double value, int id2) {
+    Object otherConverter(String[] array, int id1, double value, int id2) {
         if (id1 == id2)
             return value;
         else {
             //1 unit of id1 = ? unit of base
-            double base1 = string2Double(array[id1 + 1]);
+            double base1 = (double) string2Double(array[id1 + 1]);
             //1 unit of id2 = ? unit of base
-            double base2 = string2Double(array[id2 + 1]);
+            double base2 = (double) string2Double(array[id2 + 1]);
             //Get crosshair value
-            return base1 / base2;
+            return fixType(base1 / base2);
         }
     }
 }
