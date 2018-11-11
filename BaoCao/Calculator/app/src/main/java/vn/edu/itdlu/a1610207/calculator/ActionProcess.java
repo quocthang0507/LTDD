@@ -6,71 +6,77 @@ import io.github.kexanie.library.MathView;
 
 public class ActionProcess {
 
-    /**
-     * Check if the equation is completed
-     * true, you can change the last operator
-     * false, input string and operator will be joined
-     */
-    boolean completed = false;
-
     public ActionProcess() {
     }
 
     /**
      * Perform an action when user press
      */
-    public void actionPerformed(MathView formula, TextView expression, TextView input, String command) {
+    public void actionPerformed(MathView formula, TextView expression, TextView input, String command, boolean completed) {
         CoreFunctions fn = new CoreFunctions();
         String in = input.getText().toString();
         String exp = expression.getText().toString();
-        String fo = formula.getText() == null ? "" : formula.getText();
-        String pattern = "['+']|['-']|['*']|['/']";
-        String temp;
+        String pattern = "['+']|['-']|['*']|['/']|['^']";
+        String temp = "";
         if (exp.matches(pattern)) {
-            if (exp.substring(exp.length() - 1).matches(pattern))
-                temp = "";
-            else
+            if (!exp.substring(exp.length() - 1).matches(pattern)) {
                 for (int i = exp.length() - 1; i >= 0; i--)
                     if (Character.toString(exp.charAt(i)).matches(pattern)) {
                         temp = exp.substring(i + 1, exp.length() - 1);
+                        exp = exp.substring(0, i - 1);
+                        break;
                     }
-        } else temp = "";
+            } else temp = in;
+        }
         switch (command) {
 
             //Standard mode
 
             case "btn_percent":   //Percentage
-                exp += in + "/100";
-                fo += "$$" + in + "\\%$$";
-                completed = true;
-                in = "" + (Double.parseDouble(in) / 100);
+                if (temp.equals("")) {
+                    exp = in + "/100";
+                    in = "" + (Double.parseDouble(in) / 100);
+                } else {
+                    exp += temp + "/100";
+                    actionPerformed(formula, expression, input, "btn_equal", false);
+                }
                 break;
             case "btn_sqrt":   //Square root
-                exp += "sqrt(" + in + ")";
-                fo += "$$\\sqrt{" + in + "}$$";
-                completed = true;
-                in = "" + fn.sqrt(Double.parseDouble(in));
+                if (temp.equals("")) {
+                    exp = "sqrt(" + in + ")";
+                    in = "" + fn.sqrt(Double.parseDouble(in));
+                } else {
+                    exp += "sqrt(" + temp + ")";
+                    actionPerformed(formula, expression, input, "btn_equal", false);
+                }
                 break;
             case "btn_square":  //x squared
-                exp += "sqr(" + in + ")";
-                fo += in + "^{2}";
+                if (temp.equals("")) {
+                    exp = "sqr(" + in + ")";
+                    in = "" + fn.pow(Double.parseDouble(in), 2);
+                } else {
+                    exp += "sqr(" + temp + ")";
+                    actionPerformed(formula, expression, input, "btn_equal", false);
+                }
                 completed = true;
-                in = "" + fn.pow(Double.parseDouble(in), 2);
                 break;
             case "btn_inverse":   //Multiplicative inverse
                 if (in.equals("0"))
                     in = "Cannot divide by zero";
                 else {
-                    exp += "1/(" + in + ")";
-                    fo += "$$\\frac{1}{" + in + "}$$";
-                    in = "" + fn.pow(Double.parseDouble(in), -1);
+                    if (temp.equals("")) {
+                        exp = "1/(" + in + ")";
+                        in = "" + fn.pow(Double.parseDouble(in), -1);
+                    } else {
+                        exp += "1/(" + temp + ")";
+                        actionPerformed(formula, expression, input, "btn_equal", false);
+                    }
                 }
                 completed = true;
                 break;
             case "btn_C":  //Delete all
                 exp = "";
                 in = "0";
-                fo = "";
                 //Process other variables here ...
                 break;
             case "btn_CE":  //Delete current number
@@ -80,6 +86,7 @@ public class ActionProcess {
                 if (!in.equals("0"))
                     if (!completed)
                         in = in.substring(0, in.length() - 1);
+                    else in = "0";
                 if (in.equals(""))
                     in = "0";
                 break;
@@ -94,46 +101,43 @@ public class ActionProcess {
             case "btn_8":
             case "btn_9":
                 if (completed) {
-                    actionPerformed(formula, expression, input, "CE");
+                    actionPerformed(formula, expression, input, "btn_C", false);
                 }
-                completed = false;
-                if (in.equals("0")) in = command.split("_")[1];
-                else in += command.split("_")[1];
+                if (temp.equals("0")) in = command.split("_")[1];
+                else if(!temp.equals("")) in += command.split("_")[1];
                 break;
             case "btn_div":   //Division
             case "btn_mul":   //Multiplication
             case "btn_minus":   //Minus
             case "btn_plus":   //Plus
-                if (exp.matches("['+']|['-']|['*']|['/']|['^']")) {
-                    actionPerformed(formula, expression, input, "=");
-                    if (exp.substring(exp.length() - 1).matches("['+']|['-']|['*']|['/']|['^']")) {
+                if (!temp.equals("")) {
+                    actionPerformed(formula, expression, input, "=", true);
+                    if (temp.equals("0")) {
                         exp = exp.substring(0, in.length() - 1) + " " + command + " ";
                     }
                 } else {
                     if (command.equals("btn_div")) {
                         exp += in + " / ";
-                        fo += in + " \\div ";
                     } else if (command.equals("btn_mul")) {
                         exp += in + " * ";
-                        fo += in + "\\times";
                     } else if (command.equals("btn_minus")) {
                         exp += in + " - ";
-                        fo += in + " - ";
                     } else if (command.equals("btn_plus")) {
                         exp += in + " + ";
-                        fo += in + " + ";
                     }
                 }
                 break;
             case "btn_neg":   //Negative
-                if (completed) {
+                if (temp.equals("")) {
                     exp = "negate(" + in + ")";
-                    fo = "-(" + in + ")";
+                    in = "" + fn.neg(Double.parseDouble(in));
+                } else {
+                    exp += "negate(" + temp + ")";
+                    actionPerformed(formula, expression, input, "btn_equal", false);
                 }
-                in = "" + fn.neg(Double.parseDouble(in));
                 break;
             case "btn_dot":   //Decimal
-                if (exp.substring(exp.length() - 1).matches("['+']|['-']|['*']|['/']")) {
+                if (exp.substring(exp.length() - 1).matches(pattern)) {
                     if (!in.contains("."))
                         in = "0.";
                 } else in += ".";
@@ -146,15 +150,9 @@ public class ActionProcess {
             //Scientific mode
 
             case "btn_pow":   //x to the power of y
-                if (exp.matches("['+']|['-']|['*']|['/']|['^']")) {
-                    actionPerformed(formula, expression, input, "=");
-                    if (exp.substring(exp.length() - 1).matches("['+']|['-']|['*']|['/']|['^']")) {
-                        exp = exp.substring(0, in.length() - 1) + " ^ ";
-                    }
-                } else exp += in + " ^ ";
+                //Xu ly giong phep cong tru nhan chia
                 break;
             case "nroot":
-                exp += "" + in + "rt(";
                 break;
             case "btn_10x": //Power of 10
                 break;
@@ -163,9 +161,9 @@ public class ActionProcess {
             case "btn_sin": //Trigonometry
             case "btn_cos":
             case "btn_tan":
-            case "btn_sinh"://Hyperbolic
-            case "btn_cosh":
-            case "btn_tanh":
+            case "btn_asin"://Hyperbolic
+            case "btn_acos":
+            case "btn_atan":
                 break;
             case "btn_log": //The natural logarithm of x
             case "btn_exp": //Exponential function
@@ -204,6 +202,6 @@ public class ActionProcess {
         }
         expression.setText(exp);
         input.setText(in);
-        formula.setText(fo);
+        //Convert numeric to Latex
     }
 }

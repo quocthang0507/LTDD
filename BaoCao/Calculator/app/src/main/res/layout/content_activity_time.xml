@@ -9,35 +9,53 @@
     tools:context=".activity_time"
     tools:showIn="@layout/activity_time">
 
-    <Spinner
-        android:id="@+id/spinner_time_1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textColor="@android:color/black" />
-
-    <EditText
-        android:id="@+id/et_time_1"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:text="0"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@android:color/black" />
+        android:orientation="horizontal">
 
-    <Spinner
-        android:id="@+id/spinner_time_2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        <EditText
+            android:id="@+id/et_time_1"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:inputType="numberDecimal"
+            android:hint="0"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@android:color/black"
+            android:layout_gravity="left" />
+
+        <Spinner
+            android:id="@+id/spinner_time_1"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="right" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_marginTop="50dp"
-        android:textColor="@android:color/black" />
-
-    <EditText
-        android:id="@+id/et_time_2"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:text="0"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@android:color/black" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_time_2"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:inputType="numberDecimal"
+            android:hint="0"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@android:color/black"
+            android:layout_gravity="left" />
+
+        <Spinner
+            android:id="@+id/spinner_time_2"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="right" />
+
+    </LinearLayout>
 
 </LinearLayout>

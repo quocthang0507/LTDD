@@ -93,15 +93,15 @@ public class CoreFunctions {
      * Data converter
      * The most commonly used units of data storage capacity are the bit
      */
-    String[] Data = {"Bits", "Bytes",
-            "Kilobits", "Kibibits", "Kilobytes", "Kibibytes",
-            "Megabits", "Mebibits", "Megabytes", "Mebibytes",
-            "Gigabits", "Gibibits", "Gigabytes", "Gibibytes",
-            "Terabits", "Tebibits", "Terabytes", "Tebibytes",
-            "Petabits", "Pebibits", "Petabytes", "Pebibytes",
-            "Exabits", "Exbibits", "Exabytes", "Exbibytes",
-            "Zetabits", "Zebibits", "Zetabytes", "Zebibytes",
-            "Yottabits", "Yotbibits", "Yottabytes", "Yottbibytes"};
+    String[] Data = {"Bits", "1", "Bytes", "8",
+            "Kilobits", "1000", "Kibibits", "1024", "Kilobytes", "8000", "Kibibytes", "8192",
+            "Megabits", "10^6", "Mebibits", "2^20", "Megabytes", "8×10^6", "Mebibytes", "8×2^20",
+            "Gigabits", "10^9", "Gibibits", "2^30", "Gigabytes", "8×10^9", "Gibibytes", "8×2^30",
+            "Terabits", "10^12", "Tebibits", "2^40", "Terabytes", "8×10^12", "Tebibytes", "8×2^40",
+            "Petabits", "10^15", "Pebibits", "2^50", "Petabytes", "8×10^15", "Pebibytes", "8×2^50",
+            "Exabits", "10^18", "Exbibits", "2^60", "Exabytes", "8×10^18", "Exbibytes", "8×2^60",
+            "Zetabits", "10^21", "Zebibits", "2^70", "Zetabytes", "8×10^21", "Zebibytes", "8×2^70",
+            "Yottabits", "10^24", "Yotbibits", "2^80", "Yottabytes", "8×10^24", "Yottbibytes", "8×2^80"};
 
     /**
      * Area converter
@@ -241,29 +241,6 @@ public class CoreFunctions {
                 return Math.acos(value);
             case "atan":
                 return Math.atan(value);
-        }
-        return fixType(value);
-    }
-
-    /**
-     * Common hyperbolic
-     * Such as: sinh, cosh, tanh
-     * isRadians: true if x is radians, false if x is degrees
-     */
-    Object hyperbolic(String t, double x, boolean isRadians) {
-        double value = 0;
-        if (!isRadians)
-            x = (double) deg2Rad(x);
-        switch (t) {
-            case "sinh":
-                value = Math.sinh(x);
-                break;
-            case "cosh":
-                value = Math.cosh(x);
-                break;
-            case "tanh":
-                value = Math.tanh(x);
-                break;
         }
         return fixType(value);
     }
@@ -447,7 +424,7 @@ public class CoreFunctions {
     Object fixType(double value) {
         double decimal = value - (int) value;
         if (decimal == 0f)
-            return (int) value;
+            return (long) value;
         else return format(value);
     }
 
@@ -479,10 +456,15 @@ public class CoreFunctions {
      */
     Object string2Double(String string) {
         if (string.contains("^")) {
-            String[] temp = string.split("^");
-            double p1 = Double.parseDouble(temp[0]);
-            int p2 = Integer.parseInt(temp[1]);
-            return pow(p1, p2);
+            if (string.contains("×")) {     //s1 × 10 ^ s2
+                String s1 = string.split("^")[0].split("×")[0];
+                String s2 = string.split("^")[1];
+                double power = (double) pow(10, Double.parseDouble(s2));
+                return fixType(Double.parseDouble(s1) * power);
+            } else {
+                String t = string.split("^")[1];
+                return pow(10, Double.parseDouble(t));
+            }
         } else if (string.contains("/")) {
             String[] temp = string.split("/");
             return pi() / Integer.parseInt(temp[1]);

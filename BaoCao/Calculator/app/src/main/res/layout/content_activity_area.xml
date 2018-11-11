@@ -9,35 +9,53 @@
     tools:context=".activity_area"
     tools:showIn="@layout/activity_area">
 
-    <Spinner
-        android:id="@+id/spinner_area_1"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/black"
-        android:layout_height="50dp" />
-
-    <EditText
-        android:id="@+id/et_area_1"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="0"
-        android:textColor="@android:color/black"
-        android:inputType="numberDecimal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:orientation="horizontal">
 
-    <Spinner
+        <EditText
+            android:id="@+id/et_area_1"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:inputType="numberDecimal"
+            android:hint="0"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@android:color/black"
+            android:layout_gravity="left" />
+
+        <Spinner
+            android:id="@+id/spinner_area_1"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="right" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_marginTop="50dp"
-        android:id="@+id/spinner_area_2"
-        android:textColor="@android:color/black"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
-
-    <EditText
-        android:id="@+id/et_area_2"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="0"
-        android:textColor="@android:color/black"
-        android:inputType="numberDecimal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_area_2"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:inputType="numberDecimal"
+            android:hint="0"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@android:color/black"
+            android:layout_gravity="left" />
+
+        <Spinner
+            android:id="@+id/spinner_area_2"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="right" />
+
+    </LinearLayout>
 
 </LinearLayout>
