@@ -16,6 +16,7 @@ public class ActionProcess {
         CoreFunctions fn = new CoreFunctions();
         String in = input.getText().toString();
         String exp = expression.getText().toString();
+        //Khong the phan biet duoc dau tru "-"
         String pattern = "['+']|['-']|['*']|['/']|['^']";
         String temp = "";
         if (exp.matches(pattern)) {
