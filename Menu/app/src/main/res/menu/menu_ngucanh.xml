@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <item
+        android:id="@+id/context_copy"
+        android:title="Copy" />
+    <item
+        android:id="@+id/context_cut"
+        android:title="Cut" />
+    <item
+        android:id="@+id/context_paste"
+        android:title="Paste" />
+    <item
+        android:id="@+id/context_delete"
+        android:title="Delete"/>
+</menu>
