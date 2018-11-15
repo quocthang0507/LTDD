@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><!-- La Quoc Thang - 1610207 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--Background color for button-->
+    <gradient
+        android:endColor="#e6e8ed"
+        android:startColor="#e6e8ed" />
+
+    <!--Border for button-->
+    <stroke
+        android:width="5px"
+        android:color="#d7dbe2" />
+
+</shape>

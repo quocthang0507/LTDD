@@ -1,0 +1,40 @@
+<resources>
+    <!-- La Quoc Thang - 1610207 -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--Style for button which using for importing symbols-->
+    <style name="MyButton_Symbol" parent="Widget.AppCompat.Button">
+        <item name="android:background">@layout/mybutton1</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <!--Style for button which using for importing numbers-->
+    <style name="MyButton_Number" parent="Widget.AppCompat.Button">
+        <item name="android:background">@layout/mybutton2</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <!--Style for row-->
+    <style name="MyLinearLayout">
+        <item name="android:layout_weight">2</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+</resources>
