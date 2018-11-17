@@ -45,4 +45,6 @@
     <string name="title_activity_time">activity_time</string>
     <string name="title_activity_temperature">activity_temperature</string>
     <string name="title_activity_speed">activity_speed</string>
+    <string name="requirement">Internet connection required!</string>
+    <string name="nointernet">Please ensure that you have a stable internet connection</string>
 </resources>

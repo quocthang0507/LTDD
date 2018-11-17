@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,8 @@ public class activity_currency extends AppCompatActivity implements TextWatcher,
     CoreFunctions functions = new CoreFunctions();
     Spinner spinner1, spinner2;
     EditText editText1, editText2;
+    double rate;
+    String str1, str2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,26 @@ public class activity_currency extends AppCompatActivity implements TextWatcher,
 
     @Override
     public void afterTextChanged(Editable s) {
-
+        getSpinner();
+        switch (this.getCurrentFocus().getId()) {
+            case R.id.et_currency_1:
+                rate = functions.getExchangeRate(str1, str2);
+                if (rate != 0 && getEditText()) {
+                    editText2.setText("" + functions.fixType(rate * Double.parseDouble(str1)));
+                } else
+                    Toast.makeText(getApplicationContext(), "Please ensure that you have a stable internet connection", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.et_currency_2:
+                rate = functions.getExchangeRate(str2, str1);
+                if (rate != 0 && getEditText()) {
+                    getEditText();
+                    editText1.setText("" + functions.fixType(rate * Double.parseDouble(str2)));
+                } else
+                    Toast.makeText(getApplicationContext(), "Please ensure that you have a stable internet connection", Toast.LENGTH_LONG).show();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -74,11 +96,44 @@ public class activity_currency extends AppCompatActivity implements TextWatcher,
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
+        getSpinner();
+        switch (view.getId()) {
+            case R.id.spinner_currency_1:
+                rate = functions.getExchangeRate(str1, str2);
+                if (rate != 0 && getEditText()) {
+                    editText2.setText("" + functions.fixType(rate * Double.parseDouble(str1)));
+                } else
+                    Toast.makeText(getApplicationContext(), "Please ensure that you have a stable internet connection", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.spinner_currency_2:
+                rate = functions.getExchangeRate(str2, str1);
+                if (rate != 0 && getEditText()) {
+                    editText1.setText("" + functions.fixType(rate * Double.parseDouble(str2)));
+                } else
+                    Toast.makeText(getApplicationContext(), "Please ensure that you have a stable internet connection", Toast.LENGTH_LONG).show();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    void getSpinner() {
+        str1 = spinner1.getSelectedItem().toString();
+        str2 = spinner2.getSelectedItem().toString();
+        if (str1.contains(" ")) str1 = str1.split(" ")[0];
+        if (str2.contains(" ")) str2 = str2.split(" ")[0];
+    }
+
+    boolean getEditText() {
+        str1 = editText1.getText().toString();
+        str2 = editText2.getText().toString();
+        if (str1.equals("") && str2.equals(""))
+            return false;
+        else return true;
     }
 }

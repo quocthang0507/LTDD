@@ -1,20 +1,20 @@
 package vn.edu.itdlu.a1610207.calculator;
 
-/**
- * Date calculation
- */
-
-import android.widget.Spinner;
-
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.Weeks;
 import org.joda.time.Years;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -404,16 +404,22 @@ public class CoreFunctions {
     /**
      * Get HTML source from link
      */
-    String getHTMLSource(String link) {
-        URL url;
-        try {
-            url = new URL(link);
-            return org.apache.commons.io.IOUtils.toString(url, "utf8");
-        } catch (MalformedURLException e) {
-            return null;
-        } catch (IOException e) {
-            return null;
-        }
+    String getHTMLSource(String url) throws IOException {
+        HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
+        HttpGet httpget = new HttpGet(url); // Set the action you want to do
+        HttpResponse response = httpclient.execute(httpget); // Executeit
+        HttpEntity entity = response.getEntity();
+        InputStream is = entity.getContent(); // Create an InputStream with the response
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        while ((line = reader.readLine()) != null) // Read line by line
+            sb.append(line + "\n");
+
+        String resString = sb.toString(); // Result is here
+
+        is.close(); // Close the stream
+        return resString;
     }
 
     /**************************************Converter**************************************/
@@ -422,7 +428,7 @@ public class CoreFunctions {
      * Try to fix proper type of value
      */
     Object fixType(double value) {
-        double decimal = value - (int) value;
+        double decimal = value - (long) value;
         if (decimal == 0f)
             return (long) value;
         else return format(value);
@@ -443,7 +449,12 @@ public class CoreFunctions {
      */
     double getExchangeRate(String unit1, String unit2) {
         String url = "https://free.currencyconverterapi.com/api/v6/convert?q=" + unit1 + "_" + unit2 + "&compact=y";
-        String content = getHTMLSource(url);
+        String content;
+        try {
+            content = getHTMLSource(url);
+        } catch (IOException i) {
+            content = null;
+        }
         Pattern pattern = Pattern.compile("([\\d.]+)");
         Matcher matcher = pattern.matcher(content);
         if (matcher.find())
@@ -454,21 +465,25 @@ public class CoreFunctions {
     /**
      * Convert string to double, especially if it have power symbol
      */
-    Object string2Double(String string) {
-        if (string.contains("^")) {
-            if (string.contains("×")) {     //s1 × 10 ^ s2
-                String s1 = string.split("^")[0].split("×")[0];
-                String s2 = string.split("^")[1];
-                double power = (double) pow(10, Double.parseDouble(s2));
-                return fixType(Double.parseDouble(s1) * power);
-            } else {
-                String t = string.split("^")[1];
-                return pow(10, Double.parseDouble(t));
-            }
-        } else if (string.contains("/")) {
-            String[] temp = string.split("/");
-            return pi() / Integer.parseInt(temp[1]);
-        } else return Double.parseDouble(string);
+    Object convertString(String string) {
+        try {
+            if (string.contains("^")) {
+                if (string.contains("×")) {     //s1 × 10 ^ s2
+                    String s1 = string.split("\\^")[0].split("×")[0];
+                    String s2 = string.split("\\^")[1];
+                    double power = (double) pow(10, Double.parseDouble(s2));
+                    return fixType(Double.parseDouble(s1) * power);
+                } else {
+                    String t = string.split("\\^")[1];
+                    return pow(10, Double.parseDouble(t));
+                }
+            } else if (string.contains("/")) {
+                String[] temp = string.split("/");
+                return pi() / Integer.parseInt(temp[1]);
+            } else return fixType(Double.parseDouble(string));
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     /************************Rule of function***********************
@@ -479,51 +494,46 @@ public class CoreFunctions {
     /**
      * The temperature converter function
      */
-    double temperatureConverter(int id1, double value, int id2) {
+    Object temperatureConverter(int id1, Object value, int id2) {
         if (id1 == id2)
             return value;
         else {
+            double _value = Double.parseDouble("" + value);
             if (id1 == 0) {
-                return id2 == 1 ? 9 / 5 * value + 32 : value + 273;
+                return id2 == 1 ? 9 / 5 * _value + 32 : _value + 273;
             } else if (id1 == 1) {
-                return id2 == 0 ? 5 / 9 * (value - 32) : 5 / 9 * (value - 32) + 273;
+                return id2 == 0 ? 5 / 9 * (_value - 32) : 5 / 9 * (_value - 32) + 273;
             } else {
-                return id2 == 0 ? value - 273 : 9 / 5 * (value - 273) + 32;
+                return id2 == 0 ? _value - 273 : 9 / 5 * (_value - 273) + 32;
             }
         }
     }
 
     /**
-     * Lookup the index in the references unit array
+     * Find text in array
      */
-    int getIndexOfArray(String[] array, String unit) {
-        int length = array.length;
-        for (int i = 0; i < length; i++)
-            if (array[i] == unit)
+    int findIndexInArray(String[] array, String text) {
+        int len = array.length;
+        for (int i = 0; i < len; i++) {
+            if (array[i].equals(text))
                 return i;
+        }
         return -1;
-    }
-
-    /**
-     * Get the index of selected value of spinner
-     */
-    int getIndexFromSpinner(String[] array, Spinner spinner) {
-        return getIndexOfArray(array, spinner.getSelectedItem().toString());
     }
 
     /**
      * Other unit converter function
      */
-    Object otherConverter(String[] array, int id1, double value, int id2) {
+    Object otherConverter(String[] array, int id1, Object value, int id2) {
         if (id1 == id2)
             return value;
         else {
             //1 unit of id1 = ? unit of base
-            double base1 = (double) string2Double(array[id1 + 1]);
+            double base1 = Double.parseDouble("" + convertString(array[id1 + 1]));
             //1 unit of id2 = ? unit of base
-            double base2 = (double) string2Double(array[id2 + 1]);
+            double base2 = Double.parseDouble("" + convertString(array[id2 + 1]));
             //Get crosshair value
-            return fixType(base1 / base2);
+            return fixType(Double.parseDouble("" + value) * base1 / base2);
         }
     }
 }

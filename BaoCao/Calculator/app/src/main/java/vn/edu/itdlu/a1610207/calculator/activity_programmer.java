@@ -47,6 +47,6 @@ public class activity_programmer extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         String name = v.getResources().getResourceName(v.getId());
-        action.actionPerformed((MathView) findViewById(R.id.formula_1),(TextView) findViewById(R.id.formula_2), (TextView) findViewById(R.id.result), name.split("/")[1], false);
+        action.actionPerformed((MathView) findViewById(R.id.formula_1), (TextView) findViewById(R.id.formula_2), (TextView) findViewById(R.id.result), name.split("/")[1], false);
     }
 }

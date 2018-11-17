@@ -49,6 +49,6 @@ public class activity_standard extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         String name = v.getResources().getResourceName(v.getId());
-        action.actionPerformed((MathView) findViewById(R.id.formula_1),(TextView) findViewById(R.id.formula_2), (TextView) findViewById(R.id.result), name.split("/")[1], false);
+        action.actionPerformed((MathView) findViewById(R.id.formula_1), (TextView) findViewById(R.id.formula_2), (TextView) findViewById(R.id.result), name.split("/")[1], false);
     }
 }
