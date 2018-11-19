@@ -23,7 +23,7 @@
     <string name="title">About...</string>
     <string name="message">Author: La Quốc Thắng \r\nStudent ID: 1610207\r\nStudy at: Dalat University\r\n\nEmail 1: quocthang0507@gmail.com\r\nEmail 2: quocthang_0507@yahoo.com.vn\r\n"</string>
     <string name="button">OK, Thank author a lot :)))</string>
-    <string name="intro">Welcome you to my calculator! \nPlease touch the menu icon and choose a feature</string>
+    <string name="intro">Welcome you to my calculator! \nPlease tap the menu icon and choose a function</string>
     <string-array name="dateMode">
         <item>Difference between dates</item>
         <item>Add or subtract days</item>
@@ -47,4 +47,6 @@
     <string name="title_activity_speed">activity_speed</string>
     <string name="requirement">Internet connection required!</string>
     <string name="nointernet">Please ensure that you have a stable internet connection</string>
+    <string name="caculate_diff">Please tap \'Diffrence\' word to calculate the different dates</string>
+    <string name="caculate_date">Please tap \'Date\' word to calculate date</string>
 </resources>

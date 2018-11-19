@@ -39,7 +39,7 @@
             android:id="@+id/diff_mode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/textView"
@@ -58,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="10dp"
-                android:text="November 3rd , 2018"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@android:color/holo_blue_dark"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +92,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="15dp"
-                android:text="November 3rd , 2018"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@android:color/holo_blue_dark"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,6 +117,7 @@
                 android:layout_marginEnd="0dp"
                 android:text="Difference"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_date_to_diff" />
@@ -130,13 +129,26 @@
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="0dp"
-                android:text="Same dates"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@android:color/holo_blue_dark"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/caculate_diff"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_difference_result" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -145,7 +157,7 @@
             android:id="@+id/addsubtract_mode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/textView8"
@@ -163,7 +175,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="10dp"
-                android:text="November 3rd , 2018"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@android:color/holo_blue_dark"
                 app:layout_constraintStart_toStartOf="parent"
@@ -198,6 +209,7 @@
                     android:id="@+id/radio_add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="Add"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -296,6 +308,7 @@
                 android:layout_marginEnd="10dp"
                 android:text="Date"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.522"
                 app:layout_constraintStart_toStartOf="parent"
@@ -308,7 +321,6 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
-                android:text="November 3rd , 2018"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@android:color/holo_blue_dark"
                 android:textStyle="bold"
@@ -316,6 +328,20 @@
                 app:layout_constraintHorizontal_bias="0.544"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/caculate_date"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_addsubtract_result" />
         </android.support.constraint.ConstraintLayout>
 
     </FrameLayout>

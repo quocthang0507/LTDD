@@ -10,6 +10,8 @@ import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.Weeks;
 import org.joda.time.Years;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,9 +19,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -345,15 +346,12 @@ public class CoreFunctions {
     /**
      * Difference between 2 dates
      */
-    String different(String start, String stop) {
+    String different(String start, String end) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
         String value = "";
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        Date d1 = null, d2 = null;
         try {
-            d1 = format.parse(start);
-            d2 = format.parse(stop);
-            DateTime dt1 = new DateTime(d1);
-            DateTime dt2 = new DateTime(d2);
+            DateTime dt1 = formatter.parseDateTime(start);
+            DateTime dt2 = formatter.parseDateTime(end);
             if (Years.yearsBetween(dt1, dt2).getYears() > 0)
                 value += Years.yearsBetween(dt1, dt2).getYears() + " years, ";
             if (Months.monthsBetween(dt1, dt2).getMonths() > 0)
@@ -362,7 +360,7 @@ public class CoreFunctions {
                 value += Weeks.weeksBetween(dt1, dt2).getWeeks() + " weeks, ";
             if (Days.daysBetween(dt1, dt2).getDays() > 0)
                 value += Days.daysBetween(dt1, dt2).getDays() + " days";
-            if (dt1 == dt2)
+            if (dt1.equals(dt2))
                 value = "Same day";
         } catch (Exception e) {
             return null;
@@ -373,32 +371,27 @@ public class CoreFunctions {
     /**
      * Date1 add or subtract date2
      */
-    String changeDay(String date1, String date2, char c) {
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        Date d1 = null, d2 = null;
-        String value;
+    String changeDay(String date1, Map<Character, Integer> date2, char c) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+        DateTime dt1;
         try {
-            d1 = format.parse(date1);
-            d2 = format.parse(date2);
-            DateTime dt1 = new DateTime(d1);
-            DateTime dt2 = new DateTime(d2);
+            dt1 = formatter.parseDateTime(date1);
             switch (c) {
                 case '+':
-                    dt1.plusDays(dt2.getDayOfMonth());
-                    dt1.plusMonths(dt2.getMonthOfYear());
-                    dt1.plusYears(dt2.getYear());
+                    dt1 = dt1.plusDays(date2.get('d'));
+                    dt1 = dt1.plusMonths(date2.get('m'));
+                    dt1 = dt1.plusYears(date2.get('y'));
                     break;
                 case '-':
-                    dt1.minusDays(dt2.getDayOfMonth());
-                    dt1.minusMonths(dt2.getMonthOfYear());
-                    dt1.minusYears(dt2.getYear());
+                    dt1 = dt1.minusDays(date2.get('d'));
+                    dt1 = dt1.minusMonths(date2.get('m'));
+                    dt1 = dt1.minusYears(date2.get('y'));
                     break;
             }
-            value = dt1.toString();
         } catch (Exception e) {
             return null;
         }
-        return value;
+        return formatter.print(dt1);
     }
 
     /**
