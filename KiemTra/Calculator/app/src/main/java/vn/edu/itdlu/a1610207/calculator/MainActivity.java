@@ -4,22 +4,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     User user;
-    ArrayList<View> allButtons; //List contains all buttons in app
     TextView tvResult, tvExp;
-    double prevalue = Double.NaN;   //The previous value of this calculator
-    String operators = "['+']|['*']|['/']"; //For regex pattern
+    double preValue = Double.NaN;   //The previous value of this calculator
+    String operators = "['+']|['*']|['/']"; //Use for regex pattern
     char preOp = '\0';   //The previous operator of this calculator
     String pattern = ".#########";  //Decimal format for double value
     Locale locale = Locale.US;      //Locale for formatting double value
@@ -31,169 +27,106 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         user = new User();
         tvResult = findViewById(R.id.result);
         tvExp = findViewById(R.id.expression);
-        findAllButtons();
-        addOnClickListener();
     }
 
-    /**
-     * Find all buttons in app
-     */
-    void findAllButtons() {
-        allButtons = new ArrayList<>();
-        allButtons = ((LinearLayout) findViewById(R.id.main_layout)).getTouchables();
-    }
-
-    /**
-     * Add OnClickListener for all buttons
-     */
-    void addOnClickListener() {
-        Button button;
-        ImageButton imageButton;
-        for (View view : allButtons)
-            if (view instanceof Button) {
-                button = (Button) view;
-                button.setOnClickListener(this);
-            } else if (view instanceof ImageButton) {
-                imageButton = (ImageButton) view;
-                imageButton.setOnClickListener(this);
-            }
-    }
-
-    @Override
-    public void onClick(View v) {
-        //Get name of the button
-        String input = v.getResources().getResourceName(v.getId()).split("/")[1];
-        //Get current string of textView
+    public void btDot_OnClick(View v) {
         String current = tvResult.getText().toString();
-        //Get current expression string of textView
-        String exp = tvExp.getText().toString();
-        //Switch function button
-        switch (input) {
-            case "btn_plus":
-                //If the equation is not completed
-                if (!current.contains("=")) {
-                    if (!Double.isNaN(prevalue) && !current.matches(operators)) //When user imports number secondly
-                        if (preOp != '+' && preOp != '\0')
-                            prevalue = user.Compute(preOp, prevalue, Double.parseDouble(current));
-                        else prevalue = user.Compute('+', prevalue, Double.parseDouble(current));
-                    else if (Double.isNaN(prevalue) && !current.matches(operators)) ////When user imports number firstly
-                        prevalue = Double.parseDouble(current);
-                } else {
-                    prevalue = Double.parseDouble(current.substring(1, current.length()));
-                }
-                current = "+";
-                preOp = '+';
-                exp = "" + fixType(prevalue) + "+";
-                break;
-            case "btn_minus":
-                if (!current.contains("=")) {
-                    if (!Double.isNaN(prevalue) && !current.matches(operators))
-                        if (preOp != '-' && preOp != '\0')
-                            prevalue = user.Compute(preOp, prevalue, Double.parseDouble(current));
-                        else prevalue = user.Compute('-', prevalue, Double.parseDouble(current));
-                    else if (Double.isNaN(prevalue) && !current.matches(operators))
-                        prevalue = Double.parseDouble(current);
-                } else {
-                    prevalue = Double.parseDouble(current.substring(1, current.length()));
-                }
-                current = "-";
-                preOp = '-';
-                exp = "" + fixType(prevalue) + "-";
-                break;
-            case "btn_mul":
-                if (!current.contains("=")) {
-                    if (!Double.isNaN(prevalue) && !current.matches(operators))
-                        if (preOp != '*' && preOp != '\0')
-                            prevalue = user.Compute(preOp, prevalue, Double.parseDouble(current));
-                        else prevalue = user.Compute('*', prevalue, Double.parseDouble(current));
-                    else if (Double.isNaN(prevalue) && !current.matches(operators))
-                        prevalue = Double.parseDouble(current);
-                } else {
-                    prevalue = Double.parseDouble(current.substring(1, current.length()));
-                }
-                current = "*";
-                preOp = '*';
-                exp = "" + fixType(prevalue) + "*";
-                break;
-            case "btn_div":
-                if (!current.contains("=")) {
-                    if (!Double.isNaN(prevalue) && !current.matches(operators))
-                        if (preOp != '/' && preOp != '\0')
-                            prevalue = user.Compute(preOp, prevalue, Double.parseDouble(current));
-                        else prevalue = user.Compute('/', prevalue, Double.parseDouble(current));
-                    else if (Double.isNaN(prevalue) && !current.matches(operators))
-                        prevalue = Double.parseDouble(current);
-                } else {
-                    prevalue = Double.parseDouble(current.substring(1, current.length()));
-                }
-                current = "/";
-                preOp = '/';
-                exp = "" + fixType(prevalue) + "/";
-                break;
-            case "btn_0":
-            case "btn_1":
-            case "btn_2":
-            case "btn_3":
-            case "btn_4":
-            case "btn_5":
-            case "btn_6":
-            case "btn_7":
-            case "btn_8":
-            case "btn_9":
-                if (!current.contains("=")) {
-                    String temp = input.split("_")[1];
-                    if (!current.matches(operators) && !current.contains("-"))
-                        if (!current.equals("0"))
-                            current += temp;
-                        else current = temp;
-                    else current = temp;
-                }
-                break;
-            case "btn_dot":
-                if (!current.matches(operators) && !current.contains("-"))
-                    current += ".";
-                break;
-            case "btn_equal":
-                if (!current.matches(operators)) {
-                    exp += "" + fixType(Double.parseDouble(current));
-                    if (preOp != '\0') {
-                        double t = user.Compute(preOp, prevalue, Double.parseDouble(current));
-                        current = "=" + fixType(t);
-                    } else
-                        current = "=" + fixType(Double.parseDouble(current));
-                    preOp = '\0';
-                    prevalue = Double.NaN;
-                }
-                break;
-            case "btn_delete":
-                current = "0";
-                preOp = '\0';
-                prevalue = Double.NaN;
-                exp = "";
-                user.release();
-                break;
-            case "btn_redo":
-                current = "" + fixType(user.Redo(1));
-                exp = current;
-                break;
-            case "btn_undo":
-                current = "" + fixType(user.Undo(1));
-                exp = current;
-                break;
-            case "btn_plus_minus":
-                if (!current.matches(operators) && !current.contains("="))
-                    if (Double.parseDouble(current) != 0)
-                        current = "" + fixType(-Double.parseDouble(current));
-                break;
-            default:
-                break;
+        if (containDigit(current))
+            current += ".";
+        tvResult.setText(current);
+    }
+
+    public void btEqual_OnClick(View v) {
+        String current = tvResult.getText().toString();
+        if (containDigit(current)) {
+            tvExp.setText(tvExp.getText().toString() + fixType(Double.parseDouble(current)));
+            if (preOp != '\0') {
+                double t = user.Compute(preOp, preValue, Double.parseDouble(current));
+                current = "=" + fixType(t);
+            } else
+                current = "=" + fixType(Double.parseDouble(current));
+            preOp = '\0';
+            preValue = Double.NaN;
         }
         tvResult.setText(current);
-        tvExp.setText(exp);
+    }
+
+    public void btUndo_OnClick(View v) {
+        String temp = "" + fixType(user.Undo(1));
+        tvResult.setText(temp);
+        tvExp.setText(temp);
+    }
+
+    public void btRedo_OnClick(View v) {
+        String temp = "" + fixType(user.Redo(1));
+        tvResult.setText(temp);
+        tvExp.setText(temp);
+    }
+
+    public void btPlusMinus_OnClick(View v) {
+        String current = tvResult.getText().toString();
+        if (containDigit(current))
+            if (Double.parseDouble(current) != 0)
+                current = "" + fixType(-Double.parseDouble(current));
+        tvResult.setText(current);
+    }
+
+    public void btDelete_OnClick(View v) {
+        tvResult.setText("0");
+        tvExp.setText("");
+        preOp = '\0';
+        preValue = Double.NaN;
+        user.release();
+    }
+
+    public void btNumber_OnClick(View v) {
+        String str = tvResult.getText().toString();
+        if (str.equals("0"))
+            str = "";
+        if (!str.contains("=")) {
+            if (str.matches(operators) || str.contains("-"))
+                str = "";
+            Button b = (Button) v;
+            str += b.getText().toString();
+            tvResult.setText(str);
+        }
+    }
+
+    public void btOperator_OnClick(View v) {
+        String current = tvResult.getText().toString();
+        char c;
+        if (v.getId() == R.id.btn_plus) c = '+';
+        else if (v.getId() == R.id.btn_minus) c = '-';
+        else if (v.getId() == R.id.btn_mul) c = '*';
+        else c = '/';
+        if (!current.contains("=")) {   //When the equation isn't complete
+            if (!Double.isNaN(preValue) && containDigit(current)) //When user imports number secondly
+                if (preOp != c && preOp != '\0')
+                    preValue = user.Compute(preOp, preValue, Double.parseDouble(current));
+                else preValue = user.Compute(c, preValue, Double.parseDouble(current));
+            else if (Double.isNaN(preValue) && containDigit(current)) ////When user imports number firstly
+                preValue = Double.parseDouble(current);
+        } else {    //When the equation has completed
+            preValue = Double.parseDouble(current.substring(1, current.length()));
+        }
+        tvResult.setText("" + c);
+        tvExp.setText("" + fixType(preValue) + c);
+        preOp = c;
     }
 
     /**
-     * Fix type of value
+     * Check that a string contains at least a digit number
+     */
+    boolean containDigit(String str) {
+        int length = str.length();
+        for (int i = 0; i < length; i++)
+            if (Character.isDigit(str.charAt(i)))
+                return true;
+        return false;
+    }
+
+    /**
+     * Find proper type of value
      */
     Object fixType(double value) {
         double decimal = value - (long) value;

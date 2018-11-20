@@ -40,22 +40,26 @@
         <Button
             android:id="@+id/btn_delete"
             style="@style/MyButton_Symbol"
-            android:text="C" />
+            android:text="C"
+            android:onClick="btDelete_OnClick"/>
 
         <Button
             android:id="@+id/btn_undo"
             style="@style/MyButton_Symbol"
-            android:text="Undo" />
+            android:text="Undo"
+            android:onClick="btUndo_OnClick"/>
 
         <Button
             android:id="@+id/btn_redo"
             style="@style/MyButton_Symbol"
-            android:text="Redo" />
+            android:text="Redo"
+            android:onClick="btRedo_OnClick"/>
 
         <ImageButton
             android:id="@+id/btn_div"
             style="@style/MyButton_Symbol"
-            android:src="@drawable/ic_div" />
+            android:src="@drawable/ic_div"
+            android:onClick="btOperator_OnClick"/>
 
     </LinearLayout>
 
@@ -64,22 +68,27 @@
         <Button
             android:id="@+id/btn_7"
             style="@style/MyButton_Number"
-            android:text="7" />
+            android:text="7"
+            android:onClick="btNumber_OnClick"/>
 
         <Button
             android:id="@+id/btn_8"
             style="@style/MyButton_Number"
-            android:text="8" />
+            android:text="8"
+            android:onClick="btNumber_OnClick"/>
 
         <Button
             android:id="@+id/btn_9"
             style="@style/MyButton_Number"
-            android:text="9" />
+            android:text="9"
+            android:onClick="btNumber_OnClick"/>
 
         <ImageButton
             android:id="@+id/btn_mul"
             style="@style/MyButton_Symbol"
-            android:src="@drawable/ic_mul" />
+            android:src="@drawable/ic_mul"
+            android:onClick="btOperator_OnClick"/>
+
 
     </LinearLayout>
 
@@ -88,22 +97,27 @@
         <Button
             android:id="@+id/btn_4"
             style="@style/MyButton_Number"
-            android:text="4" />
+            android:text="4"
+            android:onClick="btNumber_OnClick"/>
 
         <Button
             android:id="@+id/btn_5"
             style="@style/MyButton_Number"
-            android:text="5" />
+            android:text="5"
+            android:onClick="btNumber_OnClick"/>
 
         <Button
             android:id="@+id/btn_6"
             style="@style/MyButton_Number"
-            android:text="6" />
+            android:text="6"
+            android:onClick="btNumber_OnClick"/>
 
         <ImageButton
             android:id="@+id/btn_minus"
             style="@style/MyButton_Symbol"
-            android:src="@drawable/ic_minus" />
+            android:src="@drawable/ic_minus"
+            android:onClick="btOperator_OnClick"/>
+
 
     </LinearLayout>
 
@@ -112,22 +126,26 @@
         <Button
             android:id="@+id/btn_1"
             style="@style/MyButton_Number"
-            android:text="1" />
+            android:text="1"
+            android:onClick="btNumber_OnClick"/>
 
         <Button
             android:id="@+id/btn_2"
             style="@style/MyButton_Number"
-            android:text="2" />
+            android:text="2"
+            android:onClick="btNumber_OnClick"/>
 
         <Button
             android:id="@+id/btn_3"
             style="@style/MyButton_Number"
-            android:text="3" />
+            android:text="3"
+            android:onClick="btNumber_OnClick"/>
 
         <ImageButton
             android:id="@+id/btn_plus"
             style="@style/MyButton_Symbol"
-            android:src="@drawable/ic_plus" />
+            android:src="@drawable/ic_plus"
+            android:onClick="btOperator_OnClick"/>
 
     </LinearLayout>
 
@@ -136,22 +154,26 @@
         <ImageButton
             android:id="@+id/btn_plus_minus"
             style="@style/MyButton_Number"
-            android:src="@drawable/ic_plus_minus" />
+            android:src="@drawable/ic_plus_minus"
+            android:onClick="btPlusMinus_OnClick"/>
 
         <Button
             android:id="@+id/btn_0"
             style="@style/MyButton_Number"
-            android:text="0" />
+            android:text="0"
+            android:onClick="btNumber_OnClick"/>
 
         <Button
             android:id="@+id/btn_dot"
             style="@style/MyButton_Number"
-            android:text="." />
+            android:text="."
+            android:onClick="btDot_OnClick"/>
 
         <ImageButton
             android:id="@+id/btn_equal"
             style="@style/MyButton_Symbol"
-            android:src="@drawable/ic_equal" />
+            android:src="@drawable/ic_equal"
+            android:onClick="btEqual_OnClick"/>
 
     </LinearLayout>
 
