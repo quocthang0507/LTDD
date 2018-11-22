@@ -7,9 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
-    static final String TAG = "SQLite";
+    static final String TAG = "1610207_SQLite";
     static final int DATABASE_VERSION = 1;
     static final String DATABASE_NAME = "Note_Manager";
     static final String TABLE_NOTE = "NOTE";
@@ -25,6 +28,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.i(TAG, "MyDatabaseHelper.onCreate ... ");
         String script = "CREATE TABLE " + TABLE_NOTE + "(" +
+                COLUMN_NOTE_ID + " INTEGER PRIMARY KEY," +
                 COLUMN_NOTE_TITLE + " TEXT," +
                 COLUMN_NOTE_CONTENT + " TEXT" + ")";
         db.execSQL(script);
@@ -64,7 +68,52 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
         Note note = new Note(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
+        cursor.close();
         return note;
+    }
 
+    public List<Note> getAllNotes() {
+        Log.i(TAG, "MyDatabaseHelper.getAllNotes ... ");
+        List<Note> noteList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_NOTE;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Note note = new Note();
+                note.setNodeID(Integer.parseInt(cursor.getString(0)));
+                note.setNoteTitle((cursor.getString(1)));
+                note.setNoteContent(cursor.getString(2));
+                noteList.add(note);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return noteList;
+    }
+
+    public int getNotesCount() {
+        Log.i(TAG, "MyDatabaseHelper.getNotesCount ...");
+        String countQuery = " SELECT * FROM " + TABLE_NOTE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
+
+    public int updateNote(Note note) {
+        Log.i(TAG, "MyDatabaseHelper.updateNote ... " + note.getNoteTitle());
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NOTE_TITLE, note.getNoteTitle());
+        values.put(COLUMN_NOTE_CONTENT, note.getNoteContent());
+        return db.update(TABLE_NOTE, values, COLUMN_NOTE_ID + " = ?", new String[]{String.valueOf(note.getNodeID())});
+    }
+
+    public void deleteNote(Note note) {
+        Log.i(TAG, "MyDatabaseHelper.deleteNote ... " + note.getNodeID());
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NOTE, COLUMN_NOTE_ID + " = ?", new String[]{String.valueOf(note.getNodeID())});
+        db.close();
     }
 }

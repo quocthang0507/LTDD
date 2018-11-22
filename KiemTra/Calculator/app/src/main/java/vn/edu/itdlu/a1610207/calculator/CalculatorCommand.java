@@ -1,5 +1,6 @@
 package vn.edu.itdlu.a1610207.calculator;
 
+//CalculatorCommand class inherits from Command class
 public class CalculatorCommand extends Command {
 
     char _operator;
@@ -28,6 +29,9 @@ public class CalculatorCommand extends Command {
         return _calculator.Operation(Undo(_operator), _operand);
     }
 
+    /**
+     * Return opposite operator for given operator
+     */
     char Undo(char operator) {
         switch (operator) {
             case '+':

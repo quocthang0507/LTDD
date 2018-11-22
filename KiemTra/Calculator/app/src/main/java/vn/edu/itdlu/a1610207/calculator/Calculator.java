@@ -1,5 +1,10 @@
 package vn.edu.itdlu.a1610207.calculator;
 
+import android.util.Log;
+
+/**
+ * The 'Receiver' class
+ */
 public class Calculator {
 
     double _curr = 0;
@@ -24,7 +29,10 @@ public class Calculator {
                     _curr /= operand;
                 else _curr = Double.NaN;
                 break;
+            default:
+                break;
         }
+        Log.i("ThangDLU", operand + " " + operator + "= " + _curr);
         return _curr;
     }
 }

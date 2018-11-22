@@ -1,6 +1,8 @@
 package vn.edu.itdlu.a1610207.sqlite;
 
-public class Note {
+import java.io.Serializable;
+
+public class Note implements Serializable {
 
     int nodeID;
     String noteTitle;
@@ -45,4 +47,8 @@ public class Note {
         this.noteContent = noteContent;
     }
 
+    @Override
+    public String toString(){
+        return this.noteTitle;
+    }
 }
