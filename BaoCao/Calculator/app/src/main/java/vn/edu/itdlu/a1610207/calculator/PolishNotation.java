@@ -5,28 +5,46 @@ import java.util.List;
 import java.util.Stack;
 
 public class PolishNotation {
-    String bieuThuc;
+    public String bieuThuc;
     List<String> input = new ArrayList<String>();
     Stack<String> stack = new Stack<String>();
     List<String> output = new ArrayList<String>();
 
     //Kiểm tra một ký tự c có phải là một toán tử hay không?
     static public boolean La_ToanTu(String c) {
-        if (c == "+" || c == "-" || c == "*" || c == "/" || c == "%" || c == "^")
+        if (c.equals("+") || c.equals("-") || c.equals("*") || c.equals("/") || c.equals("%") ||
+                c.equals("^") || c.equals("&") || c.equals("|") || c.equals(">>") || c.equals("<<"))
             return true;
         else return false;
+    }
+
+    //Tách số tại vị trí i trong chuỗi s
+    public String Tach_So(String s, int i) {
+        String t = "";
+        int len = s.length();
+        do {
+            t += s.charAt(i);
+            i++;
+        }
+        while (i < len && (La_KySo("" + s.charAt(i)) || s.charAt(i) == '.'));
+        return t;
     }
 
     //Chuyển biểu thức (một chuỗi) thành một danh sách
     public void Chuyen_BieuThuc_DanhSach() {
         int len = bieuThuc.length();
         for (int i = 0; i < len; i++) {
-            if (bieuThuc.charAt(i) >= '0' && bieuThuc.charAt(i) <= '9') {
+            if (bieuThuc.charAt(i) >= '0' && bieuThuc.charAt(i) <= '9' || bieuThuc.charAt(i) >= 'A' && bieuThuc.charAt(i) <= 'F') { //Nếu nó là số
                 String t = Tach_So(bieuThuc, i);
                 input.add(t);
                 i += t.length() - 1;
+            } else if (bieuThuc.charAt(i) == '>') {//Nếu nó là toán tử của phép dịch bit
+                input.add(">>");
+                i++;
+            } else if (bieuThuc.charAt(i) == '<') {
+                input.add("<<");
+                i++;
             } else input.add(Character.toString(bieuThuc.charAt(i)));
-
         }
     }
 
@@ -39,32 +57,30 @@ public class PolishNotation {
 
     //Trả về -1 nếu thiếu dấu đóng ngoặc
     //Trả về -2 nếu thiếu dấu mở ngoặc
-    //Trả về 0 nếu sai cú pháp
     //Trả về 1 nếu nhập đúng
     public int KT_BT_Dung() {
-        boolean flag = false;
         if (La_ToanTu(Character.toString(bieuThuc.charAt(0))))
             Chen_KyTu_Chuoi(0, '0');
         int len = bieuThuc.length();
         int counter = 0;
-        for (int i = 0; i < len - 1; i++) {
-            if (La_ToanTu(Character.toString(bieuThuc.charAt(i))) && La_ToanTu(Character.toString(bieuThuc.charAt(i + 1))))
-                return 0;
-            else if (bieuThuc.charAt(i) == '(')
+        for (int i = 0; i < len; i++) {
+            if (bieuThuc.charAt(i) == '(')
                 counter++;
             else if (bieuThuc.charAt(i) == ')')
                 counter--;
         }
-        return counter == 0 ? 0 : counter > 0 ? -1 : -2;
+        return counter == 0 ? 1 : counter > 0 ? -1 : -2;
     }
 
     //Độ ưu tiên của toán tử
     public int Do_UuTien(String c) {
-        if (c == "^" || c == "√")
+        if (c.equals("*") || c.equals("/") || c.equals("%"))
+            return 4;
+        else if (c.equals("+") || c.equals("-"))
             return 3;
-        else if (c == "*" || c == "/" || c == "%")
+        else if (c.equals("&"))
             return 2;
-        else if (c == "+" || c == "-")
+        else if (c.equals("|") || c.equals("^"))
             return 1;
         return 0;
     }
@@ -72,22 +88,11 @@ public class PolishNotation {
     //Kiểm tra s có phải là một số hay không?
     public boolean La_KySo(String s) {
         try {
-            double x = Double.parseDouble(s);
-            return true;
+            Long.parseLong(s, 16);
         } catch (NumberFormatException e) {
             return false;
         }
-    }
-
-    //Tách số tại vị trí i trong chuỗi
-    public String Tach_So(String s, int i) {
-        String t = "";
-        int len = s.length();
-        do {
-            t += s.charAt(i);
-            i++;
-        } while (i < len && ((s.charAt(i) >= '0' && s.charAt(i) <= '9') || s.charAt(i) == '.'));
-        return t;
+        return true;
     }
 
     //Thực hiện việc chuyển đổi biểu thức trung tố sang biểu thức hậu tố
@@ -97,11 +102,11 @@ public class PolishNotation {
         for (String item : this.input) {
             if (La_KySo(item))
                 output.add(item);
-            else if (item == "(")
+            else if (item.equals("("))
                 stack.push(item);
-            else if (item == ")") {
+            else if (item.equals(")")) {
                 x = stack.pop();
-                while (x != "(") {
+                while (!x.equals("(")) {
                     output.add(x);
                     x = stack.pop();
                 }
@@ -120,13 +125,13 @@ public class PolishNotation {
         }
     }
 
-    //Tính giá trị biểu thức hậu tố
-    public double Tinh_BieuThuc_HauTo() {
-        double x, y;
-        Stack<Double> s = new Stack<Double>();
+    //Tính giá trị biểu thức hậu tố, trả về cơ số 10
+    public long Tinh_BieuThuc_HauTo(int radix) {
+        long x, y;
+        Stack<Long> s = new Stack<Long>();
         for (String item : output) {
             if (La_KySo(item)) {
-                x = Double.parseDouble(item);
+                x = Long.parseLong(item, radix);
                 s.push(x);
             } else {
                 x = s.pop();
@@ -143,11 +148,26 @@ public class PolishNotation {
                         break;
                     case "/":
                         if (x == 0)
-                            return Double.POSITIVE_INFINITY;
+                            return Long.MAX_VALUE;
                         else s.push(y / x);
                         break;
                     case "%":
                         s.push(y % x);
+                        break;
+                    case "&":
+                        s.push(y & x);
+                        break;
+                    case "^":
+                        s.push(y ^ x);
+                        break;
+                    case "|":
+                        s.push(y | x);
+                        break;
+                    case ">>":
+                        s.push(y >> x);
+                        break;
+                    case "<<":
+                        s.push(y << x);
                         break;
                     default:
                         break;

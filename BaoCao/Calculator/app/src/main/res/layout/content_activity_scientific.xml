@@ -148,7 +148,8 @@
         <Button
             android:id="@+id/btn_shift"
             style="@style/MyButton"
-            android:text="shift" />
+            android:text="shift"
+            android:onClick="btn_Shift_onClick"/>
 
         <Button
             android:id="@+id/btn_CE"

@@ -317,30 +317,7 @@ public class CoreFunctions {
      * Convert from base to another base
      */
     String convertFromBaseToBase(String str, int fromBase, int toBase) {
-        return Integer.toString(Integer.parseInt(str, fromBase), toBase);
-    }
-
-    /**
-     * The Bitwise Operators: And (&), Or (|), Not (~), Xor (^)
-     */
-    int not(int n) {
-        return ~n;
-    }
-
-    long bitwise(long a, long b, String t) {
-        long value = 0;
-        switch (t) {
-            case "and":
-                value = a & b;
-                break;
-            case "or":
-                value = a | b;
-                break;
-            case "xor":
-                value = a ^ b;
-                break;
-        }
-        return value;
+        return Long.toString(Long.parseLong(str, fromBase), toBase).toUpperCase();
     }
 
     /**
@@ -352,13 +329,13 @@ public class CoreFunctions {
         try {
             DateTime dt1 = formatter.parseDateTime(start);
             DateTime dt2 = formatter.parseDateTime(end);
-            if (Years.yearsBetween(dt1, dt2).getYears() > 0)
+            if (Years.yearsBetween(dt1, dt2).getYears() != 0)
                 value += Years.yearsBetween(dt1, dt2).getYears() + " years, ";
-            if (Months.monthsBetween(dt1, dt2).getMonths() > 0)
+            if (Months.monthsBetween(dt1, dt2).getMonths() != 0)
                 value += Months.monthsBetween(dt1, dt2).getMonths() + " months, ";
-            if (Weeks.weeksBetween(dt1, dt2).getWeeks() > 0)
+            if (Weeks.weeksBetween(dt1, dt2).getWeeks() != 0)
                 value += Weeks.weeksBetween(dt1, dt2).getWeeks() + " weeks, ";
-            if (Days.daysBetween(dt1, dt2).getDays() > 0)
+            if (Days.daysBetween(dt1, dt2).getDays() != 0)
                 value += Days.daysBetween(dt1, dt2).getDays() + " days";
             if (dt1.equals(dt2))
                 value = "Same day";
