@@ -326,23 +326,24 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
         String input = result.getText().toString();
         if (completed) {
             exp.setText("RoL(" + expression + ")");
-            result.setText("" + Long.rotateLeft(Long.parseLong(input, _currentBase), 1));
+            result.setText("" + functions.rotateLeft(input,_currentBase));
             temp.setText(result.getText());
         } else if (containDigit(input)) {
-            result.setText("" + Long.rotateLeft(Long.parseLong(input, _currentBase), 1));
+            result.setText("" + functions.rotateLeft(input,_currentBase));
             temp.setText(result.getText());
         }
     }
 
     public void btn_rotateRight_onClick(View v) {
+        TextView tv_dec = findViewById(R.id.tv_dec);
         String expression = exp.getText().toString();
         String input = result.getText().toString();
         if (completed) {
             exp.setText("RoR(" + expression + ")");
-            result.setText("" + Long.rotateRight(Long.parseLong(input, _currentBase), 1));
+            result.setText("" + functions.rotateRight(input,_currentBase));
             temp.setText(result.getText());
         } else if (containDigit(input)) {
-            result.setText("" + Long.rotateRight(Long.parseLong(input, _currentBase), 1));
+            result.setText("" + functions.rotateRight(input,_currentBase));
             temp.setText(result.getText());
         }
     }

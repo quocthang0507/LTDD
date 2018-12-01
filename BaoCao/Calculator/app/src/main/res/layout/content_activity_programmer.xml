@@ -87,7 +87,8 @@
         <TextView
             android:id="@+id/tv_bin"
             style="@style/MyMiniTextView"
-            android:layout_marginLeft="5pt" />
+            android:layout_marginLeft="5pt"
+            android:maxLines="2" />
     </LinearLayout>
 
     <LinearLayout

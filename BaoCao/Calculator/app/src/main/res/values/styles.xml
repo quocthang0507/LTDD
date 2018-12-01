@@ -39,20 +39,11 @@
     <style name="MyTextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">2</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
-        <item name="android:textColor">@android:color/black</item>
-    </style>
-
-    <style name="MyMathView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1.9</item>
         <item name="android:maxLines">1</item>
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <!--For programmer layout-->
@@ -73,7 +64,7 @@
         <item name="android:layout_weight">2</item>
         <item name="android:text">0</item>
         <item name="android:gravity">center|left</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:state_multiline">false</item>
     </style>

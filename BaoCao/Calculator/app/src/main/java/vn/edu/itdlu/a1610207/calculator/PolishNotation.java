@@ -5,10 +5,18 @@ import java.util.List;
 import java.util.Stack;
 
 public class PolishNotation {
-    public String bieuThuc;
+    String bieuThuc;
     List<String> input = new ArrayList<String>();
     Stack<String> stack = new Stack<String>();
     List<String> output = new ArrayList<String>();
+
+    public String getBieuThuc(){return bieuThuc;}
+
+    public void setBieuThuc(String bieuThuc){this.bieuThuc=bieuThuc;}
+
+    public List<String> getInput(){return this.input;}
+
+    public void setInput(List<String> input){this.input=input;}
 
     //Kiểm tra một ký tự c có phải là một toán tử hay không?
     static public boolean La_ToanTu(String c) {

@@ -6,10 +6,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.Months;
-import org.joda.time.Weeks;
-import org.joda.time.Years;
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -329,20 +327,32 @@ public class CoreFunctions {
         try {
             DateTime dt1 = formatter.parseDateTime(start);
             DateTime dt2 = formatter.parseDateTime(end);
-            if (Years.yearsBetween(dt1, dt2).getYears() != 0)
-                value += Years.yearsBetween(dt1, dt2).getYears() + " years, ";
-            if (Months.monthsBetween(dt1, dt2).getMonths() != 0)
-                value += Months.monthsBetween(dt1, dt2).getMonths() + " months, ";
-            if (Weeks.weeksBetween(dt1, dt2).getWeeks() != 0)
-                value += Weeks.weeksBetween(dt1, dt2).getWeeks() + " weeks, ";
-            if (Days.daysBetween(dt1, dt2).getDays() != 0)
-                value += Days.daysBetween(dt1, dt2).getDays() + " days";
             if (dt1.equals(dt2))
                 value = "Same day";
+            else {
+                int days, months, years;
+                Period period = new Period(dt1, dt2, PeriodType.yearMonthDayTime());
+                days = period.getDays();
+                months = period.getMonths();
+                years = period.getYears();
+                value = days + " days, " + months + " months, " + years + " years";
+            }
         } catch (Exception e) {
             return null;
         }
         return value;
+    }
+
+    String rotateLeft(String input, int currentBase) {
+        Long n = Long.parseLong(convertFromBaseToBase(input, currentBase, 10));
+        String result = "" + Long.rotateLeft(n, 1);
+        return convertFromBaseToBase(result, 10, currentBase);
+    }
+
+    String rotateRight(String input, int currentBase) {
+        Long n = Long.parseLong(convertFromBaseToBase(input, currentBase, 10));
+        String result = "" + Long.rotateRight(n, 1);
+        return convertFromBaseToBase(result, 10, currentBase);
     }
 
     /**

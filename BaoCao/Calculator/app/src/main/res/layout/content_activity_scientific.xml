@@ -11,13 +11,8 @@
     tools:context=".activity_scientific"
     tools:showIn="@layout/activity_scientific">
 
-    <io.github.kexanie.library.MathView
-        android:id="@+id/formula_1"
-        style="@style/MyMathView"
-        engine="MathJax" />
-
     <TextView
-        android:id="@+id/formula_2"
+        android:id="@+id/formula"
         style="@style/MyTextView"
         android:gravity="center_vertical|right"
         android:textSize="@dimen/formula_text_size" />
