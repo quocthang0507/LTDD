@@ -43,7 +43,7 @@ public class TamGiacClass {
     }
 
     public double TinhDienTichTamGiac() {
-        double p = TinhChuViTamGiac()/2;
+        double p = TinhChuViTamGiac() / 2;
         return Math.sqrt(p * (p - this.canhA) * (p - this.canhB) * (p - this.canhC));
     }
 
@@ -72,13 +72,13 @@ public class TamGiacClass {
         else return 5;
     }
 
-    public String KetQuaPhanLoai(){
-        int kq=PhanLoaiTamGiac();
-        if(kq==0) return "Đây không phải là tam giác";
-        else if(kq==1) return "Đây là tam giác đều";
-        else if(kq==2) return "Đây là tam giác cân vuông";
-        else if(kq==3) return "Đây là tam giác cân";
-        else if(kq==4) return "Đây là tam giác vuông";
+    public String KetQuaPhanLoai() {
+        int kq = PhanLoaiTamGiac();
+        if (kq == 0) return "Đây không phải là tam giác";
+        else if (kq == 1) return "Đây là tam giác đều";
+        else if (kq == 2) return "Đây là tam giác cân vuông";
+        else if (kq == 3) return "Đây là tam giác cân";
+        else if (kq == 4) return "Đây là tam giác vuông";
         else return "Đây là tam giác thường";
     }
 }

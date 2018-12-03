@@ -19,5 +19,4 @@ public class activity_clock extends AppCompatActivity {
         analogClock = findViewById(R.id.analog);
         digitalClock = findViewById(R.id.digital);
     }
-
 }
