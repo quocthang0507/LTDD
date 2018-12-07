@@ -258,7 +258,7 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
             if (containDigit(input) && !containDigit(last) || input.equals(")")) {  //Nếu input hiện tại là số hoặc có dấu ")" thì tiến hành xử lý
                 expression += input;
                 notation.Reset();
-                notation.bieuThuc = expression;
+                notation.setBieuThuc(expression);
                 int flag = notation.KT_BT_Dung();   //Kiểm tra cú pháp
                 if (flag == -1)
                     Toast.makeText(getApplicationContext(), "Thiếu dấu đóng ngoặc", Toast.LENGTH_LONG).show();
@@ -268,7 +268,7 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
                     exp.setText(expression);
                     completed = true;
                     notation.Chuyen_TrungTo_HauTo();
-                    result.setText("" + functions.convertFromBaseToBase("" + notation.Tinh_BieuThuc_HauTo(_currentBase), 10, _currentBase));
+                    result.setText("" + functions.convertFromBaseToBase("" + functions.fixType((Long)notation.Tinh_BieuThuc_HauTo(_currentBase)), 10, _currentBase));
                     temp.setText(result.getText());
                 }
             }
@@ -326,10 +326,10 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
         String input = result.getText().toString();
         if (completed) {
             exp.setText("RoL(" + expression + ")");
-            result.setText("" + functions.rotateLeft(input,_currentBase));
+            result.setText("" + functions.rotateLeft(input, _currentBase));
             temp.setText(result.getText());
         } else if (containDigit(input)) {
-            result.setText("" + functions.rotateLeft(input,_currentBase));
+            result.setText("" + functions.rotateLeft(input, _currentBase));
             temp.setText(result.getText());
         }
     }
@@ -340,10 +340,10 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
         String input = result.getText().toString();
         if (completed) {
             exp.setText("RoR(" + expression + ")");
-            result.setText("" + functions.rotateRight(input,_currentBase));
+            result.setText("" + functions.rotateRight(input, _currentBase));
             temp.setText(result.getText());
         } else if (containDigit(input)) {
-            result.setText("" + functions.rotateRight(input,_currentBase));
+            result.setText("" + functions.rotateRight(input, _currentBase));
             temp.setText(result.getText());
         }
     }
