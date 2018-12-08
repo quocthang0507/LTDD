@@ -5,7 +5,7 @@
     <group
         android:id="@+id/group1"
         android:checkableBehavior="single"
-        android:title="Calculator">
+        android:title="@string/app_name">
         <item
             android:id="@+id/cal_standard"
             android:icon="@drawable/ic_standard"

@@ -17,6 +17,21 @@ import java.util.List;
 
 public class activity_programmer extends AppCompatActivity implements TextWatcher {
 
+    public static final String RO_R = "RoR(";
+    public static final String RO_L = "RoL(";
+    public static final String ID = "id";
+    public static final String BTN = "btn_";
+    public static final String MISSING_OPEN = "Thiếu dấu mở ngoặc";
+    public static final String MISSING_CLOSE = "Thiếu dấu đóng ngoặc";
+    public static final String RSH = "Rsh";
+    public static final String LSH = "Lsh";
+    public static final String AND = "And";
+    public static final String XOR = "Xor";
+    public static final String OR = "Or";
+    public static final String OCT = "OCT";
+    public static final String HEX = "HEX";
+    public static final String DEC = "DEC";
+    public static final String BIN = "BIN";
     Button btn_hex, btn_dec, btn_bin, btn_oct;
     String currentBase = "";
     int _currentBase;
@@ -30,8 +45,9 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_programmer);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);    //Remove activity label
         map();
         getAllNumberButtons();
         findViewById(R.id.btn_dec).performClick();  //Đưa chế độ DECimal làm mặc định
@@ -48,6 +64,10 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
         tv_dec = findViewById(R.id.tv_dec);
         tv_hex = findViewById(R.id.tv_hex);
         tv_oct = findViewById(R.id.tv_oct);
+    }
+
+    public void backToMainScreen_OnClick(View v) {
+        finish();
     }
 
     /**
@@ -68,11 +88,11 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
         resetMode();
         Button button = findViewById(v.getId());
         currentBase = button.getText().toString();
-        if (currentBase.equals("DEC"))
+        if (currentBase.equals(DEC))
             _currentBase = 10;
-        else if (currentBase.equals("HEX"))
+        else if (currentBase.equals(HEX))
             _currentBase = 16;
-        else if (currentBase.equals("OCT"))
+        else if (currentBase.equals(OCT))
             _currentBase = 8;
         else _currentBase = 2;
         changeStatusButtons(currentBase);
@@ -113,7 +133,7 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
         makeAllNumberButtonsDisable();
         Button button;
         switch (stt) {
-            case "DEC":
+            case DEC:
                 btn_dec.setTypeface(Typeface.DEFAULT_BOLD);
                 temp = findViewById(R.id.tv_dec);
                 for (int id : listID) {
@@ -124,7 +144,7 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
                     }
                 }
                 break;
-            case "HEX":
+            case HEX:
                 btn_hex.setTypeface(Typeface.DEFAULT_BOLD);
                 temp = findViewById(R.id.tv_hex);
                 for (int id : listID) {
@@ -133,7 +153,7 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
                     button.setAlpha(1f);
                 }
                 break;
-            case "OCT":
+            case OCT:
                 btn_oct.setTypeface(Typeface.DEFAULT_BOLD);
                 temp = findViewById(R.id.tv_oct);
                 for (int id : listID) {
@@ -144,7 +164,7 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
                     }
                 }
                 break;
-            case "BIN":
+            case BIN:
                 btn_bin.setTypeface(Typeface.DEFAULT_BOLD);
                 temp = findViewById(R.id.tv_bin);
                 for (int id : listID) {
@@ -189,15 +209,15 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         String number = temp.getText().toString();
         if (!number.equals(""))
-            if (currentBase.equals("DEC")) {
+            if (currentBase.equals(DEC)) {
                 tv_bin.setText(functions.convertFromBaseToBase(number, 10, 2));
                 tv_hex.setText(functions.convertFromBaseToBase(number, 10, 16));
                 tv_oct.setText(functions.convertFromBaseToBase(number, 10, 8));
-            } else if (currentBase.equals("HEX")) {
+            } else if (currentBase.equals(HEX)) {
                 tv_bin.setText(functions.convertFromBaseToBase(number, 16, 2));
                 tv_dec.setText(functions.convertFromBaseToBase(number, 16, 10));
                 tv_oct.setText(functions.convertFromBaseToBase(number, 16, 8));
-            } else if (currentBase.equals("OCT")) {
+            } else if (currentBase.equals(OCT)) {
                 tv_bin.setText(functions.convertFromBaseToBase(number, 8, 2));
                 tv_hex.setText(functions.convertFromBaseToBase(number, 8, 16));
                 tv_dec.setText(functions.convertFromBaseToBase(number, 8, 10));
@@ -235,15 +255,15 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
         } else if (containDigit(input) || input.contains(")"))  //Đưa số vào tv_exp
             expression += input;
         String name = button.getText().toString();
-        if (name.equals("Or")) { //Các toán tử đặc biệt
+        if (name.equals(OR)) { //Các toán tử đặc biệt
             input = "|";
-        } else if (name.equals("Xor")) {
+        } else if (name.equals(XOR)) {
             input = "^";
-        } else if (name.equals("And")) {
+        } else if (name.equals(AND)) {
             input = "&";
-        } else if (name.equals("Lsh")) {
+        } else if (name.equals(LSH)) {
             input = "<<";
-        } else if (name.equals("Rsh")) {
+        } else if (name.equals(RSH)) {
             input = ">>";
         }
         exp.setText(expression);
@@ -255,20 +275,20 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
             String input = result.getText().toString();
             String expression = exp.getText().toString();
             String last = expression.length() > 0 ? expression.substring(expression.length() - 1) : "";
-            if (containDigit(input) && !containDigit(last) || input.equals(")")) {  //Nếu input hiện tại là số hoặc có dấu ")" thì tiến hành xử lý
+            if (containDigit(input) && !containDigit(last) || input.equals(")")) {  //Nếu infix hiện tại là số hoặc có dấu ")" thì tiến hành xử lý
                 expression += input;
-                notation.Reset();
-                notation.setBieuThuc(expression);
-                int flag = notation.KT_BT_Dung();   //Kiểm tra cú pháp
+                notation.release();
+                notation.setExpression(expression);
+                int flag = notation.checkExpression();   //Kiểm tra cú pháp
                 if (flag == -1)
-                    Toast.makeText(getApplicationContext(), "Thiếu dấu đóng ngoặc", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), MISSING_CLOSE, Toast.LENGTH_LONG).show();
                 else if (flag == -2)
-                    Toast.makeText(getApplicationContext(), "Thiếu dấu mở ngoặc", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), MISSING_OPEN, Toast.LENGTH_LONG).show();
                 else {  //Nếu nhập đúng
                     exp.setText(expression);
                     completed = true;
-                    notation.Chuyen_TrungTo_HauTo();
-                    result.setText("" + functions.convertFromBaseToBase("" + functions.fixType((Long)notation.Tinh_BieuThuc_HauTo(_currentBase)), 10, _currentBase));
+                    notation.infixToPostfix();
+                    result.setText("" + functions.convertFromBaseToBase("" + functions.fixType((Long)notation.compute_postFix(_currentBase)), 10, _currentBase));
                     temp.setText(result.getText());
                 }
             }
@@ -279,11 +299,11 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
         completed = false;
         result.setText("0");
         temp.setText("0");
-        int id = getResources().getIdentifier("btn_" + currentBase.toLowerCase(), "id", getApplicationContext().getPackageName());
+        int id = getResources().getIdentifier(BTN + currentBase.toLowerCase(), ID, getApplicationContext().getPackageName());
         Button button = findViewById(id);
         button.performClick();
         exp.setText("");
-        notation.Reset();
+        notation.release();
     }
 
     public void btn_backspace_onClick(View v) {
@@ -325,7 +345,7 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
         String expression = exp.getText().toString();
         String input = result.getText().toString();
         if (completed) {
-            exp.setText("RoL(" + expression + ")");
+            exp.setText(RO_L + expression + ")");
             result.setText("" + functions.rotateLeft(input, _currentBase));
             temp.setText(result.getText());
         } else if (containDigit(input)) {
@@ -339,7 +359,7 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
         String expression = exp.getText().toString();
         String input = result.getText().toString();
         if (completed) {
-            exp.setText("RoR(" + expression + ")");
+            exp.setText(RO_R + expression + ")");
             result.setText("" + functions.rotateRight(input, _currentBase));
             temp.setText(result.getText());
         } else if (containDigit(input)) {

@@ -17,6 +17,7 @@ import java.util.Arrays;
 
 public class activity_currency extends AppCompatActivity implements TextWatcher, AdapterView.OnItemSelectedListener {
 
+    public static final String ENSURE_INTERNET = "Please ensure that you have a stable internet connection";
     ArrayList<String> listCurrency;
     CoreFunctions functions = new CoreFunctions();
     Spinner spinner1, spinner2;
@@ -28,8 +29,9 @@ public class activity_currency extends AppCompatActivity implements TextWatcher,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);    //Remove activity label
         map();
         loadSpinner();
         addTextChangeListener();
@@ -60,6 +62,10 @@ public class activity_currency extends AppCompatActivity implements TextWatcher,
         spinner2.setOnItemSelectedListener(this);
     }
 
+    public void backToMainScreen_OnClick(View v) {
+        finish();
+    }
+
     @Override
     public void afterTextChanged(Editable s) {
         getSpinner();
@@ -69,7 +75,7 @@ public class activity_currency extends AppCompatActivity implements TextWatcher,
                 if (rate != 0 && getEditText()) {
                     editText2.setText("" + functions.fixType(rate * Double.parseDouble(str1)));
                 } else
-                    Toast.makeText(getApplicationContext(), "Please ensure that you have a stable internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), ENSURE_INTERNET, Toast.LENGTH_LONG).show();
                 break;
             case R.id.et_currency_2:
                 rate = functions.getExchangeRate(str2, str1);
@@ -77,7 +83,7 @@ public class activity_currency extends AppCompatActivity implements TextWatcher,
                     getEditText();
                     editText1.setText("" + functions.fixType(rate * Double.parseDouble(str2)));
                 } else
-                    Toast.makeText(getApplicationContext(), "Please ensure that you have a stable internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), ENSURE_INTERNET, Toast.LENGTH_LONG).show();
                 break;
             default:
                 break;
@@ -103,14 +109,14 @@ public class activity_currency extends AppCompatActivity implements TextWatcher,
                 if (rate != 0 && getEditText()) {
                     editText2.setText("" + functions.fixType(rate * Double.parseDouble(str1)));
                 } else
-                    Toast.makeText(getApplicationContext(), "Please ensure that you have a stable internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), ENSURE_INTERNET, Toast.LENGTH_LONG).show();
                 break;
             case R.id.spinner_currency_2:
                 rate = functions.getExchangeRate(str2, str1);
                 if (rate != 0 && getEditText()) {
                     editText1.setText("" + functions.fixType(rate * Double.parseDouble(str2)));
                 } else
-                    Toast.makeText(getApplicationContext(), "Please ensure that you have a stable internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), ENSURE_INTERNET, Toast.LENGTH_LONG).show();
                 break;
             default:
                 break;
@@ -132,8 +138,6 @@ public class activity_currency extends AppCompatActivity implements TextWatcher,
     boolean getEditText() {
         str1 = editText1.getText().toString();
         str2 = editText2.getText().toString();
-        if (str1.equals("") && str2.equals(""))
-            return false;
-        else return true;
+        return !str1.equals("") || !str2.equals("");
     }
 }

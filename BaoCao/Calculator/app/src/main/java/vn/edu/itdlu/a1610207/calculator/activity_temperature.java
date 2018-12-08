@@ -26,8 +26,9 @@ public class activity_temperature extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);    //Remove activity label
         map();
         loadSpinner();
         addOnClickListener();
@@ -45,6 +46,10 @@ public class activity_temperature extends AppCompatActivity implements View.OnCl
     void addOnClickListener() {
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
+    }
+
+    public void backToMainScreen_OnClick(View v) {
+        finish();
     }
 
     @Override

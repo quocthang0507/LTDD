@@ -25,7 +25,8 @@ import java.util.Map;
 
 public class activity_date extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    static String format = "dd/MM/yyyy";
+    public static final String ADD = "Add";
+    public static final String format = "dd/MM/yyyy";
     static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.US);
     Spinner spinner;
     ConstraintLayout constraintLayout1, constraintLayout2;
@@ -41,8 +42,9 @@ public class activity_date extends AppCompatActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);    //Remove activity label
         map();
         loadSpinner();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -70,6 +72,10 @@ public class activity_date extends AppCompatActivity implements AdapterView.OnIt
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+    }
+
+    public void backToMainScreen_OnClick(View v) {
+        finish();
     }
 
     @Override
@@ -154,7 +160,7 @@ public class activity_date extends AppCompatActivity implements AdapterView.OnIt
                         ((TextView) findViewById(R.id.tv_date_to_diff)).getText().toString()));
                 break;
             case R.id.textView7:
-                char c = ((RadioButton) findViewById(group.getCheckedRadioButtonId())).getText().equals("Add") ? '+' : '-';
+                char c = ((RadioButton) findViewById(group.getCheckedRadioButtonId())).getText().equals(ADD) ? '+' : '-';
                 textView_Result.setText(functions.changeDay(((TextView) findViewById(R.id.tv_date_from)).getText().toString(), getDateFromEditTexts(), c));
             default:
                 break;

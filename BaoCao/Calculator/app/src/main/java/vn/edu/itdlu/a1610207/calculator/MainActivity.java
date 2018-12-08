@@ -16,6 +16,24 @@ import net.danlew.android.joda.JodaTimeAndroid;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String ABOUT = "about";
+    public static final String ANGLE_CONVERTER_MODE = "Angle Converter Mode";
+    public static final String PRESSURE_CONVERTER_MODE = "Pressure Converter Mode";
+    public static final String DATA_CONVERTER_MODE = "Data Converter Mode";
+    public static final String POWER_CONVERTER_MODE = "Power Converter Mode";
+    public static final String TIME_CONVERTER_MODE = "Time Converter Mode";
+    public static final String SPEED_CONVERTER_MODE = "Speed Converter Mode";
+    public static final String AREA_CONVERTER_MODE = "Area Converter Mode";
+    public static final String ENERGY_CONVERTER_MODE = "Energy Converter Mode";
+    public static final String TEMPERATURE_CONVERTER_MODE = "Temperature Converter Mode";
+    public static final String WEIGHT_AND_MASS_CONVERTER_MODE = "Weight and Mass Converter Mode";
+    public static final String LENGTH_CONVERTER_MODE = "Length Converter Mode";
+    public static final String VOLUME_CONVERTER_MODE = "Volume Converter Mode";
+    public static final String CURRENCY_CONVERTER_MODE = "Currency Converter Mode";
+    public static final String DATE_CALCULATION_MODE = "Date Calculation Mode";
+    public static final String PROGRAMMER_MODE = "Programmer Mode";
+    public static final String SCIENTIFIC_MODE = "Scientific Mode";
+    public static final String STANDARD_MODE = "Standard Mode";
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     android.support.v7.widget.Toolbar toolbar;
@@ -32,6 +50,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         JodaTimeAndroid.init(this);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        int length = navigationView.getMenu().size();
+        for (int i = 0; i < length; i++) {
+            if (navigationView.getMenu().getItem(i).isChecked()) {
+                navigationView.getMenu().getItem(i).setChecked(false);
+                return;
+            }
+        }
+    }
+
     void map() {
         drawerLayout = findViewById(R.id.main);
         navigationView = findViewById(R.id.nav_view);
@@ -40,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     void addEventListener() {
         navigationView.setNavigationItemSelectedListener(this);
-        //...
     }
 
     /**
@@ -67,95 +96,95 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             //Calculator mode
             case R.id.cal_standard:
-                setToast("Standard Mode", Toast.LENGTH_SHORT);
+                setToast(STANDARD_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_standard.class);
                 startActivity(intent);
                 break;
             case R.id.cal_scientific:
-                setToast("Scientific Mode", Toast.LENGTH_SHORT);
+                setToast(SCIENTIFIC_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_scientific.class);
                 startActivity(intent);
                 break;
             case R.id.cal_programmer:
-                setToast("Programmer Mode", Toast.LENGTH_SHORT);
+                setToast(PROGRAMMER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_programmer.class);
                 startActivity(intent);
                 break;
             case R.id.cal_date:
-                setToast("Date Calculation Mode", Toast.LENGTH_SHORT);
+                setToast(DATE_CALCULATION_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_date.class);
                 startActivity(intent);
                 break;
 
             //Converter mode
             case R.id.con_currency:
-                setToast("Currency Converter Mode", Toast.LENGTH_SHORT);
+                setToast(CURRENCY_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_currency.class);
                 startActivity(intent);
                 break;
             case R.id.con_volume:
-                setToast("Volume Converter Mode", Toast.LENGTH_SHORT);
+                setToast(VOLUME_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_volume.class);
                 startActivity(intent);
-            break;
+                break;
             case R.id.con_length:
-                setToast("Length Converter Mode", Toast.LENGTH_SHORT);
+                setToast(LENGTH_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_length.class);
                 startActivity(intent);
                 break;
             case R.id.con_weight:
-                setToast("Weight and Mass Converter Mode", Toast.LENGTH_SHORT);
+                setToast(WEIGHT_AND_MASS_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_weight.class);
                 startActivity(intent);
                 break;
             case R.id.con_temperature:
-                setToast("Temperature Converter Mode", Toast.LENGTH_SHORT);
+                setToast(TEMPERATURE_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_temperature.class);
                 startActivity(intent);
                 break;
             case R.id.con_energy:
-                setToast("Energy Converter Mode", Toast.LENGTH_SHORT);
+                setToast(ENERGY_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_energy.class);
                 startActivity(intent);
                 break;
             case R.id.con_area:
-                setToast("Area Converter Mode", Toast.LENGTH_SHORT);
+                setToast(AREA_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_area.class);
                 startActivity(intent);
                 break;
             case R.id.con_speed:
-                setToast("Speed Converter Mode", Toast.LENGTH_SHORT);
+                setToast(SPEED_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_speed.class);
                 startActivity(intent);
                 break;
             case R.id.con_time:
-                setToast("Time Converter Mode", Toast.LENGTH_SHORT);
+                setToast(TIME_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_time.class);
                 startActivity(intent);
                 break;
             case R.id.con_power:
-                setToast("Power Converter Mode", Toast.LENGTH_SHORT);
+                setToast(POWER_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_power.class);
                 startActivity(intent);
                 break;
             case R.id.con_data:
-                setToast("Data Converter Mode", Toast.LENGTH_SHORT);
+                setToast(DATA_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_data.class);
                 startActivity(intent);
                 break;
             case R.id.con_pressure:
-                setToast("Pressure Converter Mode", Toast.LENGTH_SHORT);
+                setToast(PRESSURE_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_pressure.class);
                 startActivity(intent);
                 break;
             case R.id.con_angle:
-                setToast("Angle Converter Mode", Toast.LENGTH_SHORT);
+                setToast(ANGLE_CONVERTER_MODE, Toast.LENGTH_SHORT);
                 intent = new Intent(MainActivity.this, activity_angle.class);
                 startActivity(intent);
                 break;
             case R.id.about:
                 DialogFragment dialogFragment = new myDialogFragment();
-                dialogFragment.show(getFragmentManager(), "about");
+                dialogFragment.show(getFragmentManager(), ABOUT);
                 break;
             default:
                 return false;

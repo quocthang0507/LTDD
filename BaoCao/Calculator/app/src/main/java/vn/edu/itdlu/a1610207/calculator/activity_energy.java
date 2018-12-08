@@ -26,8 +26,9 @@ public class activity_energy extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_energy);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);    //Remove activity label
         map();
         loadSpinner();
         addOnClickListener();
@@ -45,6 +46,10 @@ public class activity_energy extends AppCompatActivity implements View.OnClickLi
     void addOnClickListener() {
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
+    }
+
+    public void backToMainScreen_OnClick(View v) {
+        finish();
     }
 
     @Override

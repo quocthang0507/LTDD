@@ -10,23 +10,30 @@ import android.widget.Toast;
 
 public class activity_standard extends AppCompatActivity {
 
+    public static final String MISSING = "Missing \")\"";
     TextView tv_result, tv_exp;
     String operators = "['+']|['×']|['÷']", special = "['%']|['²']|['⁻¹']|[')']";
     PolishNotation notation = new PolishNotation();
     CoreFunctions functions = new CoreFunctions();
+    boolean completed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_standard);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);    //Remove activity label
         map();
     }
 
     void map() {
         tv_result = findViewById(R.id.result);
         tv_exp = findViewById(R.id.formula);
+    }
+
+    public void backToMainScreen_OnClick(View v) {
+        finish();
     }
 
     String replaceString(String str) {
@@ -84,34 +91,37 @@ public class activity_standard extends AppCompatActivity {
     }
 
     boolean containDigit(String str) {
-        if (str.matches(operators))
-            return false;
-        else return true;
+        return !str.matches(operators);
     }
 
     boolean endWithSpecial(String str) {
         String last = str.substring(str.length() - 1);
-        if (last.matches(special))
-            return true;
-        else return false;
+        return last.matches(special);
     }
 
     public void btn_number_OnClick(View v) {
-        String input = tv_result.getText().toString();
-        String expression = tv_exp.getText().toString();
-        if (input.equals("0"))
-            input = "";
-        else if (input.matches(operators) || input.equals("-")) {
-            expression += input;
-            input = "";
+        if (!completed) {
+            String input = tv_result.getText().toString();
+            String expression = tv_exp.getText().toString();
+            if (input.equals("0"))
+                input = "";
+            else if (input.matches(operators) || input.equals("-")) {
+                expression += input;
+                input = "";
+            }
+            input += ((Button) v).getText().toString();
+            tv_result.setText(input);
+            tv_exp.setText(expression);
         }
-        input += ((Button) v).getText().toString();
-        tv_result.setText(input);
-        tv_exp.setText(expression);
     }
 
     public void btn_neg_OnClick(View v) {
         String input = tv_result.getText().toString();
+        if (completed) {
+            tv_exp.setText("");
+            completed = false;
+            notation.release();
+        }
         if (containDigit(input)) {
             if (input.charAt(0) == '-') {
                 input = input.substring(2, input.length() - 1);
@@ -125,7 +135,7 @@ public class activity_standard extends AppCompatActivity {
 
     public void btn_dot_OnClick(View v) {
         String input = tv_result.getText().toString();
-        if (Character.isDigit(input.charAt(input.length() - 1))) {
+        if (Character.isDigit(input.charAt(input.length() - 1)) && completed) {
             input += ".";
         }
         tv_result.setText(input);
@@ -137,15 +147,16 @@ public class activity_standard extends AppCompatActivity {
         if (containDigit(input))
             exp += input;
         String newStr = replaceAllNegative(replaceAllSqrt(replaceString(exp)));
-        notation.setBieuThuc(newStr);
-        int flag = notation.KT_BT_Dung();
+        notation.setExpression(newStr);
+        int flag = notation.checkExpression();
         if (flag == -1)
-            Toast.makeText(getApplicationContext(), "Missing \")\"", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), MISSING, Toast.LENGTH_LONG).show();
         else if (flag == -2)
             Toast.makeText(getApplicationContext(), "Missing \"(\"", Toast.LENGTH_LONG).show();
         else {
-            notation.Chuyen_TrungTo_HauTo();
-            String result = notation.Tinh_BieuThuc_HauTo(10).toString();
+            completed = true;
+            notation.infixToPostfix();
+            String result = notation.compute_postFix(10).toString();
             input = functions.fixType(Double.parseDouble(result)).toString();
             tv_result.setText(input);
             tv_exp.setText(exp);
@@ -155,6 +166,11 @@ public class activity_standard extends AppCompatActivity {
     public void btn_opr_OnClick(View v) {
         String input = tv_result.getText().toString();
         String expression = tv_exp.getText().toString();
+        if (completed) {
+            expression = "";
+            completed = false;
+            notation.release();
+        }
         if (containDigit(input) && !input.equals("-") && !input.equals("0") ||
                 expression.equals("") && input.equals("0"))
             expression += input;
@@ -173,23 +189,33 @@ public class activity_standard extends AppCompatActivity {
     public void btn_deleteAll_OnClick(View v) {
         tv_exp.setText("");
         tv_result.setText("0");
-        notation.Reset();
+        notation.release();
+        completed = false;
     }
 
     public void btn_delete_OnClick(View v) {
-        tv_result.setText("0");
+        if (completed)
+            btn_deleteAll_OnClick(v);
+        else tv_result.setText("0");
     }
 
     public void btn_backspace_OnClick(View v) {
-        String input = tv_result.getText().toString();
-        input = input.substring(0, input.length() - 1);
-        if (input.equals(""))
-            input = "0";
-        tv_result.setText(input);
+        if (!completed) {
+            String input = tv_result.getText().toString();
+            input = input.substring(0, input.length() - 1);
+            if (input.equals(""))
+                input = "0";
+            tv_result.setText(input);
+        }
     }
 
     public void btn_sqrt_OnClick(View v) {
         String input = tv_result.getText().toString();
+        if (completed) {
+            tv_exp.setText("");
+            completed = false;
+            notation.release();
+        }
         if (containDigit(input)) {
             input = "√(" + input + ")";
             tv_result.setText(input);
@@ -198,6 +224,11 @@ public class activity_standard extends AppCompatActivity {
 
     public void btn_percent_OnClick(View v) {
         String input = tv_result.getText().toString();
+        if (completed) {
+            tv_exp.setText("");
+            completed = false;
+            notation.release();
+        }
         if (endWithSpecial(input)) {
             input = "(" + input + ")%";
         } else if (containDigit(input)) {
@@ -208,6 +239,11 @@ public class activity_standard extends AppCompatActivity {
 
     public void btn_square_OnClick(View v) {
         String input = tv_result.getText().toString();
+        if (completed) {
+            tv_exp.setText("");
+            completed = false;
+            notation.release();
+        }
         if (endWithSpecial(input)) {
             input = "(" + input + ")²";
         } else if (containDigit(input)) {
@@ -218,6 +254,11 @@ public class activity_standard extends AppCompatActivity {
 
     public void btn_reverse_OnClick(View v) {
         String input = tv_result.getText().toString();
+        if (completed) {
+            tv_exp.setText("");
+            completed = false;
+            notation.release();
+        }
         if (endWithSpecial(input)) {
             input = "(" + input + ")⁻¹";
         } else if (containDigit(input)) {

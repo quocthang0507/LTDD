@@ -12,8 +12,9 @@ public class activity_scientific extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scientific);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);    //Remove activity label
     }
 
     public void btn_Shift_onClick(View v) {
@@ -33,4 +34,9 @@ public class activity_scientific extends AppCompatActivity {
             layout4.setVisibility(View.VISIBLE);
         }
     }
+
+    public void backToMainScreen_OnClick(View v) {
+        finish();
+    }
+
 }

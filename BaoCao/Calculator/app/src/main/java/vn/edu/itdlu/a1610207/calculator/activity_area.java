@@ -26,8 +26,9 @@ public class activity_area extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);    //Remove activity label
         map();
         loadSpinner();
         addOnClickListener();
@@ -40,6 +41,10 @@ public class activity_area extends AppCompatActivity implements View.OnClickList
         editText2 = findViewById(R.id.et_area_2);
         button1 = findViewById(R.id.btn_down);
         button2 = findViewById(R.id.btn_up);
+    }
+
+    public void backToMainScreen_OnClick(View v) {
+        finish();
     }
 
     void addOnClickListener() {
