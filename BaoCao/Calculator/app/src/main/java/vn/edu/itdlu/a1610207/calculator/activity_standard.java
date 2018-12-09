@@ -91,7 +91,7 @@ public class activity_standard extends AppCompatActivity {
     }
 
     boolean containDigit(String str) {
-        return !str.matches(operators);
+        return !str.matches(operators) && !str.equals("-");
     }
 
     boolean endWithSpecial(String str) {
@@ -103,7 +103,7 @@ public class activity_standard extends AppCompatActivity {
         if (!completed) {
             String input = tv_result.getText().toString();
             String expression = tv_exp.getText().toString();
-            if (input.equals("0"))
+            if (input.equals("0") || endWithSpecial(input))
                 input = "";
             else if (input.matches(operators) || input.equals("-")) {
                 expression += input;
