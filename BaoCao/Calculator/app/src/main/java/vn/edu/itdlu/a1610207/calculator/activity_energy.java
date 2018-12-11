@@ -57,11 +57,11 @@ public class activity_energy extends AppCompatActivity implements View.OnClickLi
         getID();
         switch (view.getId()) {
             case R.id.btn_down:
-                value = functions.convertString(editText1.getText().toString());
+                value = functions.convertFromString(editText1.getText().toString());
                 editText2.setText("" + functions.otherConverter(functions.Energy, id1, value, id2));
                 break;
             case R.id.btn_up:
-                value = functions.convertString(editText2.getText().toString());
+                value = functions.convertFromString(editText2.getText().toString());
                 editText1.setText("" + functions.otherConverter(functions.Energy, id2, value, id1));
                 break;
             default:

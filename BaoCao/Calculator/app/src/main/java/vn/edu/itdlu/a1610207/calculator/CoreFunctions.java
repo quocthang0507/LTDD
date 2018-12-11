@@ -1,28 +1,27 @@
 package vn.edu.itdlu.a1610207.calculator;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import android.content.Context;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CoreFunctions {
-	
 	public String[] Currency =
 			new String[]{"AFN ؋", "ALL Lek", "AMD", "ANG ƒ", "AOA", "ARS $", "AUD $", "AWG ƒ", "AZN \u20BC", "BAM KM", "BBD $", "BDT",
 					"BGN лв", "BHD", "BIF", "BND $", "BOB $b", "BRL R$", "BSD $", "BTC", "BTN", "BWP P", "BYN Br",
@@ -38,7 +37,6 @@ public class CoreFunctions {
 					"SHP £", "SLL", "SOS S", "SRD $", "STD", "SYP £", "SZL", "THB ฿", "TJS", "TMT", "TND",
 					"TOP", "TRY ₺", "TTD TT$", "TWD NT$", "TZS", "UAH ₴", "UGX", "USD $", "UYU $U", "UZS лв", "VEF Bs",
 					"VND ₫", "VUV", "WST", "XAF", "XCD $", "XDR", "XOF", "XPF", "YER ﷼", "ZAR R", "ZMW"};
-	
 	/**
 	 * Length converter
 	 * The base unit in the International System of Units (SI) is the metre (or meter)
@@ -47,7 +45,6 @@ public class CoreFunctions {
 			new String[]{"Nanometers", "10^-9", "Microns", "10^-6", "Millimeters", "10^-3",
 					"Centimeters", "10^-2", "Meters", "1", "Kilometers", "10^3",
 					"Inches", "0.0254", "Feet", "0.3048", "Yards", "0.91", "Miles", "1610"};
-	
 	/**
 	 * Volume converter
 	 * According to the SI System, the base unit for measuring volume is the metre and
@@ -57,7 +54,6 @@ public class CoreFunctions {
 			new String[]{"Milliliters", "10^-6", "Cubic centimeters", "10^-6",
 					"Liters", "10^-3", "Cubic meters", "1", "Cubic inches", "0.000016387064",
 					"Cubic feet", "0.0283168466", "Cubic yards", "0.764554858"};
-	
 	/**
 	 * Mass converter
 	 * The basic SI unit of mass is the kilogram (kg)
@@ -66,13 +62,11 @@ public class CoreFunctions {
 			new String[]{"Carats", "0.0002", "Milligrams", "10^-6", "Centigrams", "10^-5", "Decigrams", "10^-4",
 					"Grams", "10^-3", "Dekagrams", "10^-2", "Hectograms", "10^-1", "Kilograms", "1",
 					"Ounces", "0.0283495231", "Pounds", "0.45359237"};
-	
 	/**
 	 * Temperature converter
 	 * The basic unit of temperature in the International System of Units (SI) is the kelvin
 	 */
 	public String[] Temperature = new String[]{"Celsius", "Fahrenheit", "Kelvin"};
-	
 	/**
 	 * Energy converter
 	 * the SI unit for energy is the same as the unit of work – the joule (J)
@@ -80,7 +74,6 @@ public class CoreFunctions {
 	public String[] Energy =
 			new String[]{"Electron volts", "1.60217662×10^-19", "Joules", "1", "Kilojoules", "1000",
 					"Thermal calories", "4184", "Food calories", "4184", "Foot-pounds", "1.35581795"};
-	
 	/**
 	 * Data converter
 	 * The most commonly used units of data storage capacity are the bit
@@ -94,7 +87,6 @@ public class CoreFunctions {
 			"Exabits", "10^18", "Exbibits", "2^60", "Exabytes", "8×10^18", "Exbibytes", "8×2^60",
 			"Zetabits", "10^21", "Zebibits", "2^70", "Zetabytes", "8×10^21", "Zebibytes", "8×2^70",
 			"Yottabits", "10^24", "Yotbibits", "2^80", "Yottabytes", "8×10^24", "Yottbibytes", "8×2^80"};
-	
 	/**
 	 * Area converter
 	 * In the International System of Units (SI), the standard unit of area is the square metre
@@ -104,7 +96,6 @@ public class CoreFunctions {
 					"Hectares", "10^4", "Square kilometers", "10^6", "Square inches", "0.00064516",
 					"Square feet", "0.09290304", "Square yards", "0.83612736", "Acres", "4046.85642",
 					"Square miles", "2589988.11"};
-	
 	/**
 	 * Speed converter
 	 * The SI unit of speed is the metre per second
@@ -113,7 +104,6 @@ public class CoreFunctions {
 			new String[]{"Centimeters per second", "0.01", "Meters per second", "1",
 					"Kilometers per hour", "0.277777778", "Feet per second", "0.3048",
 					"Miles per hour", "0.44704", "Knots", "0.514444444", "Mach", "340.29"};
-	
 	/**
 	 * Time converter
 	 * The base unit of time in the International System of Units (SI), and by extension most of the Western world, is the second
@@ -121,7 +111,6 @@ public class CoreFunctions {
 	public String[] Time =
 			new String[]{"Microseconds", "10^-6", "Milliseconds", "0.001", "Seconds", "1", "Minutes", "60",
 					"Hours", "3600", "Days", "86400", "Weeks", "604800", "Years", "31556926"};
-	
 	/**
 	 * Power converter
 	 * In the International System of Units, the unit of power is the joule per second (J/s), known as the watt in honour of James Watt
@@ -129,7 +118,6 @@ public class CoreFunctions {
 	public String[] Power =
 			new String[]{"Watts", "1", "Kilowatts", "1000", "Horsepower (US)", "745.699872",
 					"Foot-pounds/minute", "0.0225969658", "BTUs/minute", "17.5842642"};
-	
 	/**
 	 * Pressure converter
 	 * The unit of pressure in the SI system is the pascal (Pa), defined as a force of one Newton per square meter
@@ -138,12 +126,12 @@ public class CoreFunctions {
 			new String[]{"Atmospheres", "101325", "Bars", "10^5", "Kilopascals", "10^3",
 					"Millimeters of mercury", "133.322368", "Pascals", "1",
 					"Pounds per square inch", "6894.75729"};
-	
 	/**
 	 * Angle converter
 	 * The SI unit of angular measure is the radian
 	 */
 	public String[] Angle = new String[]{"Degrees", "pi/180", "Radians", "1", "Gradians", "pi/200"};
+	String exchangeRate;
 	
 	/**************************************Calculator**************************************/
 	
@@ -376,22 +364,26 @@ public class CoreFunctions {
 	/**
 	 * Get HTML source from link
 	 */
-	String getHTMLSource(String url) throws IOException {
-		HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
-		HttpGet httpget = new HttpGet(url); // Set the action you want to do
-		HttpResponse response = httpclient.execute(httpget); // Executeit
-		HttpEntity entity = response.getEntity();
-		InputStream is = entity.getContent(); // Create an InputStream with the response
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-		StringBuilder sb = new StringBuilder();
-		String line = null;
-		while ((line = reader.readLine()) != null) // Read line by line
-			sb.append(line + "\n");
-		
-		String resString = sb.toString(); // Result is here
-		
-		is.close(); // Close the stream
-		return resString;
+	void getValueFromUrl(String url, final String tag, Context context) {
+		RequestQueue requestQueue = Volley.newRequestQueue(context);
+		StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				try {
+					JSONObject jsonObject = new JSONObject(response);
+					exchangeRate = jsonObject.getJSONObject(tag).getString("val");  //Save exchange rate to global scope
+				} catch (JSONException e) {
+					exchangeRate = null;
+					e.printStackTrace();
+				}
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+			
+			}
+		});
+		requestQueue.add(stringRequest);
 	}
 	
 	/**************************************Converter**************************************/
@@ -420,25 +412,17 @@ public class CoreFunctions {
 	/**
 	 * Get the exchange rates from website
 	 */
-	double getExchangeRate(String unit1, String unit2) {
-		String url = "https://free.currencyconverterapi.com/api/v6/convert?q=" + unit1 + "_" + unit2 + "&compact=y";
-		String content;
-		try {
-			content = getHTMLSource(url);
-		} catch (IOException i) {
-			content = null;
-		}
-		Pattern pattern = Pattern.compile("([\\d.]+)");
-		Matcher matcher = pattern.matcher(content);
-		if (matcher.find())
-			return Double.parseDouble(matcher.group());
-		else return 0;
+	double getExchangeRate(String unit1, String unit2, Context context) {
+		String tag = "" + unit1 + "_" + unit2;
+		String url = "https://free.currencyconverterapi.com/api/v6/convert?q=" + tag + "&compact=y";
+		getValueFromUrl(url, tag, context);
+		return exchangeRate.equals(null) ? 0 : Double.parseDouble(exchangeRate);
 	}
 	
 	/**
 	 * Convert string to double, especially if it have power symbol
 	 */
-	Object convertString(String string) {
+	Object convertFromString(String string) {
 		try {
 			if (string.contains("^")) {
 				if (string.contains("×")) {     //s1 × 10 ^ s2
@@ -466,6 +450,9 @@ public class CoreFunctions {
 	
 	/**
 	 * The temperature converter function
+	 * id == 0 : Celsius
+	 * id == 1: Fahrenheit
+	 * id == 2 : Kelvin
 	 */
 	Object temperatureConverter(int id1, Object value, int id2) {
 		if (id1 == id2)
@@ -477,7 +464,7 @@ public class CoreFunctions {
 			} else if (id1 == 1) {
 				return id2 == 0 ? 5 / 9 * (_value - 32) : 5 / 9 * (_value - 32) + 273;
 			} else {
-				return id2 == 0 ? _value - 273 : 9 / 5 * (_value - 273) + 32;
+				return id2 == 0 ? _value - 273 : (9 / 5 * (_value - 273) + 32);
 			}
 		}
 	}
@@ -502,9 +489,9 @@ public class CoreFunctions {
 			return value;
 		else {
 			//1 unit of id1 = ? unit of base
-			double base1 = Double.parseDouble("" + convertString(array[id1 + 1]));
+			double base1 = Double.parseDouble("" + convertFromString(array[id1 + 1]));
 			//1 unit of id2 = ? unit of base
-			double base2 = Double.parseDouble("" + convertString(array[id2 + 1]));
+			double base2 = Double.parseDouble("" + convertFromString(array[id2 + 1]));
 			//Get crosshair value
 			return fixType(Double.parseDouble("" + value) * base1 / base2);
 		}
