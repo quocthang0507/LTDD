@@ -1,13 +1,7 @@
 package vn.edu.itdlu.a1610207.calculator;
 
 import android.content.Context;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import android.os.AsyncTask;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -131,7 +125,6 @@ public class CoreFunctions {
 	 * The SI unit of angular measure is the radian
 	 */
 	public String[] Angle = new String[]{"Degrees", "pi/180", "Radians", "1", "Gradians", "pi/200"};
-	String exchangeRate;
 	
 	/**************************************Calculator**************************************/
 	
@@ -361,31 +354,6 @@ public class CoreFunctions {
 		return formatter.print(dt1);
 	}
 	
-	/**
-	 * Get HTML source from link
-	 */
-	void getValueFromUrl(String url, final String tag, Context context) {
-		RequestQueue requestQueue = Volley.newRequestQueue(context);
-		StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				try {
-					JSONObject jsonObject = new JSONObject(response);
-					exchangeRate = jsonObject.getJSONObject(tag).getString("val");  //Save exchange rate to global scope
-				} catch (JSONException e) {
-					exchangeRate = null;
-					e.printStackTrace();
-				}
-			}
-		}, new Response.ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-			
-			}
-		});
-		requestQueue.add(stringRequest);
-	}
-	
 	/**************************************Converter**************************************/
 	
 	/**
@@ -414,9 +382,13 @@ public class CoreFunctions {
 	 */
 	double getExchangeRate(String unit1, String unit2, Context context) {
 		String tag = "" + unit1 + "_" + unit2;
+		tag = tag.toLowerCase();
 		String url = "https://free.currencyconverterapi.com/api/v6/convert?q=" + tag + "&compact=y";
-		getValueFromUrl(url, tag, context);
-		return exchangeRate.equals(null) ? 0 : Double.parseDouble(exchangeRate);
+		GetJson json = new GetJson();
+		json.setUrl(url);
+		json.setTag(tag);
+		json.execute();
+		return Double.parseDouble(json.getValue());
 	}
 	
 	/**
@@ -494,6 +466,64 @@ public class CoreFunctions {
 			double base2 = Double.parseDouble("" + convertFromString(array[id2 + 1]));
 			//Get crosshair value
 			return fixType(Double.parseDouble("" + value) * base1 / base2);
+		}
+	}
+	
+	private class GetJson extends AsyncTask<Void, Void, Void> {
+		String url;
+		String tag;
+		String value;
+		
+		public String getUrl() {
+			return url;
+		}
+		
+		public void setUrl(String url) {
+			this.url = url;
+		}
+		
+		public String getTag() {
+			return tag;
+		}
+		
+		public void setTag(String tag) {
+			this.tag = tag;
+		}
+		
+		public String getValue() {
+			return value;
+		}
+		
+		public void setValue(String value) {
+			this.value = value;
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
+		
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			HttpHandler sh = new HttpHandler();
+			String jsonstr = sh.makeServiceCall(url);
+			if (jsonstr != null) {
+				try {
+					JSONObject jsonObject = new JSONObject(jsonstr);
+					JSONObject value = jsonObject.getJSONObject(tag);
+					setValue(value.getString("val"));
+				} catch (final JSONException e) {
+					//Json parsing error
+				}
+			} else {
+				//Couldn't get json from server
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
 		}
 	}
 }

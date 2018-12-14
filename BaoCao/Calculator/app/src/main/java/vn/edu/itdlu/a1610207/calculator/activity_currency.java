@@ -63,6 +63,7 @@ public class activity_currency extends AppCompatActivity implements View.OnClick
 	@Override
 	public void onClick(View view) {
 		double rate, result, from;
+		getSpinner();
 		switch (view.getId()) {
 			case R.id.btn_down:
 				rate = functions.getExchangeRate(str1, str2, getApplicationContext());
