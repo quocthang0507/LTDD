@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Stack;
 
 public class PolishNotation {
-	String expression;
-	List<String> infix = new ArrayList<String>();
-	Stack<String> stack = new Stack<String>();
-	List<String> postfix = new ArrayList<String>();
+	private String expression;
+	private List<String> infix = new ArrayList<String>();
+	private Stack<String> stack = new Stack<String>();
+	private List<String> postfix = new ArrayList<String>();
 	
-	//Kiểm tra một ký tự c có phải là một toán tử hay không?
+	/**
+	 * Kiểm tra một ký tự c có phải là một toán tử hay không?
+	 */
 	static public boolean isOperator(String c) {
 		return c.equals("+") || c.equals("-") || c.equals("*") || c.equals("/") || c.equals("%") ||
 				c.equals("^") || c.equals("&") || c.equals("|") || c.equals(">>") || c.equals("<<") ||
@@ -162,7 +164,7 @@ public class PolishNotation {
 		Object t;
 		double x, y;
 		Stack<Object> s = new Stack<>();
-		for (String item : postfix) {
+		for (String item : this.postfix) {
 			if (isOperand(item)) {
 				if (radix == 10)
 					t = Double.parseDouble(item);
@@ -225,9 +227,9 @@ public class PolishNotation {
 	 * Giải phóng các thuộc tính của lớp
 	 */
 	public void release() {
-		expression = "";
-		infix.clear();
-		postfix.clear();
-		stack.clear();
+		this.expression = "";
+		this.infix.clear();
+		this.postfix.clear();
+		this.stack.clear();
 	}
 }

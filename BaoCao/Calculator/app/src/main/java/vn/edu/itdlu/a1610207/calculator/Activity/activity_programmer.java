@@ -1,4 +1,4 @@
-package vn.edu.itdlu.a1610207.calculator;
+package vn.edu.itdlu.a1610207.calculator.Activity;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,6 +14,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import vn.edu.itdlu.a1610207.calculator.CoreFunctions;
+import vn.edu.itdlu.a1610207.calculator.PolishNotation;
+import vn.edu.itdlu.a1610207.calculator.R;
 
 public class activity_programmer extends AppCompatActivity implements TextWatcher {
 

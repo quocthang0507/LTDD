@@ -1,21 +1,31 @@
 package vn.edu.itdlu.a1610207.calculator;
 
-import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
 
 public class CoreFunctions {
+	private static final String LOG_THREAD_ACTIVITY = "Thang - DLU";
 	public String[] Currency =
 			new String[]{"AFN ؋", "ALL Lek", "AMD", "ANG ƒ", "AOA", "ARS $", "AUD $", "AWG ƒ", "AZN \u20BC", "BAM KM", "BBD $", "BDT",
 					"BGN лв", "BHD", "BIF", "BND $", "BOB $b", "BRL R$", "BSD $", "BTC", "BTN", "BWP P", "BYN Br",
@@ -126,6 +136,11 @@ public class CoreFunctions {
 	 */
 	public String[] Angle = new String[]{"Degrees", "pi/180", "Radians", "1", "Gradians", "pi/200"};
 	
+	/**
+	 * String contains website's content
+	 */
+	String temp = null;
+	
 	/**************************************Calculator**************************************/
 	
 	/**
@@ -135,49 +150,49 @@ public class CoreFunctions {
 	 * 10^x
 	 * e^x
 	 */
-	Object pow(double x, double y) {
+	public Object pow(double x, double y) {
 		return fixType(Math.pow(x, y));
 	}
 	
 	/**
 	 * Percentage (%)
 	 */
-	Object percentage(double n) {
+	public Object percentage(double n) {
 		return fixType(n / 100);
 	}
 	
 	/**
 	 * Square root of x
 	 */
-	Object sqrt(double x) {
+	public Object sqrt(double x) {
 		return fixType(Math.sqrt(x));
 	}
 	
 	/**
 	 * nth root of x
 	 */
-	Object nroot(double x, double n) {
+	public Object nroot(double x, double n) {
 		return pow(x, 1 / n);
 	}
 	
 	/**
 	 * Negative number
 	 */
-	Object neg(double x) {
+	public Object neg(double x) {
 		return fixType(-x);
 	}
 	
 	/**
 	 * Convert degrees to radians
 	 */
-	Object deg2Rad(double x) {
+	public Object deg2Rad(double x) {
 		return fixType(Math.toRadians(x));
 	}
 	
 	/**
 	 * Convert radians to degrees
 	 */
-	Object rad2Deg(double x) {
+	public Object rad2Deg(double x) {
 		return fixType(Math.toDegrees(x));
 	}
 	
@@ -186,7 +201,7 @@ public class CoreFunctions {
 	 * Such as: sin, cos, tan
 	 * isRadians: true if x is radians, false if x is degrees
 	 */
-	Object trigonometric(String t, double value, boolean isRadians) {
+	public Object trigonometric(String t, double value, boolean isRadians) {
 		if (!isRadians)
 			value = (double) deg2Rad(value);
 		switch (t) {
@@ -203,7 +218,7 @@ public class CoreFunctions {
 	/**
 	 * Common inverse trigonometric functions
 	 */
-	Object inverse_trigonometric(String t, double value, boolean isRadians) {
+	public Object inverse_trigonometric(String t, double value, boolean isRadians) {
 		if (!isRadians)
 			value = (double) deg2Rad(value);
 		switch (t) {
@@ -220,14 +235,14 @@ public class CoreFunctions {
 	/**
 	 * The natural logarithm (base e) of a double value
 	 */
-	Object ln(double x) {
+	public Object ln(double x) {
 		return fixType(Math.log(x));
 	}
 	
 	/**
 	 * The base 10 logarithm of a double value
 	 */
-	Object log10(double x) {
+	public Object log10(double x) {
 		return fixType(Math.log10(x));
 	}
 	
@@ -235,14 +250,14 @@ public class CoreFunctions {
 	 * Exponential function
 	 * The method returns the base of the natural logarithms, e, to the power of the argument
 	 */
-	Object exp(double x) {
+	public Object exp(double x) {
 		return fixType(Math.exp(x));
 	}
 	
 	/**
 	 * Convert decimal degrees to Degrees Minutes Seconds
 	 */
-	String dms(double dd) {
+	public String dms(double dd) {
 		int d = (int) dd;
 		int m = (int) ((dd - d) * 60);
 		int s = (int) ((dd - d - m / 60) * 3600);
@@ -252,7 +267,7 @@ public class CoreFunctions {
 	/**
 	 * Convert Degrees Minutes Seconds to decimal degrees
 	 */
-	double dd(String dms) {
+	public double dd(String dms) {
 		int d, m, s;
 		d = Integer.parseInt(dms.substring(0, dms.indexOf("°") - 1));
 		m = Integer.parseInt(dms.substring(dms.indexOf("°") + 1, dms.indexOf("'") - 1));
@@ -264,21 +279,21 @@ public class CoreFunctions {
 	/**
 	 * The mathematical constant π
 	 */
-	double pi() {
+	public double pi() {
 		return format(Math.PI);
 	}
 	
 	/**
 	 * The mathematical constant e
 	 */
-	double e() {
+	public double e() {
 		return Math.E; //return exp(1.0);
 	}
 	
 	/**
 	 * Factorial of x
 	 */
-	long factorial(int x) {
+	public long factorial(int x) {
 		if (x > 0)
 			return x * factorial(x - 1);
 		else return 1;
@@ -287,14 +302,14 @@ public class CoreFunctions {
 	/**
 	 * Convert from base to another base
 	 */
-	String convertFromBaseToBase(String str, int fromBase, int toBase) {
+	public String convertFromBaseToBase(String str, int fromBase, int toBase) {
 		return Long.toString(Long.parseLong(str, fromBase), toBase).toUpperCase();
 	}
 	
 	/**
 	 * Difference between 2 dates
 	 */
-	String different(String start, String end) {
+	public String different(String start, String end) {
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
 		String value = "";
 		try {
@@ -316,13 +331,13 @@ public class CoreFunctions {
 		return value;
 	}
 	
-	String rotateLeft(String input, int currentBase) {
+	public String rotateLeft(String input, int currentBase) {
 		Long n = Long.parseLong(convertFromBaseToBase(input, currentBase, 10));
 		String result = "" + Long.rotateLeft(n, 1);
 		return convertFromBaseToBase(result, 10, currentBase);
 	}
 	
-	String rotateRight(String input, int currentBase) {
+	public String rotateRight(String input, int currentBase) {
 		Long n = Long.parseLong(convertFromBaseToBase(input, currentBase, 10));
 		String result = "" + Long.rotateRight(n, 1);
 		return convertFromBaseToBase(result, 10, currentBase);
@@ -331,7 +346,7 @@ public class CoreFunctions {
 	/**
 	 * Date1 add or subtract date2
 	 */
-	String changeDay(String date1, Map<Character, Integer> date2, char c) {
+	public String changeDay(String date1, Map<Character, Integer> date2, char c) {
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
 		DateTime dt1;
 		try {
@@ -359,7 +374,7 @@ public class CoreFunctions {
 	/**
 	 * Try to fix proper type of value
 	 */
-	Object fixType(double value) {
+	public Object fixType(double value) {
 		double decimal = value - (long) value;
 		if (decimal == 0f)
 			return (long) value;
@@ -371,30 +386,70 @@ public class CoreFunctions {
 	/**
 	 * Return a string whose value was formatted by decimalFormat
 	 */
-	double format(double value) {
+	public double format(double value) {
 		Double result = BigDecimal.valueOf(value).setScale(10, RoundingMode.HALF_UP)
 				.doubleValue();
 		return result;
 	}
 	
+	public String getWebpage(String url) {
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpGet httpGet = new HttpGet();
+		InputStream inputStream = null;
+		String response = null;
+		try {
+			URI uri = new URI(url);
+			httpGet.setURI(uri);
+			HttpResponse httpResponse = httpClient.execute(httpGet);
+			inputStream = httpResponse.getEntity().getContent();
+			Reader reader = new InputStreamReader(inputStream, "UTF-8");
+			int c;
+			StringBuffer stringBuffer = new StringBuffer();
+			while ((c = reader.read()) != -1) {
+				stringBuffer.append((char) c);
+			}
+			response = stringBuffer.toString();
+		} catch (ClientProtocolException e) {
+			Log.e(LOG_THREAD_ACTIVITY, "HttpActivity.getPage() ClientProtocolException error", e);
+		} catch (IOException e) {
+			Log.e(LOG_THREAD_ACTIVITY, "HttpActivity.getPage() IOException error", e);
+		} catch (URISyntaxException e) {
+			Log.e(LOG_THREAD_ACTIVITY, "HttpActivity.getPage() URISyntaxException error", e);
+		} finally {
+			try {
+				if (inputStream != null)
+					inputStream.close();
+			} catch (IOException e) {
+				Log.e(LOG_THREAD_ACTIVITY, "HttpActivity.getPage() IOException error when closing flows", e);
+			}
+		}
+		return response;
+	}
+	
 	/**
-	 * Get the exchange rates from website
+	 * Get the exchange rate from website
 	 */
-	double getExchangeRate(String unit1, String unit2, Context context) {
+	public double getExchangeRate(String unit1, String unit2) {
 		String tag = "" + unit1 + "_" + unit2;
-		tag = tag.toLowerCase();
 		String url = "https://free.currencyconverterapi.com/api/v6/convert?q=" + tag + "&compact=y";
-		GetJson json = new GetJson();
-		json.setUrl(url);
-		json.setTag(tag);
-		json.execute();
-		return Double.parseDouble(json.getValue());
+		String script = "var text = document.documentElement.innerText;var pattern=/[0-9]*\\.?[0-9]+/g;";
+		/*new HttpTask().execute(url);
+		if (temp != null) {
+			Matcher matcher = Pattern.compile("C=(\\d+\\.\\d+)").matcher(temp);
+			while (matcher.find()) {
+				double value = Double.parseDouble(matcher.group());
+				return value;
+			}
+		}
+		return 0;
+		*/
+		return 0;
 	}
 	
 	/**
 	 * Convert string to double, especially if it have power symbol
 	 */
-	Object convertFromString(String string) {
+	public Object convertFromString(String string) {
 		try {
 			if (string.contains("^")) {
 				if (string.contains("×")) {     //s1 × 10 ^ s2
@@ -415,18 +470,13 @@ public class CoreFunctions {
 		}
 	}
 	
-	/************************Rule of function***********************
-	 ****** array is the reference unit for converter function******
-	 ************ id1 is index of the unit of the value*************
-	 ************ id2 is index of the unit of result****************/
-	
 	/**
 	 * The temperature converter function
 	 * id == 0 : Celsius
 	 * id == 1: Fahrenheit
 	 * id == 2 : Kelvin
 	 */
-	Object temperatureConverter(int id1, Object value, int id2) {
+	public Object temperatureConverter(int id1, Object value, int id2) {
 		if (id1 == id2)
 			return value;
 		else {
@@ -441,10 +491,15 @@ public class CoreFunctions {
 		}
 	}
 	
+	/************************Rule of function***********************
+	 ****** array is the reference unit for converter function******
+	 ************ id1 is index of the unit of the value*************
+	 ************ id2 is index of the unit of result****************/
+	
 	/**
 	 * Find text in array
 	 */
-	int findIndexInArray(String[] array, String text) {
+	public int findIndexInArray(String[] array, String text) {
 		int len = array.length;
 		for (int i = 0; i < len; i++) {
 			if (array[i].equals(text))
@@ -456,7 +511,7 @@ public class CoreFunctions {
 	/**
 	 * Other unit converter function
 	 */
-	Object otherConverter(String[] array, int id1, Object value, int id2) {
+	public Object otherConverter(String[] array, int id1, Object value, int id2) {
 		if (id1 == id2)
 			return value;
 		else {
@@ -469,61 +524,32 @@ public class CoreFunctions {
 		}
 	}
 	
-	private class GetJson extends AsyncTask<Void, Void, Void> {
-		String url;
-		String tag;
-		String value;
+	private class HttpTask extends AsyncTask<String, Integer, String> {
 		
-		public String getUrl() {
-			return url;
+		@Override
+		protected String doInBackground(String... urls) {
+			// TODO Auto-generated method stub
+			String response = getWebpage(urls[0]);
+			return response;
 		}
 		
-		public void setUrl(String url) {
-			this.url = url;
-		}
-		
-		public String getTag() {
-			return tag;
-		}
-		
-		public void setTag(String tag) {
-			this.tag = tag;
-		}
-		
-		public String getValue() {
-			return value;
-		}
-		
-		public void setValue(String value) {
-			this.value = value;
+		@Override
+		protected void onPostExecute(String response) {
+			Log.i(LOG_THREAD_ACTIVITY, "HTTP RESPONSE" + response);
+			//textViewConsole.setText(response);
+			temp = response;
 		}
 		
 		@Override
 		protected void onPreExecute() {
+			// TODO Auto-generated method stub
 			super.onPreExecute();
 		}
 		
 		@Override
-		protected Void doInBackground(Void... arg0) {
-			HttpHandler sh = new HttpHandler();
-			String jsonstr = sh.makeServiceCall(url);
-			if (jsonstr != null) {
-				try {
-					JSONObject jsonObject = new JSONObject(jsonstr);
-					JSONObject value = jsonObject.getJSONObject(tag);
-					setValue(value.getString("val"));
-				} catch (final JSONException e) {
-					//Json parsing error
-				}
-			} else {
-				//Couldn't get json from server
-			}
-			return null;
-		}
-		
-		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
+		protected void onProgressUpdate(Integer... values) {
+			// TODO Auto-generated method stub
+			super.onProgressUpdate(values);
 		}
 	}
 }

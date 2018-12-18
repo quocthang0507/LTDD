@@ -1,4 +1,4 @@
-package vn.edu.itdlu.a1610207.calculator;
+package vn.edu.itdlu.a1610207.calculator.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import vn.edu.itdlu.a1610207.calculator.CoreFunctions;
+import vn.edu.itdlu.a1610207.calculator.PolishNotation;
+import vn.edu.itdlu.a1610207.calculator.R;
 
 public class activity_standard extends AppCompatActivity {
 

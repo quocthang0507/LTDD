@@ -14,6 +14,24 @@ import android.widget.Toast;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_angle;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_area;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_currency;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_data;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_date;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_energy;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_length;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_power;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_pressure;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_programmer;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_scientific;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_speed;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_standard;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_temperature;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_time;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_volume;
+import vn.edu.itdlu.a1610207.calculator.Activity.activity_weight;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String ABOUT = "about";

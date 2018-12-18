@@ -1,16 +1,21 @@
-package vn.edu.itdlu.a1610207.calculator;
+package vn.edu.itdlu.a1610207.calculator.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import vn.edu.itdlu.a1610207.calculator.CoreFunctions;
+import vn.edu.itdlu.a1610207.calculator.R;
 
 public class activity_currency extends AppCompatActivity implements View.OnClickListener {
 	
@@ -19,9 +24,9 @@ public class activity_currency extends AppCompatActivity implements View.OnClick
 	CoreFunctions functions = new CoreFunctions();
 	Spinner spinner1, spinner2;
 	EditText editText1, editText2;
+	TextView textView;
 	ImageButton button1, button2;
 	String str1, str2;
-	double value1, value2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class activity_currency extends AppCompatActivity implements View.OnClick
 		editText2 = findViewById(R.id.et_currency_2);
 		button1 = findViewById(R.id.btn_down);
 		button2 = findViewById(R.id.btn_up);
+		textView = findViewById(R.id.textView_exchange);
 	}
 	
 	void loadSpinner() {
@@ -62,16 +68,18 @@ public class activity_currency extends AppCompatActivity implements View.OnClick
 	
 	@Override
 	public void onClick(View view) {
-		double rate, result, from;
+		double rate, from;
 		getSpinner();
 		switch (view.getId()) {
 			case R.id.btn_down:
-				rate = functions.getExchangeRate(str1, str2, getApplicationContext());
+				rate = functions.getExchangeRate(str1, str2);
+				textView.setText("1 " + str1 + " = " + rate + str2);
 				from = Double.parseDouble("" + functions.convertFromString(editText1.getText().toString()));
 				editText2.setText("" + from * rate);
 				break;
 			case R.id.btn_up:
-				rate = functions.getExchangeRate(str2, str1, getApplicationContext());
+				rate = functions.getExchangeRate(str2, str1);
+				textView.setText("1 " + str2 + " = " + rate + str1);
 				from = Double.parseDouble("" + functions.convertFromString(editText2.getText().toString()));
 				editText1.setText("" + from * rate);
 				break;
@@ -89,4 +97,20 @@ public class activity_currency extends AppCompatActivity implements View.OnClick
 		if (str1.contains(" ")) str1 = str1.split(" ")[0];
 		if (str2.contains(" ")) str2 = str2.split(" ")[0];
 	}
+	
+	/*
+	boolean checkInternetConnection() {
+		Runtime runtime = Runtime.getRuntime();
+		try {
+			Process process = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+			int exitValue = process.waitFor();
+			return (exitValue == 0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	*/
 }

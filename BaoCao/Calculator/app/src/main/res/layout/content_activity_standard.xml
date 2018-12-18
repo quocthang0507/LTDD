@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@color/background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity_standard"
+    tools:context=".Activity.activity_standard"
     tools:ignore="HardcodedText"
     tools:showIn="@layout/activity_standard">
 

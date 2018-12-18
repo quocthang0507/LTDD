@@ -1,4 +1,4 @@
-package vn.edu.itdlu.a1610207.calculator;
+package vn.edu.itdlu.a1610207.calculator.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,12 +11,15 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class activity_energy extends AppCompatActivity implements View.OnClickListener {
+import vn.edu.itdlu.a1610207.calculator.CoreFunctions;
+import vn.edu.itdlu.a1610207.calculator.R;
+
+public class activity_weight extends AppCompatActivity implements View.OnClickListener {
 
     Spinner spinner1, spinner2;
     EditText editText1, editText2;
     ImageButton button1, button2;
-    ArrayList<String> listenergy;
+    ArrayList<String> listweight;
     CoreFunctions functions = new CoreFunctions();
     String str1, str2;
     int id1, id2;
@@ -25,7 +28,7 @@ public class activity_energy extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_energy);
+        setContentView(R.layout.activity_weight);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);    //Remove activity label
@@ -35,10 +38,10 @@ public class activity_energy extends AppCompatActivity implements View.OnClickLi
     }
 
     void map() {
-        spinner1 = findViewById(R.id.spinner_energy_1);
-        spinner2 = findViewById(R.id.spinner_energy_2);
-        editText1 = findViewById(R.id.et_energy_1);
-        editText2 = findViewById(R.id.et_energy_2);
+        spinner1 = findViewById(R.id.spinner_weight_1);
+        spinner2 = findViewById(R.id.spinner_weight_2);
+        editText1 = findViewById(R.id.et_weight_1);
+        editText2 = findViewById(R.id.et_weight_2);
         button1 = findViewById(R.id.btn_down);
         button2 = findViewById(R.id.btn_up);
     }
@@ -58,11 +61,11 @@ public class activity_energy extends AppCompatActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.btn_down:
                 value = functions.convertFromString(editText1.getText().toString());
-                editText2.setText("" + functions.otherConverter(functions.Energy, id1, value, id2));
+                editText2.setText("" + functions.otherConverter(functions.Weight_Mass, id1, value, id2));
                 break;
             case R.id.btn_up:
                 value = functions.convertFromString(editText2.getText().toString());
-                editText1.setText("" + functions.otherConverter(functions.Energy, id2, value, id1));
+                editText1.setText("" + functions.otherConverter(functions.Weight_Mass, id2, value, id1));
                 break;
             default:
                 break;
@@ -70,17 +73,17 @@ public class activity_energy extends AppCompatActivity implements View.OnClickLi
     }
 
     void array2List() {
-        String[] temp = functions.Energy;
-        listenergy = new ArrayList<>();
+        String[] temp = functions.Weight_Mass;
+        listweight = new ArrayList<>();
         for (int i = 0; i < temp.length; i++) {
             if (i % 2 == 0)
-                listenergy.add(temp[i]);
+                listweight.add(temp[i]);
         }
     }
 
     void loadSpinner() {
         array2List();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_row, listenergy);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_row, listweight);
         spinner1.setAdapter(adapter);
         spinner2.setAdapter(adapter);
     }
@@ -92,7 +95,7 @@ public class activity_energy extends AppCompatActivity implements View.OnClickLi
 
     void getID() {
         getSpinner();
-        id1 = functions.findIndexInArray(functions.Energy, str1);
-        id2 = functions.findIndexInArray(functions.Energy, str2);
+        id1 = functions.findIndexInArray(functions.Weight_Mass, str1);
+        id2 = functions.findIndexInArray(functions.Weight_Mass, str2);
     }
 }

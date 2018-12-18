@@ -1,4 +1,4 @@
-package vn.edu.itdlu.a1610207.calculator;
+package vn.edu.itdlu.a1610207.calculator.Activity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -22,6 +22,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import vn.edu.itdlu.a1610207.calculator.CoreFunctions;
+import vn.edu.itdlu.a1610207.calculator.R;
 
 public class activity_date extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 

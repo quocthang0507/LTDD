@@ -1,4 +1,4 @@
-package vn.edu.itdlu.a1610207.calculator;
+package vn.edu.itdlu.a1610207.calculator.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,12 +11,15 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class activity_angle extends AppCompatActivity implements View.OnClickListener {
+import vn.edu.itdlu.a1610207.calculator.CoreFunctions;
+import vn.edu.itdlu.a1610207.calculator.R;
+
+public class activity_data extends AppCompatActivity implements View.OnClickListener {
 
     Spinner spinner1, spinner2;
     EditText editText1, editText2;
     ImageButton button1, button2;
-    ArrayList<String> listangle;
+    ArrayList<String> listdata;
     CoreFunctions functions = new CoreFunctions();
     String str1, str2;
     int id1, id2;
@@ -25,7 +28,7 @@ public class activity_angle extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_angle);
+        setContentView(R.layout.activity_data);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);    //Remove activity label
@@ -35,10 +38,10 @@ public class activity_angle extends AppCompatActivity implements View.OnClickLis
     }
 
     void map() {
-        spinner1 = findViewById(R.id.spinner_angle_1);
-        spinner2 = findViewById(R.id.spinner_angle_2);
-        editText1 = findViewById(R.id.et_angle_1);
-        editText2 = findViewById(R.id.et_angle_2);
+        spinner1 = findViewById(R.id.spinner_data_1);
+        spinner2 = findViewById(R.id.spinner_data_2);
+        editText1 = findViewById(R.id.et_data_1);
+        editText2 = findViewById(R.id.et_data_2);
         button1 = findViewById(R.id.btn_down);
         button2 = findViewById(R.id.btn_up);
     }
@@ -58,11 +61,11 @@ public class activity_angle extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.btn_down:
                 value = functions.convertFromString(editText1.getText().toString());
-                editText2.setText("" + functions.otherConverter(functions.Angle, id1, value, id2));
+                editText2.setText("" + functions.otherConverter(functions.Data, id1, value, id2));
                 break;
             case R.id.btn_up:
                 value = functions.convertFromString(editText2.getText().toString());
-                editText1.setText("" + functions.otherConverter(functions.Angle, id2, value, id1));
+                editText1.setText("" + functions.otherConverter(functions.Data, id2, value, id1));
                 break;
             default:
                 break;
@@ -70,17 +73,17 @@ public class activity_angle extends AppCompatActivity implements View.OnClickLis
     }
 
     void array2List() {
-        String[] temp = functions.Angle;
-        listangle = new ArrayList<>();
+        String[] temp = functions.Data;
+        listdata = new ArrayList<>();
         for (int i = 0; i < temp.length; i++) {
             if (i % 2 == 0)
-                listangle.add(temp[i]);
+                listdata.add(temp[i]);
         }
     }
 
     void loadSpinner() {
         array2List();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_row, listangle);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_row, listdata);
         spinner1.setAdapter(adapter);
         spinner2.setAdapter(adapter);
     }
@@ -92,7 +95,7 @@ public class activity_angle extends AppCompatActivity implements View.OnClickLis
 
     void getID() {
         getSpinner();
-        id1 = functions.findIndexInArray(functions.Angle, str1);
-        id2 = functions.findIndexInArray(functions.Angle, str2);
+        id1 = functions.findIndexInArray(functions.Data, str1);
+        id2 = functions.findIndexInArray(functions.Data, str2);
     }
 }

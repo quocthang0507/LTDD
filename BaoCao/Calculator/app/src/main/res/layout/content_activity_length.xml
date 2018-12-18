@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity_length"
+    tools:context=".Activity.activity_length"
     tools:showIn="@layout/activity_length">
 
     <LinearLayout

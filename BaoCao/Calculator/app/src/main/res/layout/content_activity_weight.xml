@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity_weight"
+    tools:context=".Activity.activity_weight"
     tools:showIn="@layout/activity_weight">
 
     <LinearLayout

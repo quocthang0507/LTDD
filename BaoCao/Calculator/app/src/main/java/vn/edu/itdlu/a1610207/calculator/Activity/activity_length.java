@@ -1,4 +1,4 @@
-package vn.edu.itdlu.a1610207.calculator;
+package vn.edu.itdlu.a1610207.calculator.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,12 +11,15 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class activity_area extends AppCompatActivity implements View.OnClickListener {
+import vn.edu.itdlu.a1610207.calculator.CoreFunctions;
+import vn.edu.itdlu.a1610207.calculator.R;
+
+public class activity_length extends AppCompatActivity implements View.OnClickListener {
 
     Spinner spinner1, spinner2;
     EditText editText1, editText2;
     ImageButton button1, button2;
-    ArrayList<String> listarea;
+    ArrayList<String> listLength;
     CoreFunctions functions = new CoreFunctions();
     String str1, str2;
     int id1, id2;
@@ -25,7 +28,7 @@ public class activity_area extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_area);
+        setContentView(R.layout.activity_length);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);    //Remove activity label
@@ -33,18 +36,18 @@ public class activity_area extends AppCompatActivity implements View.OnClickList
         loadSpinner();
         addOnClickListener();
     }
-
-    void map() {
-        spinner1 = findViewById(R.id.spinner_area_1);
-        spinner2 = findViewById(R.id.spinner_area_2);
-        editText1 = findViewById(R.id.et_area_1);
-        editText2 = findViewById(R.id.et_area_2);
-        button1 = findViewById(R.id.btn_down);
-        button2 = findViewById(R.id.btn_up);
-    }
-
+    
     public void backToMainScreen_OnClick(View v) {
         finish();
+    }
+    
+    void map() {
+        spinner1 = findViewById(R.id.spinner_length_1);
+        spinner2 = findViewById(R.id.spinner_length_2);
+        editText1 = findViewById(R.id.et_length_1);
+        editText2 = findViewById(R.id.et_length_2);
+        button1 = findViewById(R.id.btn_down);
+        button2 = findViewById(R.id.btn_up);
     }
 
     void addOnClickListener() {
@@ -58,11 +61,11 @@ public class activity_area extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
             case R.id.btn_down:
                 value = functions.convertFromString(editText1.getText().toString());
-                editText2.setText("" + functions.otherConverter(functions.Area, id1, value, id2));
+                editText2.setText("" + functions.otherConverter(functions.Length, id1, value, id2));
                 break;
             case R.id.btn_up:
                 value = functions.convertFromString(editText2.getText().toString());
-                editText1.setText("" + functions.otherConverter(functions.Area, id2, value, id1));
+                editText1.setText("" + functions.otherConverter(functions.Length, id2, value, id1));
                 break;
             default:
                 break;
@@ -70,17 +73,17 @@ public class activity_area extends AppCompatActivity implements View.OnClickList
     }
 
     void array2List() {
-        String[] temp = functions.Area;
-        listarea = new ArrayList<>();
+        String[] temp = functions.Length;
+        listLength = new ArrayList<>();
         for (int i = 0; i < temp.length; i++) {
             if (i % 2 == 0)
-                listarea.add(temp[i]);
+                listLength.add(temp[i]);
         }
     }
 
     void loadSpinner() {
         array2List();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_row, listarea);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_row, listLength);
         spinner1.setAdapter(adapter);
         spinner2.setAdapter(adapter);
     }
@@ -92,7 +95,7 @@ public class activity_area extends AppCompatActivity implements View.OnClickList
 
     void getID() {
         getSpinner();
-        id1 = functions.findIndexInArray(functions.Area, str1);
-        id2 = functions.findIndexInArray(functions.Area, str2);
+        id1 = functions.findIndexInArray(functions.Length, str1);
+        id2 = functions.findIndexInArray(functions.Length, str2);
     }
 }
