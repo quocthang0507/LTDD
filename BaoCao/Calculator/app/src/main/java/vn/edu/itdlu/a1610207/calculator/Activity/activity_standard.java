@@ -116,10 +116,13 @@ public class activity_standard extends AppCompatActivity implements AdapterView.
 		for (int i = 0; i < length; i++) {
 			if (str.charAt(i) == '-' && str.charAt(i + 1) == '(') {
 				if (i == 0) { //-(x)
-					str = "0" + str; //0-(x)
+					str = "(0" + str + ")"; //0-(x)
 					length++;
 				} else if (i > 0 && str.charAt(i - 1) == '(') { //(-(x))^2
 					str = str.substring(0, i) + "0" + str.substring(i); //(0-(x))^2
+					length++;
+				} else if (i > 0) { //2--(1)
+					str = str.substring(0, i) + "(0" + str.substring(i, i + 1) + str.substring(i + 2);    //2-(0-1)
 					length++;
 				}
 			} else if (str.charAt(i) == '-' && i > 0 && str.charAt(i - 1) == '^') { //x^-1
@@ -183,6 +186,8 @@ public class activity_standard extends AppCompatActivity implements AdapterView.
 	}
 	
 	public void btn_equal_OnClick(View v) {
+		if (completed)
+			return;
 		String exp = tv_exp.getText().toString();
 		String input = tv_result.getText().toString();
 		Database db = new Database(this);
@@ -393,7 +398,7 @@ public class activity_standard extends AppCompatActivity implements AdapterView.
 	void deleteAll() {
 		this.listCalculations.clear();
 		Database db = new Database(this);
-		db.deleteDataInTable();
+		db.deleteAll();
 		List<Calculation> list = db.getAll();
 		this.listCalculations.addAll(list);
 		loadDB2ListView();
@@ -401,12 +406,8 @@ public class activity_standard extends AppCompatActivity implements AdapterView.
 	
 	void deleteOthers(Calculation calc) {
 		Database db = new Database(this);
-		for (Calculation c : listCalculations) {
-			if (c.getId() != calc.getId()) {
-				db.delete(c);
-			}
-		}
 		this.listCalculations.clear();
+		db.deleteOthers(calc);
 		List<Calculation> list = db.getAll();
 		this.listCalculations.addAll(list);
 		loadDB2ListView();

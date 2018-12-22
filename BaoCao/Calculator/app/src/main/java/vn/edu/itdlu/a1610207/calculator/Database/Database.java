@@ -47,9 +47,23 @@ public class Database extends SQLiteOpenHelper {
 		db.close();
 	}
 	
-	public void deleteDataInTable() {
+	public void deleteAll() {
 		Log.i(TAG, "Database is being deleted data...");
 		String deleteScript = " DELETE FROM " + TABLE_NAME;
+		executeSQL(deleteScript);
+	}
+	
+	public void delete(Calculation calc) {
+		Log.i(TAG, "This row is being deleted...");
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_NAME, COL_ID + " =? ", new String[]{String.valueOf(calc.getId())});
+		db.close();
+	}
+	
+	public void deleteOthers(Calculation calc) {
+		Log.i(TAG, "Other rows is being deleted...");
+		String deleteScript = "DELETE FROM " + TABLE_NAME + " WHERE " + COL_ID + " NOT IN " +
+				"( SELECT " + COL_ID + " FROM " + TABLE_NAME + " WHERE " + COL_ID + " = '" + calc.getId() + "' ); ";
 		executeSQL(deleteScript);
 	}
 	
@@ -70,12 +84,6 @@ public class Database extends SQLiteOpenHelper {
 		values.put(COL_EXP, calc.getExpression());
 		values.put(COL_RESULT, calc.getResult());
 		db.update(TABLE_NAME, values, COL_ID + " = " + calc.getId(), null);
-		db.close();
-	}
-	
-	public void delete(Calculation calc) {
-		SQLiteDatabase db = this.getWritableDatabase();
-		db.delete(TABLE_NAME, COL_ID + " = " + calc.getId(), null);
 		db.close();
 	}
 	
