@@ -3,6 +3,7 @@ package vn.edu.itdlu.a1610207.calculator.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -12,6 +13,7 @@ public class activity_scientific extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(getApplicationContext().getResources().getString(R.string.tag), "Opening activity_scientific...");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scientific);
         Toolbar toolbar = findViewById(R.id.toolbar);

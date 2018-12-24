@@ -1,5 +1,6 @@
 <resources>
 	<string name="app_name">Calculator</string>
+	<string name="tag">1610207_Calculator</string>
 	<string name="group_1">Calculator</string>
 	<string name="cal_stand">Standard</string>
 	<string name="cal_scien">Scientific</string>
@@ -47,7 +48,7 @@
 	<string name="title_activity_speed">activity_speed</string>
 	<string name="requirement">Internet connection required!</string>
 	<string name="nointernet">Please ensure that you have a stable internet connection</string>
-	<string name="caculate_diff">Please tap \'Diffrence\' word to calculate the different dates</string>
+	<string name="caculate_diff">Please tap \'Difference\' word to calculate the different dates</string>
 	<string name="caculate_date">Please tap \'Date\' word to calculate date</string>
 	<string name="history">History</string>
 	<string name="result">Result :</string>

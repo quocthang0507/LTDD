@@ -3,8 +3,8 @@ package vn.edu.itdlu.a1610207.calculator.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -14,22 +14,22 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import vn.edu.itdlu.a1610207.calculator.CoreFunctions;
+import vn.edu.itdlu.a1610207.calculator.Core.CoreFunctions;
 import vn.edu.itdlu.a1610207.calculator.R;
 
 public class activity_currency extends AppCompatActivity implements View.OnClickListener {
-	
-	public static final String ENSURE_INTERNET = "Please ensure that you have a stable internet connection";
-	ArrayList<String> listCurrency;
-	CoreFunctions functions = new CoreFunctions();
-	Spinner spinner1, spinner2;
-	EditText editText1, editText2;
-	TextView textView;
-	ImageButton button1, button2;
-	String str1, str2;
+	private final String ENSURE_INTERNET = "Please ensure that you have a stable internet connection";
+	private ArrayList<String> listCurrency;
+	private CoreFunctions functions = new CoreFunctions();
+	private Spinner spinner1, spinner2;
+	private EditText editText1, editText2;
+	private TextView textView;
+	private ImageButton button1, button2;
+	private String str1, str2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.i(getApplicationContext().getResources().getString(R.string.tag), "Opening activity_currency...");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_currency);
 		Toolbar toolbar = findViewById(R.id.toolbar);
@@ -72,13 +72,13 @@ public class activity_currency extends AppCompatActivity implements View.OnClick
 		getSpinner();
 		switch (view.getId()) {
 			case R.id.btn_down:
-				rate = functions.getExchangeRate(str1, str2);
+				rate = functions.getExchangeRate(getApplicationContext(), str1, str2);
 				textView.setText("1 " + str1 + " = " + rate + str2);
 				from = Double.parseDouble("" + functions.convertFromString(editText1.getText().toString()));
 				editText2.setText("" + from * rate);
 				break;
 			case R.id.btn_up:
-				rate = functions.getExchangeRate(str2, str1);
+				rate = functions.getExchangeRate(getApplicationContext(), str2, str1);
 				textView.setText("1 " + str2 + " = " + rate + str1);
 				from = Double.parseDouble("" + functions.convertFromString(editText2.getText().toString()));
 				editText1.setText("" + from * rate);

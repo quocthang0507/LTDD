@@ -3,6 +3,7 @@ package vn.edu.itdlu.a1610207.calculator.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -11,22 +12,22 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-import vn.edu.itdlu.a1610207.calculator.CoreFunctions;
+import vn.edu.itdlu.a1610207.calculator.Core.CoreFunctions;
 import vn.edu.itdlu.a1610207.calculator.R;
 
 public class activity_length extends AppCompatActivity implements View.OnClickListener {
-
-    Spinner spinner1, spinner2;
-    EditText editText1, editText2;
-    ImageButton button1, button2;
-    ArrayList<String> listLength;
-    CoreFunctions functions = new CoreFunctions();
-    String str1, str2;
-    int id1, id2;
-    Object value;
+    private Spinner spinner1, spinner2;
+    private EditText editText1, editText2;
+    private ImageButton button1, button2;
+    private ArrayList<String> listLength;
+    private CoreFunctions functions = new CoreFunctions();
+    private String str1, str2;
+    private int id1, id2;
+    private Object value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(getApplicationContext().getResources().getString(R.string.tag), "Opening activity_length...");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_length);
         Toolbar toolbar = findViewById(R.id.toolbar);

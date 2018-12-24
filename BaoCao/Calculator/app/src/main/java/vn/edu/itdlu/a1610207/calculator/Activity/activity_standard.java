@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,32 +20,32 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.edu.itdlu.a1610207.calculator.CoreFunctions;
-import vn.edu.itdlu.a1610207.calculator.CustomAdapter;
+import vn.edu.itdlu.a1610207.calculator.Core.CoreFunctions;
+import vn.edu.itdlu.a1610207.calculator.Database.CustomAdapter;
 import vn.edu.itdlu.a1610207.calculator.Database.Calculation;
 import vn.edu.itdlu.a1610207.calculator.Database.Database;
-import vn.edu.itdlu.a1610207.calculator.PolishNotation;
+import vn.edu.itdlu.a1610207.calculator.Core.PolishNotation;
 import vn.edu.itdlu.a1610207.calculator.R;
 
 public class activity_standard extends AppCompatActivity implements AdapterView.OnItemClickListener {
-	
 	private static final String MISSING = "Missing \")\"";
 	private static final int MENU_ITEM_SELECT = 111;
 	private static final int MENU_ITEM_DELETE = 222;
 	private static final int MENU_ITEM_DELETE_OTHERS = 333;
 	private static final int MENU_ITEM_DELETE_ALL = 444;
-	TextView tv_result, tv_exp;
-	String operators = "['+']|['×']|['÷']", special = "['%']|['²']|['⁻¹']|[')']";
-	PolishNotation notation = new PolishNotation();
-	CoreFunctions functions = new CoreFunctions();
-	boolean completed = false;
-	ListView listView;
-	List<Calculation> listCalculations = new ArrayList<>();
-	CustomAdapter adapter;
-	DrawerLayout drawerLayout;
+	private TextView tv_result, tv_exp;
+	private String operators = "['+']|['×']|['÷']", special = "['%']|['²']|['⁻¹']|[')']";
+	private PolishNotation notation = new PolishNotation();
+	private CoreFunctions functions = new CoreFunctions();
+	private boolean completed = false;
+	private ListView listView;
+	private List<Calculation> listCalculations = new ArrayList<>();
+	private CustomAdapter adapter;
+	private DrawerLayout drawerLayout;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.i(getApplicationContext().getResources().getString(R.string.tag), "Opening activity_standard...");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_standard);
 		Toolbar toolbar = findViewById(R.id.toolbar);

@@ -3,6 +3,7 @@ package vn.edu.itdlu.a1610207.calculator.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -11,22 +12,22 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-import vn.edu.itdlu.a1610207.calculator.CoreFunctions;
+import vn.edu.itdlu.a1610207.calculator.Core.CoreFunctions;
 import vn.edu.itdlu.a1610207.calculator.R;
 
 public class activity_pressure extends AppCompatActivity implements View.OnClickListener {
-
-    Spinner spinner1, spinner2;
-    EditText editText1, editText2;
-    ImageButton button1, button2;
-    ArrayList<String> listpressure;
-    CoreFunctions functions = new CoreFunctions();
-    String str1, str2;
-    int id1, id2;
-    Object value;
+    private Spinner spinner1, spinner2;
+    private EditText editText1, editText2;
+    private ImageButton button1, button2;
+    private ArrayList<String> listPressure;
+    private CoreFunctions functions = new CoreFunctions();
+    private String str1, str2;
+    private int id1, id2;
+    private Object value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(getApplicationContext().getResources().getString(R.string.tag), "Opening activity_pressure...");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pressure);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -74,16 +75,16 @@ public class activity_pressure extends AppCompatActivity implements View.OnClick
 
     void array2List() {
         String[] temp = functions.Pressure;
-        listpressure = new ArrayList<>();
+        listPressure = new ArrayList<>();
         for (int i = 0; i < temp.length; i++) {
             if (i % 2 == 0)
-                listpressure.add(temp[i]);
+                listPressure.add(temp[i]);
         }
     }
 
     void loadSpinner() {
         array2List();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_row, listpressure);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_row, listPressure);
         spinner1.setAdapter(adapter);
         spinner2.setAdapter(adapter);
     }

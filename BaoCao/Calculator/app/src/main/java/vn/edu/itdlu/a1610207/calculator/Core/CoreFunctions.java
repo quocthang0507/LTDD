@@ -1,54 +1,25 @@
-package vn.edu.itdlu.a1610207.calculator;
+package vn.edu.itdlu.a1610207.calculator.Core;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Map;
 
 public class CoreFunctions {
-	private static final String LOG_THREAD_ACTIVITY = "Thang - DLU";
-	public String[] Currency =
-			new String[]{"AFN ؋", "ALL Lek", "AMD", "ANG ƒ", "AOA", "ARS $", "AUD $", "AWG ƒ", "AZN \u20BC", "BAM KM", "BBD $", "BDT",
-					"BGN лв", "BHD", "BIF", "BND $", "BOB $b", "BRL R$", "BSD $", "BTC", "BTN", "BWP P", "BYN Br",
-					"BYR", "BZD BZ$", "CAD $", "CDF", "CHF CHF", "CLP $", "CNY ¥", "COP $", "CRC ₡", "CUP ₱", "CVE",
-					"CZK Kč", "DJF", "DKK kr", "DOP RD$", "DZD", "EGP £", "ERN", "ETB", "EUR €", "FJD $", "FKP £",
-					"GBP £", "GEL", "GHS ¢", "GIP £", "GMD", "GNF", "GTQ Q", "GYD $", "HKD $", "HNL L", "HRK kn",
-					"HTG", "HUF Ft", "IDR Rp", "ILS ₪", "INR ₹", "IQD", "IRR ﷼", "ISK kr", "JMD J$", "JOD", "JPY ¥",
-					"KES", "KGS лв", "KHR ៛", "KMF", "KPW ₩", "KRW ₩", "KWD", "KYD $", "KZT лв", "LAK ₭", "LBP £",
-					"LKR ₨", "LRD $", "LSL", "LVL", "LYD", "MAD", "MDL", "MGA", "MKD ден", "MMK", "MNT ₮",
-					"MOP", "MRO", "MUR ₨", "MVR", "MWK", "MXN $", "MYR RM", "MZN MT", "NAD $", "NGN ₦", "NIO C$",
-					"NOK kr", "NPR ₨", "NZD $", "OMR ﷼", "PAB B/.", "PEN S/.", "PGK", "PHP ₱", "PKR ₨", "PLN zł", "PYG Gs",
-					"QAR ﷼", "RON lei", "RSD Дин.", "RUB \u20BD", "RWF", "SAR ﷼", "SBD $", "SCR ₨", "SDG", "SEK kr", "SGD $",
-					"SHP £", "SLL", "SOS S", "SRD $", "STD", "SYP £", "SZL", "THB ฿", "TJS", "TMT", "TND",
-					"TOP", "TRY ₺", "TTD TT$", "TWD NT$", "TZS", "UAH ₴", "UGX", "USD $", "UYU $U", "UZS лв", "VEF Bs",
-					"VND ₫", "VUV", "WST", "XAF", "XCD $", "XDR", "XOF", "XPF", "YER ﷼", "ZAR R", "ZMW"};
-	/**
-	 * Length converter
-	 * The base unit in the International System of Units (SI) is the metre (or meter)
-	 */
-	public String[] Length =
-			new String[]{"Nanometers", "10^-9", "Microns", "10^-6", "Millimeters", "10^-3",
-					"Centimeters", "10^-2", "Meters", "1", "Kilometers", "10^3",
-					"Inches", "0.0254", "Feet", "0.3048", "Yards", "0.91", "Miles", "1610"};
 	/**
 	 * Volume converter
 	 * According to the SI System, the base unit for measuring volume is the metre and
@@ -58,6 +29,14 @@ public class CoreFunctions {
 			new String[]{"Milliliters", "10^-6", "Cubic centimeters", "10^-6",
 					"Liters", "10^-3", "Cubic meters", "1", "Cubic inches", "0.000016387064",
 					"Cubic feet", "0.0283168466", "Cubic yards", "0.764554858"};
+	/**
+	 * Length converter
+	 * The base unit in the International System of Units (SI) is the metre (or meter)
+	 */
+	public String[] Length =
+			new String[]{"Nanometers", "10^-9", "Microns", "10^-6", "Millimeters", "10^-3",
+					"Centimeters", "10^-2", "Meters", "1", "Kilometers", "10^3",
+					"Inches", "0.0254", "Feet", "0.3048", "Yards", "0.91", "Miles", "1610"};
 	/**
 	 * Mass converter
 	 * The basic SI unit of mass is the kilogram (kg)
@@ -135,11 +114,27 @@ public class CoreFunctions {
 	 * The SI unit of angular measure is the radian
 	 */
 	public String[] Angle = new String[]{"Degrees", "pi/180", "Radians", "1", "Gradians", "pi/200"};
+	public String[] Currency =
+			new String[]{"AFN ؋", "ALL Lek", "AMD", "ANG ƒ", "AOA", "ARS $", "AUD $", "AWG ƒ", "AZN \u20BC", "BAM KM", "BBD $", "BDT",
+					"BGN лв", "BHD", "BIF", "BND $", "BOB $b", "BRL R$", "BSD $", "BTC", "BTN", "BWP P", "BYN Br",
+					"BYR", "BZD BZ$", "CAD $", "CDF", "CHF CHF", "CLP $", "CNY ¥", "COP $", "CRC ₡", "CUP ₱", "CVE",
+					"CZK Kč", "DJF", "DKK kr", "DOP RD$", "DZD", "EGP £", "ERN", "ETB", "EUR €", "FJD $", "FKP £",
+					"GBP £", "GEL", "GHS ¢", "GIP £", "GMD", "GNF", "GTQ Q", "GYD $", "HKD $", "HNL L", "HRK kn",
+					"HTG", "HUF Ft", "IDR Rp", "ILS ₪", "INR ₹", "IQD", "IRR ﷼", "ISK kr", "JMD J$", "JOD", "JPY ¥",
+					"KES", "KGS лв", "KHR ៛", "KMF", "KPW ₩", "KRW ₩", "KWD", "KYD $", "KZT лв", "LAK ₭", "LBP £",
+					"LKR ₨", "LRD $", "LSL", "LVL", "LYD", "MAD", "MDL", "MGA", "MKD ден", "MMK", "MNT ₮",
+					"MOP", "MRO", "MUR ₨", "MVR", "MWK", "MXN $", "MYR RM", "MZN MT", "NAD $", "NGN ₦", "NIO C$",
+					"NOK kr", "NPR ₨", "NZD $", "OMR ﷼", "PAB B/.", "PEN S/.", "PGK", "PHP ₱", "PKR ₨", "PLN zł", "PYG Gs",
+					"QAR ﷼", "RON lei", "RSD Дин.", "RUB \u20BD", "RWF", "SAR ﷼", "SBD $", "SCR ₨", "SDG", "SEK kr", "SGD $",
+					"SHP £", "SLL", "SOS S", "SRD $", "STD", "SYP £", "SZL", "THB ฿", "TJS", "TMT", "TND",
+					"TOP", "TRY ₺", "TTD TT$", "TWD NT$", "TZS", "UAH ₴", "UGX", "USD $", "UYU $U", "UZS лв", "VEF Bs",
+					"VND ₫", "VUV", "WST", "XAF", "XCD $", "XDR", "XOF", "XPF", "YER ﷼", "ZAR R", "ZMW"};
 	
 	/**
 	 * String contains website's content
 	 */
-	String temp = null;
+	private String rate = null;
+	private String url;
 	
 	/**************************************Calculator**************************************/
 	
@@ -392,59 +387,28 @@ public class CoreFunctions {
 		return result;
 	}
 	
-	public String getWebpage(String url) {
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet();
-		InputStream inputStream = null;
-		String response = null;
-		try {
-			URI uri = new URI(url);
-			httpGet.setURI(uri);
-			HttpResponse httpResponse = httpClient.execute(httpGet);
-			inputStream = httpResponse.getEntity().getContent();
-			Reader reader = new InputStreamReader(inputStream, "UTF-8");
-			int c;
-			StringBuffer stringBuffer = new StringBuffer();
-			while ((c = reader.read()) != -1) {
-				stringBuffer.append((char) c);
-			}
-			response = stringBuffer.toString();
-		} catch (ClientProtocolException e) {
-			Log.e(LOG_THREAD_ACTIVITY, "HttpActivity.getPage() ClientProtocolException error", e);
-		} catch (IOException e) {
-			Log.e(LOG_THREAD_ACTIVITY, "HttpActivity.getPage() IOException error", e);
-		} catch (URISyntaxException e) {
-			Log.e(LOG_THREAD_ACTIVITY, "HttpActivity.getPage() URISyntaxException error", e);
-		} finally {
-			try {
-				if (inputStream != null)
-					inputStream.close();
-			} catch (IOException e) {
-				Log.e(LOG_THREAD_ACTIVITY, "HttpActivity.getPage() IOException error when closing flows", e);
-			}
-		}
-		return response;
-	}
-	
 	/**
 	 * Get the exchange rate from website
 	 */
-	public double getExchangeRate(String unit1, String unit2) {
+	public double getExchangeRate(Context context, String unit1, String unit2) {
 		String tag = "" + unit1 + "_" + unit2;
-		String url = "https://free.currencyconverterapi.com/api/v6/convert?q=" + tag + "&compact=y";
-		String script = "var text = document.documentElement.innerText;var pattern=/[0-9]*\\.?[0-9]+/g;";
-		/*new HttpTask().execute(url);
-		if (temp != null) {
-			Matcher matcher = Pattern.compile("C=(\\d+\\.\\d+)").matcher(temp);
-			while (matcher.find()) {
-				double value = Double.parseDouble(matcher.group());
-				return value;
-			}
+		url = "https://free.currencyconverterapi.com/api/v6/convert?q=" + tag + "&compact=y";
+		if (checkInternetConnection()) {
+			new GetExchangeRates().execute();
+		} else {
+			new AlertDialog.Builder(context)
+					.setTitle("Internet Connection")
+					.setMessage("Please check your internet connection")
+					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					}).show();
+			rate = "0";
 		}
-		return 0;
-		*/
-		return 0;
+		double value = Double.parseDouble(rate);
+		return value;
 	}
+	
 	
 	/**
 	 * Convert string to double, especially if it have power symbol
@@ -524,32 +488,46 @@ public class CoreFunctions {
 		}
 	}
 	
-	private class HttpTask extends AsyncTask<String, Integer, String> {
-		
-		@Override
-		protected String doInBackground(String... urls) {
-			// TODO Auto-generated method stub
-			String response = getWebpage(urls[0]);
-			return response;
+	boolean checkInternetConnection() {
+		Runtime runtime = Runtime.getRuntime();
+		try {
+			Process process = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+			int exitValue = process.waitFor();
+			return (exitValue == 0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		
-		@Override
-		protected void onPostExecute(String response) {
-			Log.i(LOG_THREAD_ACTIVITY, "HTTP RESPONSE" + response);
-			//textViewConsole.setText(response);
-			temp = response;
-		}
+		return false;
+	}
+	
+	private class GetExchangeRates extends AsyncTask<Void, Void, Void> {
 		
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
 			super.onPreExecute();
 		}
 		
 		@Override
-		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
-			super.onProgressUpdate(values);
+		protected Void doInBackground(Void... arg0) {
+			ServiceHandler sh = new ServiceHandler();
+			String jsonResult = sh.makeServiceCall(url, ServiceHandler.GET);
+			JSONObject object = null;
+			try {
+				object = new JSONObject(jsonResult);
+				rate = object.getJSONObject("val").toString();
+			} catch (JSONException e) {
+				Log.e("JSON Parser", "Error parsing data " + e.toString());
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			String temp = rate;
 		}
 	}
+	
 }

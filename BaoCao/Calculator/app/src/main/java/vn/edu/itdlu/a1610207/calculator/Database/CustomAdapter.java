@@ -1,4 +1,4 @@
-package vn.edu.itdlu.a1610207.calculator;
+package vn.edu.itdlu.a1610207.calculator.Database;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,12 +9,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import vn.edu.itdlu.a1610207.calculator.Database.Calculation;
+import vn.edu.itdlu.a1610207.calculator.R;
 
 public class CustomAdapter extends BaseAdapter {
 	private static LayoutInflater inflater = null;
-	Context context;
-	List<Calculation> list;
+	private Context context;
+	private List<Calculation> list;
 	
 	public CustomAdapter(Context context, List<Calculation> list) {
 		this.context = context;
@@ -38,14 +38,14 @@ public class CustomAdapter extends BaseAdapter {
 	}
 	
 	@Override
-	public View getView(int positon, View convertView, ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		if (view == null)
 			view = inflater.inflate(R.layout.list_item, null);
 		TextView exp = (TextView) view.findViewById(R.id.tv_item_exp);
 		TextView result = (TextView) view.findViewById(R.id.tv_item_result);
-		exp.setText(list.get(positon).getExpression());
-		result.setText(list.get(positon).getResult());
+		exp.setText(list.get(position).getExpression());
+		result.setText(list.get(position).getResult());
 		return view;
 	}
 }
