@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SoNguyenTo {
-    int so;
+    private int so;
 
     public SoNguyenTo() {
         this.so = 0;
@@ -19,7 +19,7 @@ public class SoNguyenTo {
     }
 
     public boolean KiemTraSoNguyenTo(int n) {
-        int t = (int) Math.sqrt(n);
+    	int t = (int) Math.sqrt(n);
         for (int i = 2; i <= t; i++)
             if (n % i == 0)
                 return false;

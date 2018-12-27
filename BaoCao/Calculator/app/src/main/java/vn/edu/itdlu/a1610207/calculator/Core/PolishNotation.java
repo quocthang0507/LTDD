@@ -6,9 +6,9 @@ import java.util.Stack;
 
 public class PolishNotation {
 	private String expression;
-	private List<String> infix = new ArrayList<String>();
-	private Stack<String> stack = new Stack<String>();
-	private List<String> postfix = new ArrayList<String>();
+	private List<String> infix = new ArrayList<String>();   //Đầu vào (chuỗi trung tố)
+	private Stack<String> stack = new Stack<String>();  //Chứa các toản tử
+	private List<String> postfix = new ArrayList<String>(); //Đầu ra (chuối hậu tố)
 	
 	/**
 	 * Kiểm tra một ký tự c có phải là một toán tử hay không?
@@ -39,13 +39,13 @@ public class PolishNotation {
 	 * Tách số tại vị trí i trong chuỗi str
 	 */
 	public String extractNumber(String str, int i) {
-		String t = "";
+		StringBuilder t = new StringBuilder();
 		int len = str.length();
 		do {        //Lặp cho đến khi ký tự đó không còn là số
-			t += str.charAt(i);
+			t.append(str.charAt(i));
 			i++;
 		} while (i < len && (isOperand("" + str.charAt(i)) || str.charAt(i) == '.'));
-		return t;
+		return t.toString();
 	}
 	
 	/***
@@ -129,25 +129,28 @@ public class PolishNotation {
 		convertToList();
 		String x;
 		for (String item : this.infix) {
-			if (isOperand(item))
+			if (isOperand(item))    //Nếu là toán hạng
 				postfix.add(item);
 			else if (item.equals("("))
 				stack.push(item);
 			else if (item.equals(")")) {
 				x = stack.pop();
-				while (!x.equals("(")) {
+				while (!x.equals("(")) {    //Pop các toán tử cho vào postfix đến khi gặp dấu '('
 					postfix.add(x);
 					x = stack.pop();
 				}
 			} else {
+				//Nếu là toán tử
+				//Thực hiện vòng lặp kiểm tra, nếu ở đỉnh stack là toán tử có độ ưu tiên >=
+				//toán tử hiện tại thì lấy toán tử đó trong stack (pop) cho vào postfix
 				while (!stack.empty() && isOperator(stack.peek()))
 					if (getPriority(stack.peek()) >= getPriority(item)) {
 						x = stack.pop();
 						postfix.add(x);
 					} else break;
-				stack.push(item);
+				stack.push(item);   //Cho toán tử hiện tại vào stack
 			}
-		}
+		}   //Lấy toán tử còn lại trong stack cho vào postfix
 		while (!stack.empty()) {
 			x = stack.pop();
 			postfix.add(x);

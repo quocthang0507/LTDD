@@ -20,6 +20,8 @@ import java.math.RoundingMode;
 import java.util.Map;
 
 public class CoreFunctions {
+	private static final String format = "dd/MM/yyyy";
+	
 	/**
 	 * Volume converter
 	 * According to the SI System, the base unit for measuring volume is the metre and
@@ -114,6 +116,9 @@ public class CoreFunctions {
 	 * The SI unit of angular measure is the radian
 	 */
 	public String[] Angle = new String[]{"Degrees", "pi/180", "Radians", "1", "Gradians", "pi/200"};
+	/**
+	 * List of currencies of the world
+	 */
 	public String[] Currency =
 			new String[]{"AFN ؋", "ALL Lek", "AMD", "ANG ƒ", "AOA", "ARS $", "AUD $", "AWG ƒ", "AZN \u20BC", "BAM KM", "BBD $", "BDT",
 					"BGN лв", "BHD", "BIF", "BND $", "BOB $b", "BRL R$", "BSD $", "BTC", "BTN", "BWP P", "BYN Br",
@@ -129,7 +134,6 @@ public class CoreFunctions {
 					"SHP £", "SLL", "SOS S", "SRD $", "STD", "SYP £", "SZL", "THB ฿", "TJS", "TMT", "TND",
 					"TOP", "TRY ₺", "TTD TT$", "TWD NT$", "TZS", "UAH ₴", "UGX", "USD $", "UYU $U", "UZS лв", "VEF Bs",
 					"VND ₫", "VUV", "WST", "XAF", "XCD $", "XDR", "XOF", "XPF", "YER ﷼", "ZAR R", "ZMW"};
-	
 	/**
 	 * String contains website's content
 	 */
@@ -157,121 +161,6 @@ public class CoreFunctions {
 	}
 	
 	/**
-	 * Square root of x
-	 */
-	public Object sqrt(double x) {
-		return fixType(Math.sqrt(x));
-	}
-	
-	/**
-	 * nth root of x
-	 */
-	public Object nroot(double x, double n) {
-		return pow(x, 1 / n);
-	}
-	
-	/**
-	 * Negative number
-	 */
-	public Object neg(double x) {
-		return fixType(-x);
-	}
-	
-	/**
-	 * Convert degrees to radians
-	 */
-	public Object deg2Rad(double x) {
-		return fixType(Math.toRadians(x));
-	}
-	
-	/**
-	 * Convert radians to degrees
-	 */
-	public Object rad2Deg(double x) {
-		return fixType(Math.toDegrees(x));
-	}
-	
-	/**
-	 * Common trigonometric functions
-	 * Such as: sin, cos, tan
-	 * isRadians: true if x is radians, false if x is degrees
-	 */
-	public Object trigonometric(String t, double value, boolean isRadians) {
-		if (!isRadians)
-			value = (double) deg2Rad(value);
-		switch (t) {
-			case "sin":
-				return Math.sin(value);
-			case "cos":
-				return Math.cos(value);
-			case "tan":
-				return Math.tan(value);
-		}
-		return fixType(value);
-	}
-	
-	/**
-	 * Common inverse trigonometric functions
-	 */
-	public Object inverse_trigonometric(String t, double value, boolean isRadians) {
-		if (!isRadians)
-			value = (double) deg2Rad(value);
-		switch (t) {
-			case "asin":
-				return Math.asin(value);
-			case "acos":
-				return Math.acos(value);
-			case "atan":
-				return Math.atan(value);
-		}
-		return fixType(value);
-	}
-	
-	/**
-	 * The natural logarithm (base e) of a double value
-	 */
-	public Object ln(double x) {
-		return fixType(Math.log(x));
-	}
-	
-	/**
-	 * The base 10 logarithm of a double value
-	 */
-	public Object log10(double x) {
-		return fixType(Math.log10(x));
-	}
-	
-	/**
-	 * Exponential function
-	 * The method returns the base of the natural logarithms, e, to the power of the argument
-	 */
-	public Object exp(double x) {
-		return fixType(Math.exp(x));
-	}
-	
-	/**
-	 * Convert decimal degrees to Degrees Minutes Seconds
-	 */
-	public String dms(double dd) {
-		int d = (int) dd;
-		int m = (int) ((dd - d) * 60);
-		int s = (int) ((dd - d - m / 60) * 3600);
-		return String.format("{0}°{1}'{2}\"", d, m, s);
-	}
-	
-	/**
-	 * Convert Degrees Minutes Seconds to decimal degrees
-	 */
-	public double dd(String dms) {
-		int d, m, s;
-		d = Integer.parseInt(dms.substring(0, dms.indexOf("°") - 1));
-		m = Integer.parseInt(dms.substring(dms.indexOf("°") + 1, dms.indexOf("'") - 1));
-		s = Integer.parseInt(dms.substring(dms.indexOf("'") + 1, dms.indexOf("\"") - 1));
-		double decimal = ((m * 60) + s) / 3600;
-		return d + decimal;
-	}
-	
-	/**
 	 * The mathematical constant π
 	 */
 	public double pi() {
@@ -286,12 +175,23 @@ public class CoreFunctions {
 	}
 	
 	/**
-	 * Factorial of x
+	 * Rotate left the specified long value
+	 * Convert another base to decimal before rotate left
 	 */
-	public long factorial(int x) {
-		if (x > 0)
-			return x * factorial(x - 1);
-		else return 1;
+	public String rotateLeft(String input, int currentBase) {
+		Long n = Long.parseLong(convertFromBaseToBase(input, currentBase, 10));
+		String result = "" + Long.rotateLeft(n, 1);
+		return convertFromBaseToBase(result, 10, currentBase);
+	}
+	
+	/**
+	 * Rotate right the specified long value
+	 * Convert another base to decimal before rotate right
+	 */
+	public String rotateRight(String input, int currentBase) {
+		Long n = Long.parseLong(convertFromBaseToBase(input, currentBase, 10));
+		String result = "" + Long.rotateRight(n, 1);
+		return convertFromBaseToBase(result, 10, currentBase);
 	}
 	
 	/**
@@ -302,10 +202,10 @@ public class CoreFunctions {
 	}
 	
 	/**
-	 * Difference between 2 dates
+	 * Calculate difference between 2 dates
 	 */
 	public String different(String start, String end) {
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+		DateTimeFormatter formatter = DateTimeFormat.forPattern(format);
 		String value = "";
 		try {
 			DateTime dt1 = formatter.parseDateTime(start);
@@ -326,36 +226,24 @@ public class CoreFunctions {
 		return value;
 	}
 	
-	public String rotateLeft(String input, int currentBase) {
-		Long n = Long.parseLong(convertFromBaseToBase(input, currentBase, 10));
-		String result = "" + Long.rotateLeft(n, 1);
-		return convertFromBaseToBase(result, 10, currentBase);
-	}
-	
-	public String rotateRight(String input, int currentBase) {
-		Long n = Long.parseLong(convertFromBaseToBase(input, currentBase, 10));
-		String result = "" + Long.rotateRight(n, 1);
-		return convertFromBaseToBase(result, 10, currentBase);
-	}
-	
 	/**
 	 * Date1 add or subtract date2
 	 */
-	public String changeDay(String date1, Map<Character, Integer> date2, char c) {
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+	public String changeDay(String date1, Map<Character, Integer> change, char c) {
+		DateTimeFormatter formatter = DateTimeFormat.forPattern(format);
 		DateTime dt1;
 		try {
 			dt1 = formatter.parseDateTime(date1);
 			switch (c) {
 				case '+':
-					dt1 = dt1.plusDays(date2.get('d'));
-					dt1 = dt1.plusMonths(date2.get('m'));
-					dt1 = dt1.plusYears(date2.get('y'));
+					dt1 = dt1.plusDays(change.get('d'));
+					dt1 = dt1.plusMonths(change.get('m'));
+					dt1 = dt1.plusYears(change.get('y'));
 					break;
 				case '-':
-					dt1 = dt1.minusDays(date2.get('d'));
-					dt1 = dt1.minusMonths(date2.get('m'));
-					dt1 = dt1.minusYears(date2.get('y'));
+					dt1 = dt1.minusDays(change.get('d'));
+					dt1 = dt1.minusMonths(change.get('m'));
+					dt1 = dt1.minusYears(change.get('y'));
 					break;
 			}
 		} catch (Exception e) {
@@ -367,7 +255,7 @@ public class CoreFunctions {
 	/**************************************Converter**************************************/
 	
 	/**
-	 * Try to fix proper type of value
+	 * Try to fix proper value type
 	 */
 	public Object fixType(double value) {
 		double decimal = value - (long) value;
@@ -413,7 +301,7 @@ public class CoreFunctions {
 	/**
 	 * Convert string to double, especially if it have power symbol
 	 */
-	public Object convertFromString(String string) {
+	public Object parseString(String string) {
 		try {
 			if (string.contains("^")) {
 				if (string.contains("×")) {     //s1 × 10 ^ s2
@@ -421,17 +309,26 @@ public class CoreFunctions {
 					String s2 = string.split("\\^")[1];
 					double power = (double) pow(10, Double.parseDouble(s2));
 					return fixType(Double.parseDouble(s1) * power);
-				} else {
+				} else {    //10 ^ s2
 					String t = string.split("\\^")[1];
 					return pow(10, Double.parseDouble(t));
 				}
-			} else if (string.contains("/")) {
+			} else if (string.contains("/")) {  //pi/180
 				String[] temp = string.split("/");
 				return pi() / Integer.parseInt(temp[1]);
-			} else return fixType(Double.parseDouble(string));
+			} else return fixType(Double.parseDouble(string));  //123456789
 		} catch (NumberFormatException e) {
 			return null;
 		}
+	}
+	
+	/**
+	 * Convert a string to double, return null if str can't convert to double value
+	 */
+	public double convertToDouble(String str) {
+		if (str.equals("") || str.equals(null))
+			return 0;
+		else return Double.parseDouble(str);
 	}
 	
 	/**
@@ -441,27 +338,24 @@ public class CoreFunctions {
 	 * id == 2 : Kelvin
 	 */
 	public Object temperatureConverter(int id1, Object value, int id2) {
-		if (id1 == id2)
-			return value;
-		else {
-			double _value = Double.parseDouble("" + value);
+		double result;
+		double _value = Double.parseDouble("" + value);
+		if (id1 == id2) {
+			result = _value;
+		} else {
 			if (id1 == 0) {
-				return id2 == 1 ? 9 / 5 * _value + 32 : _value + 273;
+				result = id2 == 1 ? 9d / 5d * _value + 32d : _value + 273d;
 			} else if (id1 == 1) {
-				return id2 == 0 ? 5 / 9 * (_value - 32) : 5 / 9 * (_value - 32) + 273;
+				result = id2 == 0 ? 5d / 9d * (_value - 32d) : 5d / 9d * (_value - 32d) + 273d;
 			} else {
-				return id2 == 0 ? _value - 273 : (9 / 5 * (_value - 273) + 32);
+				result = id2 == 0 ? _value - 273d : 9d / 5d * (_value - 273d) + 32d;
 			}
 		}
+		return fixType(result);
 	}
 	
-	/************************Rule of function***********************
-	 ****** array is the reference unit for converter function******
-	 ************ id1 is index of the unit of the value*************
-	 ************ id2 is index of the unit of result****************/
-	
 	/**
-	 * Find text in array
+	 * Find index of text in array
 	 */
 	public int findIndexInArray(String[] array, String text) {
 		int len = array.length;
@@ -473,21 +367,24 @@ public class CoreFunctions {
 	}
 	
 	/**
-	 * Other unit converter function
+	 * Convert other unit converters
 	 */
 	public Object otherConverter(String[] array, int id1, Object value, int id2) {
 		if (id1 == id2)
 			return value;
 		else {
 			//1 unit of id1 = ? unit of base
-			double base1 = Double.parseDouble("" + convertFromString(array[id1 + 1]));
+			double base1 = Double.parseDouble(parseString(array[id1 + 1]).toString());
 			//1 unit of id2 = ? unit of base
-			double base2 = Double.parseDouble("" + convertFromString(array[id2 + 1]));
+			double base2 = Double.parseDouble(parseString(array[id2 + 1]).toString());
 			//Get crosshair value
-			return fixType(Double.parseDouble("" + value) * base1 / base2);
+			return fixType(Double.parseDouble(value.toString()) * base1 / base2);
 		}
 	}
 	
+	/**
+	 * Check that internet connection exists
+	 */
 	boolean checkInternetConnection() {
 		Runtime runtime = Runtime.getRuntime();
 		try {

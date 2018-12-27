@@ -22,9 +22,9 @@
 	<string name="con_ang">Angle</string>
 	<string name="about">About</string>
 	<string name="title">About...</string>
-	<string name="message">Author: La Quốc Thắng \r\nStudent ID: 1610207\r\nStudy at: Dalat University\r\n\nEmail 1: quocthang0507@gmail.com\r\nEmail 2: quocthang_0507@yahoo.com.vn\r\n"</string>
+	<string name="message">Author: La Quốc Thắng \r\nStudent ID: 1610207\r\nStudy at: Information Technology Department - Dalat University\r\n\nEmail 1: quocthang0507@gmail.com\r\nEmail 2: quocthang_0507@yahoo.com.vn\r\n"</string>
 	<string name="button">OK, Thank author a lot :)))</string>
-	<string name="intro">Welcome you to my calculator! \nPlease tap the menu icon and choose a function</string>
+	<string name="intro">Welcome you to my calculator! \nPlease tap the menu icon and choose a feature</string>
 	<string-array name="dateMode">
 		<item>Difference between dates</item>
 		<item>Add or subtract days</item>

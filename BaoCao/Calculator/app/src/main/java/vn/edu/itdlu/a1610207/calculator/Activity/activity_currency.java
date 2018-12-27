@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +38,8 @@ public class activity_currency extends AppCompatActivity implements View.OnClick
 		getSupportActionBar().setDisplayShowTitleEnabled(false);    //Remove activity label
 		map();
 		loadSpinner();
-		addOnClickListener();
+		//addOnClickListener();
+		Toast.makeText(this, "Tính năng này không khả dụng...", Toast.LENGTH_SHORT).show();
 	}
 	
 	void map() {
@@ -74,13 +76,13 @@ public class activity_currency extends AppCompatActivity implements View.OnClick
 			case R.id.btn_down:
 				rate = functions.getExchangeRate(getApplicationContext(), str1, str2);
 				textView.setText("1 " + str1 + " = " + rate + str2);
-				from = Double.parseDouble("" + functions.convertFromString(editText1.getText().toString()));
+				from = functions.convertToDouble(editText1.getText().toString());
 				editText2.setText("" + from * rate);
 				break;
 			case R.id.btn_up:
 				rate = functions.getExchangeRate(getApplicationContext(), str2, str1);
 				textView.setText("1 " + str2 + " = " + rate + str1);
-				from = Double.parseDouble("" + functions.convertFromString(editText2.getText().toString()));
+				from = functions.convertToDouble(editText2.getText().toString());
 				editText1.setText("" + from * rate);
 				break;
 			default:

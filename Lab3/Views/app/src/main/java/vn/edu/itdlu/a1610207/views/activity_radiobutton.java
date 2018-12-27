@@ -11,8 +11,8 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 public class activity_radiobutton extends AppCompatActivity {
-    RadioGroup rGroup;
-    Button button;
+    private RadioGroup rGroup;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

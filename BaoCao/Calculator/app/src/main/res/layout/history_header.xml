@@ -10,13 +10,14 @@
 	<ImageView
 		android:layout_width="match_parent"
 		android:layout_height="100dp"
-		android:src="@drawable/history" />
+		android:src="@drawable/history"
+		android:tint="@color/icon" />
 
 	<TextView
 		android:layout_width="match_parent"
 		android:layout_height="50dp"
 		android:text="@string/history"
 		android:textAlignment="center"
-		android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+		android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
 </LinearLayout>

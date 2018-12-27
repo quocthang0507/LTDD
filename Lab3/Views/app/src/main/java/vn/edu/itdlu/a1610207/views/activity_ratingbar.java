@@ -12,9 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class activity_ratingbar extends AppCompatActivity {
-    RatingBar ratingBar;
-    TextView textView;
-    Button button;
+    private RatingBar ratingBar;
+    private TextView textView;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

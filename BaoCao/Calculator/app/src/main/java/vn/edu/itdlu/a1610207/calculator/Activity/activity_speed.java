@@ -61,12 +61,12 @@ public class activity_speed extends AppCompatActivity implements View.OnClickLis
         getID();
         switch (view.getId()) {
             case R.id.btn_down:
-                value = functions.convertFromString(editText1.getText().toString());
-                editText2.setText("" + functions.otherConverter(functions.Speed, id1, value, id2));
+                value = functions.convertToDouble(editText1.getText().toString());
+                editText2.setText(functions.otherConverter(functions.Speed, id1, value, id2).toString());
                 break;
             case R.id.btn_up:
-                value = functions.convertFromString(editText2.getText().toString());
-                editText1.setText("" + functions.otherConverter(functions.Speed, id2, value, id1));
+                value = functions.convertToDouble(editText2.getText().toString());
+                editText1.setText(functions.otherConverter(functions.Speed, id2, value, id1).toString());
                 break;
             default:
                 break;

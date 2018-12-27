@@ -9,8 +9,8 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 public class activity_checkbox extends AppCompatActivity {
-    CheckBox chk1, chk2, chk3;
-    Button button;
+    private CheckBox chk1, chk2, chk3;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

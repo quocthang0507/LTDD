@@ -255,7 +255,7 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
 	boolean containDigit(String str) {
 		int len = str.length();
 		for (int i = 0; i < len; i++) {
-			if (!Character.isDigit(str.charAt(i)) && str.charAt(i) < 'A' && str.charAt(i) > 'F')
+			if (!Character.isDigit(str.charAt(i)) && (str.charAt(i) < 'A' || str.charAt(i) > 'F'))
 				return false;
 		}
 		return true;
@@ -304,7 +304,7 @@ public class activity_programmer extends AppCompatActivity implements TextWatche
 					exp.setText(expression);
 					completed = true;
 					notation.infixToPostfix();
-					result.setText("" + functions.convertFromBaseToBase("" + functions.fixType((Long) notation.compute_postFix(_currentBase)), 10, _currentBase));
+					result.setText(functions.convertFromBaseToBase(notation.compute_postFix(_currentBase).toString(), 10, _currentBase));
 					temp.setText(result.getText());
 				}
 			}

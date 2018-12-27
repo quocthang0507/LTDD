@@ -41,9 +41,9 @@ public class CustomAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		if (view == null)
-			view = inflater.inflate(R.layout.list_item, null);
-		TextView exp = (TextView) view.findViewById(R.id.tv_item_exp);
-		TextView result = (TextView) view.findViewById(R.id.tv_item_result);
+			view = inflater.inflate(R.layout.list_item_history, null);
+		TextView exp = view.findViewById(R.id.tv_item_exp);
+		TextView result = view.findViewById(R.id.tv_item_result);
 		exp.setText(list.get(position).getExpression());
 		result.setText(list.get(position).getResult());
 		return view;

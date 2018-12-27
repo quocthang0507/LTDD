@@ -73,8 +73,7 @@ public class activity_date extends AppCompatActivity implements AdapterView.OnIt
 	}
 	
 	void loadSpinner() {
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.dateMode, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.dateMode, R.layout.spinner_row);
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
 	}

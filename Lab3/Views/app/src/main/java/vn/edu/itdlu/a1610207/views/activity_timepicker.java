@@ -13,11 +13,11 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 public class activity_timepicker extends AppCompatActivity {
-    static final int TIME_DIALOG_ID = 999;
-    int hour, minute;
-    TextView textView;
-    TimePicker timePicker;
-    Button button;
+    private static final int TIME_DIALOG_ID = 999;
+    private int hour, minute;
+    private TextView textView;
+    private TimePicker timePicker;
+    private Button button;
     private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int _minute) {

@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tvHienThi;
-    Button btRun, btXoa;
-    Button btCong, btTru, btNhan, btChia;
-    EditText etTuSoA, etMauSoA, etTuSoB, etMauSoB;
-    int tuSoA, tuSoB, mauSoA, mauSoB;
+    private TextView tvHienThi;
+    private Button btRun, btXoa;
+    private Button btCong, btTru, btNhan, btChia;
+    private EditText etTuSoA, etMauSoA, etTuSoB, etMauSoB;
+    private int tuSoA, tuSoB, mauSoA, mauSoB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

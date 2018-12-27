@@ -10,8 +10,8 @@ import android.widget.Button;
 
 public class activity_button extends AppCompatActivity {
 
-    Button button;
-    Intent intent;
+    private Button button;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

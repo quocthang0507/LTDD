@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 public class activity_textbox extends AppCompatActivity {
 
-    EditText editText;
-    Button button;
+    private EditText editText;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,24 +1,24 @@
 package vn.edu.itdlu.a1610207.tamgiac;
 
 public class TamGiacClass {
-    int canhA;
-    int canhB;
-    int canhC;
+    private int canhA;
+    private int canhB;
+    private int canhC;
 
     public TamGiacClass() {
         this.canhA = this.canhB = this.canhC = 0;
     }
 
+    public TamGiacClass(int canhA, int canhB, int canhC){
+	    this.canhA = a;
+	    this.canhB = b;
+	    this.canhC = c;
+    }
+    
     public void SetCanh() {
         this.canhA = 5;
         this.canhB = 10;
         this.canhC = 12;
-    }
-
-    public void SetCanh(int a, int b, int c) {
-        this.canhA = a;
-        this.canhB = b;
-        this.canhC = c;
     }
 
     public int getCanhA() {

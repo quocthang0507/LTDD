@@ -9,8 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class activity_password extends AppCompatActivity {
-    EditText editText;
-    Button button;
+    private EditText editText;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

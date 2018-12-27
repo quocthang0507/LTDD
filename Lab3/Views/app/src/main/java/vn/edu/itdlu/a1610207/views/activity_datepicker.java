@@ -13,11 +13,11 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 public class activity_datepicker extends AppCompatActivity {
-    static final int DATE_DIALOG_ID = 999;
-    TextView textView;
-    DatePicker datePicker;
-    int year, month, day;
-    Button button;
+    private static final int DATE_DIALOG_ID = 999;
+    private TextView textView;
+    private DatePicker datePicker;
+    private int year, month, day;
+    private Button button;
 
     private DatePickerDialog.OnDateSetListener datePickerListener = new
             DatePickerDialog.OnDateSetListener() {

@@ -61,12 +61,12 @@ public class activity_angle extends AppCompatActivity implements View.OnClickLis
 		getID();
 		switch (view.getId()) {
 			case R.id.btn_down: //Chuyển từ đơn vị 1 sang đơn vị 2
-				value = functions.convertFromString(editText1.getText().toString());
-				editText2.setText("" + functions.otherConverter(functions.Angle, id1, value, id2));
+				value = functions.convertToDouble(editText1.getText().toString());
+				editText2.setText(functions.otherConverter(functions.Angle, id1, value, id2).toString());
 				break;
 			case R.id.btn_up:   //Chuyển từ đơn vị 2 sang đơn vị 1
-				value = functions.convertFromString(editText2.getText().toString());
-				editText1.setText("" + functions.otherConverter(functions.Angle, id2, value, id1));
+				value = functions.convertToDouble(editText2.getText().toString());
+				editText1.setText(functions.otherConverter(functions.Angle, id2, value, id1).toString());
 				break;
 			default:
 				break;

@@ -1,7 +1,9 @@
 package vn.edu.itdlu.a1610207.calculator.Activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -21,14 +23,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vn.edu.itdlu.a1610207.calculator.Core.CoreFunctions;
-import vn.edu.itdlu.a1610207.calculator.Database.CustomAdapter;
-import vn.edu.itdlu.a1610207.calculator.Database.Calculation;
-import vn.edu.itdlu.a1610207.calculator.Database.Database;
 import vn.edu.itdlu.a1610207.calculator.Core.PolishNotation;
+import vn.edu.itdlu.a1610207.calculator.Database.Calculation;
+import vn.edu.itdlu.a1610207.calculator.Database.CustomAdapter;
+import vn.edu.itdlu.a1610207.calculator.Database.Database;
 import vn.edu.itdlu.a1610207.calculator.R;
 
 public class activity_standard extends AppCompatActivity implements AdapterView.OnItemClickListener {
-	private static final String MISSING = "Missing \")\"";
+	private static final String MISSING_OPEN = "Missing \")\"";
+	private static final String MISSING_CLOSE = "Missing \"(\"";
+	private static final String ALERT = "Are you sure want to delete?";
 	private static final int MENU_ITEM_SELECT = 111;
 	private static final int MENU_ITEM_DELETE = 222;
 	private static final int MENU_ITEM_DELETE_OTHERS = 333;
@@ -42,6 +46,7 @@ public class activity_standard extends AppCompatActivity implements AdapterView.
 	private List<Calculation> listCalculations = new ArrayList<>();
 	private CustomAdapter adapter;
 	private DrawerLayout drawerLayout;
+	private Vibrator vibrator;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,7 @@ public class activity_standard extends AppCompatActivity implements AdapterView.
 		listView = findViewById(R.id.list_history);
 		listView.setOnItemClickListener(this);
 		drawerLayout = findViewById(R.id.layout_history);
+		vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 	}
 	
 	void loadDB2ListView() {
@@ -148,6 +154,7 @@ public class activity_standard extends AppCompatActivity implements AdapterView.
 		String expression = tv_exp.getText().toString();
 		if (completed) {
 			expression = "";
+			completed = false;
 		}
 		if (input.equals("0") || endWithSpecial(input))
 			input = "";
@@ -180,7 +187,7 @@ public class activity_standard extends AppCompatActivity implements AdapterView.
 	
 	public void btn_dot_OnClick(View v) {
 		String input = tv_result.getText().toString();
-		if (Character.isDigit(input.charAt(input.length() - 1)) && completed) {
+		if (Character.isDigit(input.charAt(input.length() - 1)) && !completed) {
 			input += ".";
 		}
 		tv_result.setText(input);
@@ -198,10 +205,11 @@ public class activity_standard extends AppCompatActivity implements AdapterView.
 		notation.setExpression(newStr);
 		int flag = notation.checkExpression();
 		if (flag == -1)
-			Toast.makeText(getApplicationContext(), MISSING, Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), MISSING_OPEN, Toast.LENGTH_LONG).show();
 		else if (flag == -2)
-			Toast.makeText(getApplicationContext(), "Missing \"(\"", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), MISSING_CLOSE, Toast.LENGTH_LONG).show();
 		else {
+			vibrator.vibrate(150);
 			completed = true;
 			notation.infixToPostfix();
 			String result = notation.compute_postFix(10).toString();
@@ -347,7 +355,7 @@ public class activity_standard extends AppCompatActivity implements AdapterView.
 				break;
 			case MENU_ITEM_DELETE:
 				new AlertDialog.Builder(this).
-						setMessage("Are you sure want to delete?")
+						setMessage(ALERT)
 						.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -357,7 +365,7 @@ public class activity_standard extends AppCompatActivity implements AdapterView.
 				break;
 			case MENU_ITEM_DELETE_ALL:
 				new AlertDialog.Builder(this).
-						setMessage("Are you sure want to delete?")
+						setMessage(ALERT)
 						.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -367,7 +375,7 @@ public class activity_standard extends AppCompatActivity implements AdapterView.
 				break;
 			case MENU_ITEM_DELETE_OTHERS:
 				new AlertDialog.Builder(this).
-						setMessage("Are you sure want to delete?")
+						setMessage(ALERT)
 						.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
